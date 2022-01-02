@@ -1,15 +1,9 @@
-//import express from 'express';
-//import mysql from 'mysql';
-//import cors from 'cors';
+import express from 'express';
+import mysql from 'mysql';
+import cors from 'cors';
+import bodyParser from "body-parser";
 
-const express = require("express");
-const bodyPaeser = require('body-parser');
-const cors =require('cors')
 const app = express();
-const mysql = require('mysql');
-
-
-
 
 const db = mysql.createPool({
     host: "localhost",
@@ -18,7 +12,7 @@ const db = mysql.createPool({
     database: "LISDatabase",
 });
 
-app.use(bodyPaeser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors());
 app.use(express.json());
 
