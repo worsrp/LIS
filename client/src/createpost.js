@@ -1,10 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import React,{useState, useEffect } from "react";
 import Axios from 'axios'
 //เหลือใส่รูป
 
-function App() {
+function Post() {
   const [Name,setName] = useState('')
   const [Category,setCategory] = useState('Fashion')
   const [Location,setLocation] = useState('Chiang Mai')
@@ -68,4 +67,4 @@ function App() {
   );
 }
 
-export default App;
+export default Post;
