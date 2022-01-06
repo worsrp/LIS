@@ -11,11 +11,13 @@ const Favlist = () =>{
     }, []);
 
     const deleteFav = (id) => {
-        Axios.delete("http://localhost:8000/fav", { 
-            post_id: id
-        }).then(() => {
-            
-        })
+        if(window.confirm("Remove this post from my favorite post ")){
+            Axios.delete("http://localhost:8000/fav", { 
+                post_id: id
+            }).then(() => {
+                alert("Deleted")
+            }) 
+        } 
     };
 
     return (
