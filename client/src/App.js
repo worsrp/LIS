@@ -4,6 +4,7 @@ import { Link, Route } from 'react-router-dom';
 
 //import routes
 import CreatePost from './pages/Createpost';
+import Feed from './pages/Feed';
 
 function App() {
   return (
@@ -29,6 +30,12 @@ function App() {
         <div>
             <Route path="/createpost">
               <CreatePost />
+            </Route>
+        </div>
+
+        <div>
+            <Route path="/feed">
+              <Feed />
             </Route>
         </div>
       </header>
