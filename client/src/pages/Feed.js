@@ -32,13 +32,11 @@ const Feed = () =>{
         <div>
             <div className="searchBar">
                 <div className="form">
-                    <form method="POST" action="/feed" >
-                        <input type="text" placeholder="search item" name="item" onChange={(e)=>{
-                        setSearch(e.target.value)
-                        }} required />
+                    <input type="text" placeholder="search item" name="item" onChange={(e)=>{
+                    setSearch(e.target.value)
+                    }} required />
 
-                        <button type="submit" onClick={searchPost}> search </button> 
-                    </form>
+                    <button onClick={searchPost}> search </button> 
                 </div>
             </div>
 

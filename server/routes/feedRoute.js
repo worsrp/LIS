@@ -20,13 +20,15 @@ router.get('/', (req, res)=> {
 router.post('/', (req,res)=> {
     const searchItem = req.body.item;
 
-    const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Availables' "
-    db.query(sqlSelect, (err, result) => {
+    const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' AND post_name Like ? "
+    db.query(sqlSelect, [searchItem], (err, result) => {
         if(err){
             console.log(err);
         }else{
           res.send(result); 
+          console.log("post method");
           console.log(result); 
+          console.log(sqlSelect);
         }
     })
 });
