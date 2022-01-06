@@ -11,7 +11,7 @@ const db = mysql.createPool({
 
 router.get('/', (req, res)=> {
     //on feed show all post
-    const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' "
+    const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' ORDER BY post_id DESC"
     db.query(sqlSelect, (err, result) => {
         res.send(result);
     })
@@ -20,7 +20,7 @@ router.get('/', (req, res)=> {
 router.post('/', (req,res)=> {
     const searchItem = req.body.item;
 
-    const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Availables'"
+    const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Availables' "
     db.query(sqlSelect, (err, result) => {
         res.send(result);
     })

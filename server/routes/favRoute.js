@@ -12,7 +12,7 @@ const db = mysql.createPool({
 router.get('/', (req, res)=> {
     const userId = 1234;
 
-    const sqlSelect = "SELECT DISTINCT * FROM POST JOIN FAVLIST ON POST.post_id = FAVLIST.post_id WHERE post_status Like 'Available' " 
+    const sqlSelect = "SELECT DISTINCT * FROM POST JOIN FAVLIST ON POST.post_id = FAVLIST.post_id WHERE post_status Like 'Available'" ;
     db.query(sqlSelect, (err, result) => {
         res.send(result);
     })
@@ -27,6 +27,10 @@ router.post('/', (req,res)=> {
     db.query(sqlInsert, [user_id,post_id], (err, result) => {
         console.log(err);
     })
+});
+
+router.delete('/', (req,res)=> {
+
 });
 
 export default router;
