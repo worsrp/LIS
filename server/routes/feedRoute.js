@@ -22,7 +22,12 @@ router.post('/', (req,res)=> {
 
     const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Availables' "
     db.query(sqlSelect, (err, result) => {
-        res.send(result);
+        if(err){
+            console.log(err);
+        }else{
+          res.send(result); 
+          console.log(result); 
+        }
     })
 });
 

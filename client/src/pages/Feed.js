@@ -2,28 +2,29 @@ import React,{useState, useEffect } from "react";
 import Axios from 'axios'
 
 const Feed = () =>{
-    const [search, setSearch] = useState([]);
+    const [search, setSearch] = useState('');
     const [feedPost, setFeedPost] = useState([]);
 
+    //show all post
     useEffect (() => {
         Axios.get("http://localhost:8000/feed").then((response) => {
             setFeedPost(response.data);
         });
     }, []);
 
+    //search 
     const searchPost = () => {
         Axios.post("http://localhost:8000/feed", { 
             item: search
-        }).then(() => {
-            
-        })
+        });
     };
 
+    //add post to favlist
     const addFav = (id) => {
         Axios.post("http://localhost:8000/fav", { 
             post_id: id
         }).then(() => {
-            
+            alert("added to favorite list");
         })
     };
 
@@ -31,13 +32,16 @@ const Feed = () =>{
         <div>
             <div className="searchBar">
                 <div className="form">
-                    <input type="text" placeholder="search item" name="item" onChange={(e)=>{
-                    setSearch(e.target.value)
-                    }} required />
+                    <form method="POST" action="/feed" >
+                        <input type="text" placeholder="search item" name="item" onChange={(e)=>{
+                        setSearch(e.target.value)
+                        }} required />
 
-                    <button onClick={searchPost}> search </button>
+                        <button type="submit" onClick={searchPost}> search </button> 
+                    </form>
                 </div>
             </div>
+
             <div className="feed">
                 <div>
                     {feedPost.map((val)=> {
