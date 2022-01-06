@@ -12,14 +12,26 @@ const Feed = () =>{
     }, []);
 
     const searchPost = () => {
+        Axios.post("http://localhost:8000/feed", { 
+            item: search
+        }).then(() => {
+            
+        })
+    };
 
+    const addFav = (id) => {
+        Axios.post("http://localhost:8000/fav", { 
+            post_id: id
+        }).then(() => {
+            
+        })
     };
 
     return (
         <div>
             <div className="searchBar">
                 <div className="form">
-                    <input type="text" placeholder="search item" name="search" onChange={(e)=>{
+                    <input type="text" placeholder="search item" name="item" onChange={(e)=>{
                     setSearch(e.target.value)
                     }} required />
 
@@ -29,7 +41,18 @@ const Feed = () =>{
             <div className="feed">
                 <div>
                     {feedPost.map((val)=> {
-                        return <h2> Name : {val.post_name} <br /> Description : {val.description} <br /> Location : {val.location} </h2>
+                        return (
+                            <div className="feedCard">
+                                <h3> Name : {val.post_name} </h3> 
+                                <h5> Description : </h5>  
+                                <h6> {val.description} </h6>
+                                <h6> Location : {val.location}  </h6>
+
+                                <button onClick={() => {addFav(val.post_id)}}> favorite </button>
+                                
+                            </div>
+
+                        ); 
                     })}
                 </div>
             </div>

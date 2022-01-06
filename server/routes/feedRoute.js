@@ -10,7 +10,17 @@ const db = mysql.createPool({
 });
 
 router.get('/', (req, res)=> {
+    //on feed show all post
     const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' "
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    })
+});
+
+router.post('/', (req,res)=> {
+    const searchItem = req.body.item;
+
+    const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Availables'"
     db.query(sqlSelect, (err, result) => {
         res.send(result);
     })
