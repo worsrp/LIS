@@ -29,8 +29,14 @@ router.post('/', (req,res)=> {
     })
 });
 
-router.delete('/', (req,res)=> {
+router.delete('/:id', (req,res)=> {
+    const user_id = 1234;
+    const post_id = req.params.id;
 
+    const sqlDelete = "DELETE FROM FAVLIST WHERE user_id = ? AND post_id = ?";
+    db.query(sqlDelete, [user_id, post_id], (err, result) => {
+        console.log(err);
+    })
 });
 
 export default router;
