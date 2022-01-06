@@ -5,6 +5,7 @@ import { Link, Route } from 'react-router-dom';
 //import routes
 import CreatePost from './pages/Createpost';
 import Feed from './pages/Feed';
+import Favlist from './pages/Favlist';
 
 function App() {
   return (
@@ -36,6 +37,12 @@ function App() {
         <div>
             <Route path="/feed">
               <Feed />
+            </Route>
+        </div>
+
+        <div>
+            <Route path="/favlist">
+              <Favlist />
             </Route>
         </div>
       </header>
