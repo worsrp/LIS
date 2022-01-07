@@ -25,10 +25,9 @@ const Feed = () =>{
 
     //add post to favlist
     const addFav = (id) => {
+        // alert("added to favorite list");
         Axios.post("http://localhost:8000/fav", { 
             post_id: id
-        }).then(() => {
-            alert("added to favorite list");
         })
     };
 

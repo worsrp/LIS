@@ -33,6 +33,7 @@ router.post('/', (req,res)=> {
     db.query(sqlInsert, [user_id,post_id], (err, result) => {
         console.log(err);
     })
+
 });
 
 router.delete('/:id', (req,res)=> {
