@@ -14,9 +14,13 @@ const Feed = () =>{
 
     //search 
     const searchPost = () => {
-        Axios.post("http://localhost:8000/feed", { 
-            item: search
-        });
+        if(search != ''){
+            Axios.post("http://localhost:8000/feed", { 
+                item: search
+            }).then((response) => {
+                setFeedPost(response.data);
+            })
+        }
     };
 
     //add post to favlist
@@ -31,13 +35,12 @@ const Feed = () =>{
     return (
         <div>
             <div className="searchBar">
-                <div className="form">
-                    <input type="text" placeholder="search item" name="item" onChange={(e)=>{
+                <input type="text" placeholder="search item" name="item" onChange={(e)=>{
                     setSearch(e.target.value)
-                    }} required />
+                }} />
 
-                    <button onClick={searchPost}> search </button> 
-                </div>
+                <button className="searchButt" onClick={searchPost}> search </button> 
+
             </div>
 
             <div className="feed">
@@ -50,7 +53,7 @@ const Feed = () =>{
                                 <h6> {val.description} </h6>
                                 <h6> Location : {val.location}  </h6>
 
-                                <button onClick={() => {addFav(val.post_id)}}> favorite </button>
+                                <button className="favButt" onClick={() => {addFav(val.post_id)}}> favorite </button>
                                 
                             </div>
 
@@ -60,7 +63,6 @@ const Feed = () =>{
             </div>
         </div>
         
-
     );
 
 };
