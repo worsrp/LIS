@@ -4,15 +4,12 @@ import { Link, Route } from 'react-router-dom';
 //import routes
 import Feed from './pages/Feed';
 import Favlist from './pages/Favlist';
-<<<<<<< HEAD
-import Mypost from './pages/Mypost';
-=======
-import CreatePost from './pages/CreatePost';
+import CreatePost from './pages/Createpost';
 //import style
 import './custom.scss';
 import { Dropdown } from 'react-bootstrap';
 import { AiOutlinePlus, AiOutlineHeart, AiOutlineUser } from "react-icons/ai";
->>>>>>> 45d0f2f1bfbadec159335c952009249ebc7b1b8f
+import MyPost from "./pages/Mypost";
 
 function App() {
   
@@ -76,21 +73,10 @@ function App() {
         </nav>
 
         <div>
-<<<<<<< HEAD
-            <Route path="/mypost">
-              <Mypost />
-            </Route>
-        </div>
-
-        <div>
-            <Route path="/favlist">
-              <Favlist />
-            </Route>
-=======
             <Route path="/createpost"><CreatePost/></Route>
             <Route path="/feed"><Feed /></Route>
             <Route path="/favlist"><Favlist /></Route>
->>>>>>> 45d0f2f1bfbadec159335c952009249ebc7b1b8f
+            <Route path="/mypost"><MyPost /></Route>
         </div>
       </header>
     </div>
