@@ -4,7 +4,6 @@ import { Link, Route } from 'react-router-dom';
 //import routes
 import Feed from './pages/Feed';
 import Favlist from './pages/Favlist';
-import CreUI from './pages/CrePostUI';
 import CreatePost from './pages/CreatePost';
 //import style
 import './custom.scss';
@@ -73,7 +72,7 @@ function App() {
         </nav>
 
         <div>
-            <Route path="/createpost"><CreUI /></Route>
+            <Route path="/createpost"><CreatePost/></Route>
             <Route path="/feed"><Feed /></Route>
             <Route path="/favlist"><Favlist /></Route>
         </div>
