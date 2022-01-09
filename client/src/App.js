@@ -1,14 +1,37 @@
-import './custom.scss';
+import React,{useState, useEffect } from "react";
 import { Link, Route } from 'react-router-dom';
 
-
 //import routes
-import CreatePost from './pages/Createpost';
 import Feed from './pages/Feed';
 import Favlist from './pages/Favlist';
+<<<<<<< HEAD
 import Mypost from './pages/Mypost';
+=======
+import CreatePost from './pages/CreatePost';
+//import style
+import './custom.scss';
+import { Dropdown } from 'react-bootstrap';
+import { AiOutlinePlus, AiOutlineHeart, AiOutlineUser } from "react-icons/ai";
+>>>>>>> 45d0f2f1bfbadec159335c952009249ebc7b1b8f
 
 function App() {
+  
+  const [modalShow, setModalShow] = React.useState(false);
+
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a
+      href=""
+      ref={ref}
+      onClick={e => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      <AiOutlineUser className="icon-nav" style={{ outline: 'none !important', boxShadow: 'none !important' }} />
+      {children}
+    </a>
+  ));
+
   return (
     <div className="App">
       <header className="App-header">
@@ -17,31 +40,43 @@ function App() {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto icon-pos">
               <li class="nav-item">
-                <Link to="/createpost"><i class="bi bi-plus-lg icon-large icon-area"></i></Link>
+                <Link to="/createpost">
+                  <AiOutlinePlus variant="primary" className="icon-nav"
+                  onClick={() => setModalShow(true)} />
+                    <CreatePost
+                      show={modalShow}
+                      onHide={() => setModalShow(false)}
+                    />
+                  </Link>
               </li>
               <li class="nav-item">
-                <Link to="/"><i class="bi bi-heart icon-large icon-area"></i></Link>
+                <Link to="/">
+                  <AiOutlineHeart className="icon-nav" />
+                </Link>
               </li>
               <li class="nav-item">
-              <Link to="/"><i class="bi bi-person-circle icon-large icon-area"></i></Link>
+              <Link to="/">
+                <Dropdown style={{ outline: 'none !important', boxShadow: 'none !important' }}>
+                  <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" style={{ outline: 'none !important', boxShadow: 'none !important' }}>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu style={{ margin: '10px', border: 'white' }}>
+                    <Dropdown.Item eventKey="1" 
+                    style={{ textAlign: 'right', margin: '5px', outline: 'none', boxShadow: 'none' }}>
+                      Profile</Dropdown.Item>
+                    <Dropdown.Item eventKey="2" 
+                    style={{ textAlign: 'right', margin: '5px', outline: 'none', boxShadow: 'none' }}>
+                      Logout</Dropdown.Item>                    
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Link>
               </li>
             </ul>
           </div>
         </nav>
-        
-        <div>
-            <Route path="/createpost">
-              <CreatePost />
-            </Route>
-        </div>
 
         <div>
-            <Route path="/feed">
-              <Feed />
-            </Route>
-        </div>
-
-        <div>
+<<<<<<< HEAD
             <Route path="/mypost">
               <Mypost />
             </Route>
@@ -51,6 +86,11 @@ function App() {
             <Route path="/favlist">
               <Favlist />
             </Route>
+=======
+            <Route path="/createpost"><CreatePost/></Route>
+            <Route path="/feed"><Feed /></Route>
+            <Route path="/favlist"><Favlist /></Route>
+>>>>>>> 45d0f2f1bfbadec159335c952009249ebc7b1b8f
         </div>
       </header>
     </div>
