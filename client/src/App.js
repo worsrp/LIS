@@ -1,9 +1,10 @@
-import './custom.scss';
 import { Link, Route } from 'react-router-dom';
 
-
 //import routes
-import CreatePost from './pages/Createpost';
+import CreatePost from './pages/createPost';
+
+//import style
+import './custom.scss';
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto icon-pos">
               <li class="nav-item">
-                <Link to="/createpost"><i class="bi bi-plus-lg icon-large icon-area"></i></Link>
+                <Link to="/createpost">
+                  <i class="bi bi-plus-lg icon-large icon-area"></i>
+                  </Link>
               </li>
               <li class="nav-item">
                 <Link to="/"><i class="bi bi-heart icon-large icon-area"></i></Link>
@@ -25,7 +28,7 @@ function App() {
             </ul>
           </div>
         </nav>
-        
+
         <div>
             <Route path="/createpost">
               <CreatePost />

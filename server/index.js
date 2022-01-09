@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from "body-parser";
 
 //import routers
-import createpostRoute from './routes/createpostRoute.js'
+import createpostRoute from './routes/createPostRoute.js'
 
 const app = express();
 

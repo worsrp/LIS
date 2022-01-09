@@ -25,7 +25,7 @@ body {
 }
 
 .icon-large{
-    font-size: 30px;
+    font-size: 25px;
     color: #000;
 }
 
@@ -36,4 +36,24 @@ body {
 
 .icon-area{
     padding-left: 30px;
+}
+
+.text-title{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.text-header{
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.pos-center{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pos-right{
+    position: absolute;
+    right: 30px;
 }
