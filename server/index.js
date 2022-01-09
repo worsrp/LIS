@@ -3,13 +3,9 @@ import cors from 'cors';
 import bodyParser from "body-parser";
 
 //import routers
-<<<<<<< HEAD
-import createpostRoute from './routes/createPostRoute.js'
-=======
 import createpostRoute from './routes/createpostRoute.js'
 import feedRoute from './routes/feedRoute.js'
 import favRoute from './routes/favRoute.js'
->>>>>>> b551ecaa2e4f5f3bba33dac2783ea2abdbf442b9
 
 const app = express();
 
