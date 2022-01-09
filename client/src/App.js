@@ -1,10 +1,16 @@
 import { Link, Route } from 'react-router-dom';
 
 //import routes
+<<<<<<< HEAD
 import CreatePost from './pages/createPost';
 
 //import style
 import './custom.scss';
+=======
+import CreatePost from './pages/Createpost';
+import Feed from './pages/Feed';
+import Favlist from './pages/Favlist';
+>>>>>>> b551ecaa2e4f5f3bba33dac2783ea2abdbf442b9
 
 function App() {
   return (
@@ -32,6 +38,18 @@ function App() {
         <div>
             <Route path="/createpost">
               <CreatePost />
+            </Route>
+        </div>
+
+        <div>
+            <Route path="/feed">
+              <Feed />
+            </Route>
+        </div>
+
+        <div>
+            <Route path="/favlist">
+              <Favlist />
             </Route>
         </div>
       </header>
