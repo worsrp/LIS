@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import createpostRoute from './routes/createpostRoute.js'
 import feedRoute from './routes/feedRoute.js'
 import favRoute from './routes/favRoute.js'
+import mypostRoute from './routes/mypostRoute.js'
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.use("/createpost", createpostRoute);
 app.use("/feed", feedRoute);
 
 app.use("/fav", favRoute);
+
+app.use("/mypost", mypostRoute);
 
 app.listen(8000, () =>{
     console.log("Running on port 8000");
