@@ -27,13 +27,13 @@ router.get('/:id', (req, res)=> {
 router.post('/', (req,res)=> {
     const user_id = 1234;
     const post_id = 20;
-    const picture = 1;
 
     const post_name = req.body.post_name
     const description = req.body.description
     const location = req.body.location
     const edit_date = req.body.edit_date
     const post_status = req.body.post_status
+    const picture = req.body.picture
 
     
     const sqlupdate = "UPDATE POST SET post_name =? ,description =? ,edit_date =? ,post_status =? ,location =? ,picture=?   WHERE post_id =?";

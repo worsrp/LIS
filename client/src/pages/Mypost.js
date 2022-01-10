@@ -34,6 +34,7 @@ const MyPost = () =>{
                             <h5> Description : </h5>  
                             <h6> {val.description} </h6>
                             <h6> Location : {val.location}  </h6>
+                            <img alt="User Pic" src="http://localhost:8000/<%=data[0].image%>" class="img-circle img-responsive"></img>
 
                             <button onClick={() => {editPost(val.post_id)}}> Edit </button>
                             <button onClick={() => {deletePost(val.post_id)}}> Delete </button>
