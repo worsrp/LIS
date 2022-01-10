@@ -18,6 +18,10 @@ const MyPost = () =>{
         }
     };
 
+    const editPost = (post_id) => {
+            Axios.get(`http://localhost:8000/editpost/${post_id}`);
+    };
+
     return (
         <div className="myPost">
             <h2>My Post</h2>
@@ -31,7 +35,9 @@ const MyPost = () =>{
                             <h6> {val.description} </h6>
                             <h6> Location : {val.location}  </h6>
 
-                            <button onClick={() => {deletePost(val.post_id)}}> Delete </button> 
+                            <button onClick={() => {editPost(val.post_id)}}> Edit </button>
+                            <button onClick={() => {deletePost(val.post_id)}}> Delete </button>
+                            
                             
                         </div>
                     ); 

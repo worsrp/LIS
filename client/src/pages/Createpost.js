@@ -15,6 +15,10 @@ function CreatePost(props) {
     const [Category,setCategory] = useState('Fashion')
     const [Location,setLocation] = useState('Chiang Mai')
     const [Description,setDescription] = useState('')
+    //const [file, setFile] = useState()
+    //const [fileName, setFileName] = useState("")
+
+    
 
     const submitPost = () => {
         var today = new Date();
@@ -65,6 +69,15 @@ function CreatePost(props) {
                                 onChange={ (e) => { setDescription(e.target.value) }} required />
                             </Col>
                         </Form.Group>
+                        
+
+                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                            <Col sm="11">
+                                <Form.Control type="file" placeholder="Uplode Image" 
+                                onChange={ (e) => { setName(e.target.value) }} required  />
+                            </Col>
+                            </Form.Group>
+
                     </Col>
                 </Row>
                 <Row style={{ paddingLeft : '10%' }}> 

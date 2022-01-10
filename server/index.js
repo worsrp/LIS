@@ -11,7 +11,7 @@ import mypostRoute from './routes/mypostRoute.js'
 import loginRoute from './routes/loginRoute.js'
 import registerRoute from './routes/registerRoute.js'
 import editprofileRoute from './routes/editprofileRoute.js'
-
+import editpostRoute from './routes/editpostRoute.js';
 
 const app = express();
 
@@ -29,9 +29,11 @@ app.use("/profile", profileRoute);
 
 app.use("/mypost", mypostRoute);
 
-app.use("/register", registerRoute);
+app.use("/register", registerRoute); 
 
 app.use("/login", loginRoute);
+ 
+app.use("/editpost", editpostRoute);
 
 app.use("/editprofile", editprofileRoute);
 
