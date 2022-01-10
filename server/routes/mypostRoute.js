@@ -30,4 +30,16 @@ router.delete('/:id', (req,res)=> {
     })
 });
 
+//edit post
+// router.get('/:id', (req,res)=> {
+//     const user_id = 1234;
+//     const post_id = req.params.id;
+
+    
+// });
+
+
+
+
+
 export default router;

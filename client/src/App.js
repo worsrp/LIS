@@ -8,7 +8,7 @@ import Profile from './pages/Profile';
 import CreatePost from './pages/Createpost';
 import Register from './pages/Register';
 import Login from './pages/Login';     
-
+import Editpost from './pages/Editpost';
 
 //import style
 import './custom.scss';
@@ -85,6 +85,7 @@ function App() {
             <Route path="/profile"><Profile /></Route>  
             <Route path="/login">< Login /></Route>
             <Route path="/register">< Register /></Route>
+            <Route path="/editpost">< Editpost /></Route>
         </div>
       </header>
     </div>
