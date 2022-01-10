@@ -10,6 +10,7 @@ import profileRoute from './routes/profileRoute.js'
 import mypostRoute from './routes/mypostRoute.js'
 import loginRoute from './routes/loginRoute.js'
 import registerRoute from './routes/registerRoute.js'
+import editprofileRoute from './routes/editprofileRoute.js'
 
 
 const app = express();
@@ -31,6 +32,8 @@ app.use("/mypost", mypostRoute);
 app.use("/register", registerRoute);
 
 app.use("/login", loginRoute);
+
+app.use("/editprofile", editprofileRoute);
 
 
 app.listen(8000, () =>{

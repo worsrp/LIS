@@ -5,6 +5,7 @@ import { Link, Route } from 'react-router-dom';
 import Feed from './pages/Feed';
 import Favlist from './pages/Favlist';
 import Profile from './pages/Profile';
+import Editprofile from './pages/Editprofile';
 import CreatePost from './pages/Createpost';
 import Register from './pages/Register';
 import Login from './pages/Login';     
@@ -83,6 +84,7 @@ function App() {
             <Route path="/favlist"><Favlist /></Route>
             <Route path="/mypost"><MyPost /></Route>
             <Route path="/profile"><Profile /></Route>  
+            <Route path="/editprofile"><Editprofile /></Route> 
             <Route path="/login">< Login /></Route>
             <Route path="/register">< Register /></Route>
         </div>
