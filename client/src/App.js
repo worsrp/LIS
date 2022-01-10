@@ -4,6 +4,7 @@ import { Link, Route } from 'react-router-dom';
 //import routes
 import Feed from './pages/Feed';
 import Favlist from './pages/Favlist';
+import Profile from './pages/Profile';
 import CreatePost from './pages/Createpost';
 import Register from './pages/Register';
 import Login from './pages/Login';     
@@ -80,10 +81,12 @@ function App() {
             <Route path="/createpost"><CreatePost/></Route>
             <Route path="/feed"><Feed /></Route>
             <Route path="/favlist"><Favlist /></Route>
+            <Route path="/mypost"><MyPost /></Route>
+            <Route path="/profile"><Profile /></Route>  
+            <Route path="/login">< Login /></Route>
+            <Route path="/register">< Register /></Route>
         </div>
       </header>
-      <Route path="/login">< Login /></Route>
-      <Route path="/register">< Register /></Route>
     </div>
   );
 }

@@ -6,9 +6,11 @@ import bodyParser from "body-parser";
 import createpostRoute from './routes/createpostRoute.js'
 import feedRoute from './routes/feedRoute.js'
 import favRoute from './routes/favRoute.js'
+import profileRoute from './routes/profileRoute.js'
 import mypostRoute from './routes/mypostRoute.js'
 import loginRoute from './routes/loginRoute.js'
 import registerRoute from './routes/registerRoute.js'
+
 
 const app = express();
 
@@ -21,6 +23,8 @@ app.use("/createpost", createpostRoute);
 app.use("/feed", feedRoute);
 
 app.use("/fav", favRoute);
+
+app.use("/profile", profileRoute);
 
 app.use("/mypost", mypostRoute);
 
