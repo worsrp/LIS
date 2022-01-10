@@ -81,12 +81,7 @@ function App() {
             <Route path="/feed"><Feed /></Route>
             <Route path="/favlist"><Favlist /></Route>
             <Route path="/mypost"><MyPost /></Route>
-        </div>
-
-        <div>
-            <Route path="/profile">
-              <Profile />
-            </Route>
+            <Route path="/profile"><Profile /></Route>
         </div>
       </header>
     </div>
