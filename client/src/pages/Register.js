@@ -1,13 +1,15 @@
 import Axios from "axios";
 import React, {useState } from "react";
 
-    function Register (){
+function Register (){
+    const [IsError, setIsError] = useState("");         
     const [emailReg, setEmailReg] = useState("");
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [moblie, setMoblie] = useState("");
     const [address, setAddress] = useState("");
     const [passwordReg, setPasswordReg] = useState("");
+    const [confermPassword, setConfirmPassword] = useState("");
 
     const register = () => {
         console.log(emailReg);
@@ -23,6 +25,13 @@ import React, {useState } from "react";
         })
     };
 
+    const checkValidation=(e)=>{
+        setConfirmPassword(e.target.value);
+        if(passwordReg != confermPassword){
+            setIsError("Confirm Password should be match with password");
+        }
+    }
+
     return (
         <center>
         <div className="App Container">
@@ -36,8 +45,8 @@ import React, {useState } from "react";
                 <input
                 type="text"
                 className="form-controll"
-                onChange={(event) => {
-                    setEmailReg(event.target.value)
+                onChange={(e) => {
+                    setEmailReg(e.target.value)
                 }}
                 ></input>
             </div>
@@ -48,8 +57,8 @@ import React, {useState } from "react";
                 <input
                 type="text"
                 className="form-controll"
-                onChange={(event) => {
-                    setFirstname(event.target.value)
+                onChange={(e) => {
+                    setFirstname(e.target.value)
                 }}
                 ></input>
             </div>
@@ -60,8 +69,8 @@ import React, {useState } from "react";
                 <input
                 type="text"
                 className="form-controll"
-                onChange={(event) => {
-                    setLastname(event.target.value)
+                onChange={(e) => {
+                    setLastname(e.target.value)
                 }}
                 ></input>
             </div>
@@ -72,8 +81,8 @@ import React, {useState } from "react";
                 <input
                 type="text"
                 className="form-controll"
-                onChange={(event) => {
-                    setMoblie(event.target.value)
+                onChange={(e) => {
+                    setMoblie(e.target.value)
                 }}
                 ></input>
             </div>
@@ -84,8 +93,8 @@ import React, {useState } from "react";
                 <input
                 type="text"
                 className="form-controll"
-                onChange={(event) => {
-                    setAddress(event.target.value)
+                onChange={(e) => {
+                    setAddress(e.target.value)
                 }}
                 ></input>
             </div>
@@ -94,14 +103,25 @@ import React, {useState } from "react";
                 Password :
                 </label>
                 <input
-                type="text"
+                type="password"
                 className="form-controll"
-                onChange={(event) => {
-                    setPasswordReg(event.target.value)
+                onChange={(e) => {
+                    setPasswordReg(e.target.value)
                 }}
                 ></input>
             </div>
-            <br />
+            <div className="mb-3">
+                <label htmlFor="name" className="form-label">
+                Conferm Password :
+                </label>
+                <input
+                type="password"
+                className="form-controll"
+                onChange={(e) => checkValidation(e)}
+                ></input>
+                <br />
+                <p1>{IsError}</p1>
+            </div>
             <br />
                 <button class="btn btn-success" onClick={register}>
                 Register
