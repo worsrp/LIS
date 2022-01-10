@@ -7,7 +7,9 @@ import Favlist from './pages/Favlist';
 import Profile from './pages/Profile';
 import CreatePost from './pages/Createpost';
 import Register from './pages/Register';
-import Login from './pages/Login';     
+import Login from './pages/Login';    
+import Sendotp from './pages/Sendotp'; 
+import ResetPass from './pages/Resetpass'; 
 
 
 //import style
@@ -85,6 +87,8 @@ function App() {
             <Route path="/profile"><Profile /></Route>  
             <Route path="/login">< Login /></Route>
             <Route path="/register">< Register /></Route>
+            <Route path="/sendotp">< Sendotp /></Route>  
+            <Route path="/resetpass">< ResetPass /></Route>  
         </div>
       </header>
     </div>

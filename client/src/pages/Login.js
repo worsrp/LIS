@@ -1,6 +1,7 @@
 
 import React, {useState } from "react";
 import Axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function Login (){
 
@@ -20,6 +21,11 @@ function Login (){
             setLoginStatus(response.data[0].firstname + " " +response.data[0].lastname);
         }
         })
+    };
+
+    const history = useHistory();
+    const sendotp = () =>{ 
+        history.push("/sendotp");
     };
 
     return (
@@ -44,6 +50,7 @@ function Login (){
             }} />
             <br />
             <br />
+            <a onClick={sendotp}> Forgot Password ? </a>
             <button class="btn btn-success" onClick={login}> Login </button>
         </div>  
         <h1>{loginStatus}</h1>
