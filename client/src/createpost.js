@@ -8,6 +8,7 @@ function Post() {
   const [Category,setCategory] = useState('Fashion')
   const [Location,setLocation] = useState('Chiang Mai')
   const [Description,setDescription] = useState('')
+  const selectedFile = useRef();
 
   const submitPost = () => {
 
@@ -17,6 +18,7 @@ function Post() {
     var yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
     console.log(Name);
+    console.log(selectedFile.current.files);
     Axios.post("http://localhost:8000/createpost", { 
       post_name: Name,  
       category: Category,
@@ -38,6 +40,8 @@ function Post() {
         <input type="text" name="post_name" onChange={(e)=>{
           setName(e.target.value)
         }} required /><br></br>
+
+        <input type="file" ref={selectedFile} required /><br></br>
 
         <label>Category : </label>
         <select name="category"  onChange={(e)=>{

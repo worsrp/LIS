@@ -5,12 +5,13 @@ import { Link, Route } from 'react-router-dom';
 import Feed from './pages/Feed';
 import Favlist from './pages/Favlist';
 import Profile from './pages/Profile';
+import Editprofile from './pages/Editprofile';
 import CreatePost from './pages/Createpost';
 import Register from './pages/Register';
-import Login from './pages/Login';    
-import Sendotp from './pages/Sendotp'; 
-import ResetPass from './pages/Resetpass'; 
-
+import Login from './pages/Login';  
+import sendotp from './pages/Sendotp';  
+import ResetPass from './pages/Resetpass';     
+import Editpost from './pages/Editpost';
 
 //import style
 import './custom.scss';
@@ -85,10 +86,12 @@ function App() {
             <Route path="/favlist"><Favlist /></Route>
             <Route path="/mypost"><MyPost /></Route>
             <Route path="/profile"><Profile /></Route>  
+            <Route path="/editprofile"><Editprofile /></Route> 
             <Route path="/login">< Login /></Route>
             <Route path="/register">< Register /></Route>
             <Route path="/sendotp">< Sendotp /></Route>  
             <Route path="/resetpass">< ResetPass /></Route>  
+            <Route path="/editpost">< Editpost /></Route>
         </div>
       </header>
     </div>

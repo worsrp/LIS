@@ -15,6 +15,10 @@ function CreatePost(props) {
     const [Category,setCategory] = useState('Fashion')
     const [Location,setLocation] = useState('Chiang Mai')
     const [Description,setDescription] = useState('')
+    const [Image, setImage] = useState('')
+    //const [fileName, setFileName] = useState("")
+
+    
 
     const submitPost = () => {
         var today = new Date();
@@ -28,7 +32,8 @@ function CreatePost(props) {
             category: Category,
             post_date: today,  
             location: Location,  
-            description: Description
+            description: Description,
+            picture: Image
         }).then(() => {
             alert("successful insert");
         })
@@ -65,6 +70,16 @@ function CreatePost(props) {
                                 onChange={ (e) => { setDescription(e.target.value) }} required />
                             </Col>
                         </Form.Group>
+                        
+
+                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                            <Col sm="11">
+                                {/* <Form.Control type="file" placeholder="Uplode Image" 
+                                onChange={ (e) => { setImage(e.target.value) }} required  /> */}
+                                <Form.Control class="form-control" type="file" name="uploaded_image" accept=""/>
+                            </Col>
+                            </Form.Group>
+
                     </Col>
                 </Row>
                 <Row style={{ paddingLeft : '10%' }}> 

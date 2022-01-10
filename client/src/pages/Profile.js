@@ -1,31 +1,30 @@
 import React,{useState, useEffect } from "react";
 import Axios from 'axios'
+import { Link, Route } from 'react-router-dom';
 
 const Profile = () =>{
     const [profile, setProfile] = useState([]);
 
-    //show all post
+
     useEffect (() => {
         Axios.get("http://localhost:8000/profile").then((response) => {
             setProfile(response.data);
         });
     }, []);
 
-    const editProfile = () => {
-          Axios.get("http://localhost:8000/edit");      
-    };
 
     return (
         <div>
-            <div>
-                <button className="edit" onClick={editProfile}> edit </button> 
-            </div>
+            <button>
+            <Link  to="/editprofile">Edit</Link>
+            </button>
 
             <div className="profile">
                 <div>
                     {profile.map((val)=> {
                         return (
                             <div >
+                                <h3>Image</h3>
                                 <h3> {val.firstname}     {val.lastname}</h3> 
                                 <h5> Email : {val.email}</h5>  
                                 <h5> Mobile : {val.moblie}</h5>  
