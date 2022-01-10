@@ -14,7 +14,7 @@ const Feed = () =>{
 
     //search 
     const searchPost = () => {
-        if(search != ''){
+        if(search !== ''){
             Axios.post("http://localhost:8000/feed", { 
                 item: search
             }).then((response) => {
