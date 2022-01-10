@@ -7,6 +7,8 @@ import createpostRoute from './routes/createpostRoute.js'
 import feedRoute from './routes/feedRoute.js'
 import favRoute from './routes/favRoute.js'
 import mypostRoute from './routes/mypostRoute.js'
+import loginRoute from './routes/loginRoute.js'
+import registerRoute from './routes/registerRoute.js'
 
 const app = express();
 
@@ -22,7 +24,13 @@ app.use("/fav", favRoute);
 
 app.use("/mypost", mypostRoute);
 
+app.use("/register", registerRoute);
+
+app.use("/login", loginRoute);
+
+
 app.listen(8000, () =>{
     console.log("Running on port 8000");
 })
+
 

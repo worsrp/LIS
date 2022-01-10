@@ -5,6 +5,10 @@ import { Link, Route } from 'react-router-dom';
 import Feed from './pages/Feed';
 import Favlist from './pages/Favlist';
 import CreatePost from './pages/Createpost';
+import Register from './pages/Register';
+import Login from './pages/Login';     
+
+
 //import style
 import './custom.scss';
 import { Dropdown } from 'react-bootstrap';
@@ -76,9 +80,10 @@ function App() {
             <Route path="/createpost"><CreatePost/></Route>
             <Route path="/feed"><Feed /></Route>
             <Route path="/favlist"><Favlist /></Route>
-            <Route path="/mypost"><MyPost /></Route>
         </div>
       </header>
+      <Route path="/login">< Login /></Route>
+      <Route path="/register">< Register /></Route>
     </div>
   );
 }
