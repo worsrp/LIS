@@ -91,7 +91,7 @@ function App() {
             <Route path="/register">< Register /></Route>
             <Route path="/sendotp">< Sendotp /></Route>  
             <Route path="/resetpass">< ResetPass /></Route>  
-            <Route path="/editpost">< Editpost /></Route>
+            <Route path="/editpost/:post_id">< Editpost /></Route>
         </div>
       </header>
     </div>
