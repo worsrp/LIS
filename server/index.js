@@ -1,6 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import bcrypt from "bcrypt";
+
 
 //import routers
 import createpostRoute from './routes/createpostRoute.js'
@@ -21,6 +25,27 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors());
 app.use(express.json());
+
+app.use(
+    cors({
+        origin: ["http://localhost:8000"],
+        methods: ["GET", "POST"],
+        credentials: true,
+    })
+);
+app.use(cookieParser());
+
+app.use(
+    session({
+        key: "userId",
+        secret: "subscribe",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+        expires: 60 * 60 * 24,
+        },
+    })
+);
 
 app.use("/createpost", createpostRoute);
 

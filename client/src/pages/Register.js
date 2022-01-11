@@ -9,7 +9,10 @@ function Register (){
     const [moblie, setMoblie] = useState("");
     const [address, setAddress] = useState("");
     const [passwordReg, setPasswordReg] = useState("");
-    const [confermPassword, setConfirmPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+
+    Axios.defaults.withCredentials = true;
 
     const register = () => {
         console.log(emailReg);
@@ -27,11 +30,13 @@ function Register (){
 
     const checkValidation=(e)=>{
         setConfirmPassword(e.target.value);
-        if(passwordReg != confermPassword){
+        if(passwordReg != confirmPassword){
             setIsError("Confirm Password should be match with password");
-        }
+        }else{
+            setIsError("");
     }
-
+    };
+    
     return (
         <center>
         <div className="App Container">
@@ -112,7 +117,7 @@ function Register (){
             </div>
             <div className="mb-3">
                 <label htmlFor="name" className="form-label">
-                Conferm Password :
+                Confirm Password :
                 </label>
                 <input
                 type="password"
