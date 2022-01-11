@@ -1,8 +1,6 @@
 import React,{useState, useEffect } from "react";
 import Axios from 'axios'
 import { Link, Route } from 'react-router-dom';
-import {Image} from 'react-bootstrap';
-
 import { Image } from 'react-bootstrap';
 
 const Profile = () =>{
