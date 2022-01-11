@@ -1,6 +1,7 @@
 import React,{useState, useEffect } from "react";
 import Axios from 'axios'
 import { Link, Route } from 'react-router-dom';
+import {Image} from 'react-bootstrap';
 
 const Profile = () =>{
     const [profile, setProfile] = useState([]);
@@ -24,7 +25,8 @@ const Profile = () =>{
                     {profile.map((val)=> {
                         return (
                             <div >
-                                <h3>Image</h3>
+                                <h3>Image {val.image}</h3>
+                                <img src={require(`../../../public_html/uploads/${val.image}`)}/>
                                 <h3> {val.firstname}     {val.lastname}</h3> 
                                 <h5> Email : {val.email}</h5>  
                                 <h5> Mobile : {val.moblie}</h5>  

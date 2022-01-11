@@ -39,16 +39,17 @@ const Editprofile = () =>{
     }else{
       const formdata = new FormData(); 
       formdata.append('avatar', userInfo.file);
-      Axios.post("http://localhost:8000/editprofile", {
-          image:formdata,
+      Axios.post("http://localhost:8000/editprofile", formdata,{   
+            headers: { "Content-Type": "multipart/form-data" } 
+      })
+      Axios.post("http://localhost:8000/editprofile",{
+        image:formdata,
         email: email, 
         firstname: firstname, 
         lastname: lastname, 
         password: password,
         moblie: moblie, 
         address: address,
-    
-      
       }).then(() => {
             alert("successfully");
         })
