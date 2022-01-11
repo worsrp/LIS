@@ -2,42 +2,45 @@ import React,{useState, useEffect} from "react";
 import Axios from 'axios'
 import { Link, useHistory } from "react-router-dom";
 
-const Sendotp = () => {
+const Vertify = () => {
 
-    const [email, setEmail] = useState("");
+    const [code, setcode] = useState("");
     const [sendOtpStatus, setsendOtpStatus] = useState("")
 
-    const sendotp = () => {
-        Axios.post('http://localhost:8000/sendotp',{
-        email: email,   
+    const vertify = () => {
+        Axios.post('http://localhost:8000/vertify',{
+        code: code,   
         }).then((response) => {
             if(response.data.message) {
                 setsendOtpStatus(response.data.message);
             }else{
-                alert("Invalid Email");
+                alert("Invalid OTP");
             }
             }
         )
     };   
 
-    
-
     const history = useHistory();
     const back = () =>{ 
-        history.push("/login");
+        history.push("/sendotp");
     }
+
+    // const history = useHistory();
+    // const back = () =>{ 
+    //     history.push("/login");
+    // }
 
     return (
         <center>
         <div className="Container">
-            <div className="ResetPass">
-                <h1> Send OTP for Vetify </h1>
-                <label>Enter Email</label>
+            <div className="VertifyOTP">
+                <h1> Vertification </h1>
+                <label>Enter OTP from your Email</label>
                 <div class="contact">
-                    <input placeholder="12345@gmail.com" onChange={(event) =>{setEmail(event.target.value);}}
-                        type="text" name="email" required></input>
+                    <input placeholder="OTP...6-digit" onChange={(event) =>{setcode(event.target.value);}}
+                        type="text" name="otp" required></input>
                         <br />
-                        <Link to="/vertify"><button type="submit" onClick={sendotp}>Send Otp</button></Link>
+                        <Link to="/resetpass"><button type="submit" onClick={vertify}>Submit</button></Link>
                         <button type="submit" onClick={back}>Back</button>
                     <br></br>
                 </div>
@@ -48,4 +51,4 @@ const Sendotp = () => {
     );
 }
 
-export default Sendotp;
+export default Vertify;
