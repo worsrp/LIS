@@ -1,13 +1,23 @@
 import React,{useState, useEffect } from "react";
 import Axios from 'axios'
+import { Link, Route } from 'react-router-dom';
+
+
 
 const Editpost = () =>{
     const [editPost, seteditPost] = useState([]);
     const [Name,setName] = useState('')
     const [Location,setLocation] = useState('')
     const [Description,setDescription] = useState('')
-    const [Status,setStatus] = useState('Available')
+    const [Status,setStatus] = useState('')
     const [Picture,setPicture] = useState('')
+
+    useEffect ((post_id) => {
+        Axios.get(`http://localhost:8000/editpost/${post_id}`).then((response) => {
+            seteditPost(response.data);
+            console.log(post_id);
+        });
+    }, []);
 
     const savePost = () => {
 
@@ -24,32 +34,12 @@ const Editpost = () =>{
         location: Location,  
         description: Description,
         post_status: Status,
-        picture: Picture
+        picture: Picture,
         
         }).then(() => {
         alert("successful Edit");
         })
     };
-
-    //get post
-    useEffect ((post_id) => {
-        console.log(post_id);
-        Axios.get(`http://localhost:8000/editpost/${post_id}`).then((response) => {
-            seteditPost(response.data);
-        });
-    }, []);
-
-    //cancel post
-    const cancelPost = (post_id) => {
-        if(window.confirm("Are you sure")){
-            Axios.get(`http://localhost:8000/mypost`);
-        }
-    };
-
-    // //save post
-    // const savePost = (post_id) => {
-    //         Axios.post(`http://localhost:8000/mypost`);
-    // };
 
     return (
         <div className="myPost">
@@ -61,7 +51,7 @@ const Editpost = () =>{
                         <div className="myPostCard">
 
                             <label>Post Name : </label>
-                            <input type="text" name="post_name" placeholder = {val.post_name} onChange={(e)=>{ setName(e.target.value) }}required /><br></br>
+                            <input type="text" name="post_name" placeholder = {val.post_name} onChange={(e)=>{ setName(e.target.value) }} required /><br></br>
 
                             <input class="form-control" type="file" name="uploaded_image" accept="" onChange={(e)=>{ setPicture(e.target.value) }}/>
 
@@ -78,8 +68,9 @@ const Editpost = () =>{
                             <label>Post Status : </label>
                             <input type="text" name="post_status" placeholder = {val.post_status} onChange={(e)=>{ setStatus(e.target.value) }}required /><br></br>
 
-                            <button onClick={() => {savePost(val.post_id)}}> Save </button>
-                            <button onClick={() => {cancelPost(val.post_id)}}> Cancel</button>
+                            {/* <button onClick={() => {savePost(val.post_id)}}> Save </button> */}
+                            <button onClick={() => {savePost(val.post_id)}} > Edit </button>
+                            <button > <Link  to="/mypost">Cancel</Link> </button>
                             
                             
                         </div>
