@@ -1,12 +1,11 @@
 import React,{useState, useEffect } from "react";
 import Axios from 'axios'
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import App from '../App';
 //import style
 import '../custom.scss';
-import { Card, Button, Form, Row, Col, Container, Modal } from 'react-bootstrap';
-import { GrLocation } from "react-icons/gr";
+import { Button, Form, Row, Col, Container, Modal } from 'react-bootstrap';
+import { GrLocation, GrClose } from "react-icons/gr";
 import { BiCategory } from "react-icons/bi";
 //เหลือใส่รูป
 
@@ -47,11 +46,14 @@ function CreatePost(props) {
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <Modal.Header closeButton >
+            <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter" 
                 className="text-header" style={{ paddingLeft : '250px' }}>
                         Create new post
                 </Modal.Title>
+                <Link to="/feed" onClick={props.onHide}>
+                    <GrClose className="icon-large" />
+                </Link>
             </Modal.Header>
             <Modal.Body>
             <Form>

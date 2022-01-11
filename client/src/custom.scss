@@ -29,6 +29,12 @@ body {
     color: #000;
 }
 
+.icon-sim {
+    font-size: 20px;
+    margin: 2px;
+    margin-right: 4px;
+}
+
 .icon-nav{
     font-size: 30px;
     margin-top: 5px;
@@ -43,6 +49,10 @@ body {
 
 .icon-area{
     padding-left: 30px;
+}
+
+.text-sim{
+    color: #000;
 }
 
 .text-title{
@@ -74,4 +84,39 @@ body {
 
 .bootstrap-select .btn:focus {
     outline: none !important;
+}
+
+.link-nodec{
+    text-decoration: none;
+    color: #000;
+}
+
+.search-bar{
+    border:none;
+    border-bottom: 1px solid #000;
+    padding: 5px 10px;
+    outline: none;
+    border-radius: 0px;
+    width: 225px;
+}
+
+.search-icon-pos{
+    position: absolute;
+    top: 30px;
+    left: 490px;
+}
+
+.search-bar-pos{
+    position: absolute;
+    top: 30px;
+    left: 620px;
+}
+
+textarea:focus, input:focus{
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.fav-btn{
+    border-radius: 20px;
 }

@@ -1,6 +1,12 @@
 import React,{useState, useEffect } from "react";
 import Axios from 'axios'
 
+//import style
+import '../custom.scss';
+import { Card, Button, Form, Row, Col, Container, Modal, CardGroup } from 'react-bootstrap';
+import { GrSearch, GrLocation } from "react-icons/gr";
+import { AiOutlineHeart } from "react-icons/ai";
+
 const Feed = () =>{
     const [search, setSearch] = useState('');
     const [feedPost, setFeedPost] = useState([]);
@@ -32,36 +38,95 @@ const Feed = () =>{
     };
 
     return (
-        <div>
-            <div className="searchBar">
-                <input type="text" placeholder="search item" name="item" onChange={(e)=>{
-                    setSearch(e.target.value)
-                }} />
+        <Container>
+            <Form>
+                <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                    <Form.Label column sm="1">
+                        <GrSearch className="icon-large search-icon-pos" style={{ marginLeft: '70px' }} />
+                    </Form.Label>
+                    <Col sm="3">
+                    <Form.Control type="text" placeholder="What are you looking for?"
+                    className="search-bar search-bar-pos"/>
+                    </Col>
+                </Form.Group>
+            </Form>
 
-                <button className="searchButt" onClick={searchPost}> search </button> 
-
-            </div>
-
-            <div className="feed">
-                <div>
-                    {feedPost.map((val)=> {
+            {feedPost.map((val)=> {
                         return (
-                            <div className="feedCard">
-                                <h3> Name : {val.post_name} </h3> 
-                                <h5> Description : </h5>  
-                                <h6> {val.description} </h6>
-                                <h6> Location : {val.location}  </h6>
-
-                                <button className="favButt" onClick={() => {addFav(val.post_id)}}> favorite </button>
-                                
-                            </div>
-
+                            <CardGroup style={{ width: '90%' }} className="pos-center">
+                            <Card style={{ margin: '20px' }}>
+                                <Card.Img variant="top" src="holder.js/100px180" />
+                                <Card.Body>
+                                    <Card.Title>{val.post_name}</Card.Title>
+                                    <Card.Text>
+                                                <h5> Description : </h5>  
+                                                <h6> {val.description} </h6>
+                                    </Card.Text>
+                                    <Card.Footer style={{ backgroundColor: 'white', border: 'none' }}>
+                                                    <Row>
+                                                        <Col style={{ marginTop: '20px', marginLeft: '-10px'}}>
+                                                            <GrLocation className="icon-sim" /> : {val.location}
+                                                        </Col>  
+                                                        <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
+                                                            <Button variant="outline-danger" className="fav-btn">
+                                                            <AiOutlineHeart className="icon-sim"/>
+                                                                favorite
+                                                            </Button>
+                                                        </Col>
+                                                    </Row>
+                                    </Card.Footer>
+                                </Card.Body>
+                            </Card>
+                            <Card style={{ margin: '20px' }}>
+                                <Card.Img variant="top" src="holder.js/100px180" />
+                                <Card.Body>
+                                    <Card.Title>{val.post_name}</Card.Title>
+                                    <Card.Text>
+                                                <h5> Description : </h5>  
+                                                <h6> {val.description} </h6>
+                                    </Card.Text>
+                                    <Card.Footer style={{ backgroundColor: 'white', border: 'none' }}>
+                                                    <Row>
+                                                        <Col style={{ marginTop: '20px', marginLeft: '-10px'}}>
+                                                            <GrLocation className="icon-sim" /> : {val.location}
+                                                        </Col>  
+                                                        <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
+                                                            <Button variant="outline-danger" className="fav-btn">
+                                                            <AiOutlineHeart className="icon-sim"/>
+                                                                favorite
+                                                            </Button>
+                                                        </Col>
+                                                    </Row>
+                                    </Card.Footer>
+                                </Card.Body>
+                            </Card>
+                            <Card style={{ margin: '20px' }}>
+                                <Card.Img variant="top" src="holder.js/100px180" />
+                                <Card.Body>
+                                    <Card.Title>{val.post_name}</Card.Title>
+                                    <Card.Text>
+                                                <h5> Description : </h5>  
+                                                <h6> {val.description} </h6>
+                                    </Card.Text>
+                                    <Card.Footer style={{ backgroundColor: 'white', border: 'none' }}>
+                                                    <Row>
+                                                        <Col style={{ marginTop: '20px', marginLeft: '-10px'}}>
+                                                            <GrLocation className="icon-sim" /> : {val.location}
+                                                        </Col>  
+                                                        <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
+                                                            <Button variant="outline-danger" className="fav-btn">
+                                                            <AiOutlineHeart className="icon-sim"/>
+                                                                favorite
+                                                            </Button>
+                                                        </Col>
+                                                    </Row>
+                                    </Card.Footer>
+                                </Card.Body>
+                            </Card>
+                            </CardGroup>
                         ); 
                     })}
-                </div>
-            </div>
-        </div>
-        
+        </Container>
     );
 
 };
