@@ -8,6 +8,7 @@ const db = mysql.createConnection({
     password: "",
     database: "lisdatabase"
 });
+
 const mailer = (email,otp)=>{
     var nodemailer = require('nodemailer');
     var transporter = nodemail.createTransport({
@@ -34,52 +35,52 @@ const mailer = (email,otp)=>{
     })
 }
 
-
-const changePassword = async (req,res)=>{
-    //console.log(req.body.email)
-    var data = await user.findOne({email:req.body.email,code:req.body.otpCode});
-    //console.log(data)
-    const response = {};
-    if(data){
-        var currentTime = new Date().getTime();
-        var diff = data.expireIn - currentTime;
-        if(diff<0){
-            response.statusText ='error'
-            response.message = 'Token already expired';
-        }else{
-            var user = await user.findOne({email:req.body.email});
-            user.password = req.body.password;
-            user.save();
-            response.statusText ='Success'
-            response.message = 'Password changed successfully';
-        }
+// const changePassword = async (req,res)=>{
+//     //console.log(req.body.email)
+//     var data = await user.findOne({email:req.body.email,code:req.body.otpCode});
+//     //console.log(data)
+//     const response = {};
+//     if(data){
+//         var currentTime = new Date().getTime();
+//         var diff = data.expireIn - currentTime;
+//         if(diff<0){
+//             response.statusText ='error'
+//             response.message = 'Token already expired';
+//         }else{
+//             var user = await user.findOne({email:req.body.email});
+//             user.password = req.body.password;
+//             user.save();
+//             response.statusText ='Success'
+//             response.message = 'Password changed successfully';
+//         }
         
-    }else{
-        response.statusText ='error'
-        response.message = 'Invalid Otp';
-    }
-    res.status(200).json(response);
-}
+//     }else{
+//         response.statusText ='error'
+//         response.message = 'Invalid Otp';
+//     }
+//     res.status(200).json(response);
+// }
 
 router.post('/', (req,res) => {
-    console.log(req.body.email)
+    
     const email = req.body.email
     const sqlSelect = "SELECT * FROM user WHERE email = ?"
-    var responseType = {};
 
     db.query(sqlSelect,[email],(err, result) =>{
         if(result.length > 0){
-            console.log(result.length);
-            var otpcode = Math.floor((Math.random()*1000)+123);
-            var optData = new Otp({
-                email:req.body.email,
-                code:otpcode,
-                expireIn: new Date().getTime()+ 300*1000
+            console.log(result)
+            console.log(err)
+            console.log(req.body.email)
+            var code = Math.floor((Math.random()*1000000)+123);
+            var expireIn = new Date().getTime();
+            const sqlInsert = "INSERT INTO OTP(email, code, expireIn) VALUES (?,?,?);"
+            db.query(sqlInsert,[email, code, expireIn],
+            (err, result) =>{
+                console.log(err);
             })
-            //var otpResponse = await optData.save();
-            res.send({ message: "pls check mail"});
+            res.send({message: "Please Check your Email !"});
         }else{
-            res.send({ message: "invalid email"});
+            res.send({err: err})
         }
         }
     )
