@@ -9,7 +9,7 @@ const Sendotp = () => {
 
     const sendotp = () => {
         
-        Axios.post('http://localhost:8000/sendotp',{
+        Axios.post('http://localhost:8000/send',{
         email: email,   
         }).then((response) => {
         if(response.data.message) {
@@ -28,7 +28,7 @@ const Sendotp = () => {
         <center>
         <div className="Container">
             <div className="ResetPass">
-                <h1> Reset Password </h1>
+                <h1> Send OTP for Vetify </h1>
                 <label>Enter Email</label>
                 <div class="contact">
                     <form method="post" action="send">

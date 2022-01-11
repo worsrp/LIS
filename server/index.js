@@ -10,7 +10,7 @@ import profileRoute from './routes/profileRoute.js'
 import mypostRoute from './routes/mypostRoute.js'
 import loginRoute from './routes/loginRoute.js'
 import registerRoute from './routes/registerRoute.js'
-// import sendotpRoute from './routes/sendotpRoute.js'
+import sendotpRoute from './routes/sendotpRoute.js'
 import resetpassRoute from './routes/resetpassRoute.js'
 
 import editprofileRoute from './routes/editprofileRoute.js'
@@ -40,7 +40,7 @@ app.use("/editpost", editpostRoute);
 
 app.use("/editprofile", editprofileRoute);
 
-// app.use("/sendotp", sendotpRoute);
+app.use("/sendotp", sendotpRoute);
 
 app.use("/resetpass", resetpassRoute);
 

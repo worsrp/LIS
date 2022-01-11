@@ -9,7 +9,7 @@ import Editprofile from './pages/Editprofile';
 import CreatePost from './pages/Createpost';
 import Register from './pages/Register';
 import Login from './pages/Login';  
-import sendotp from './pages/Sendotp';  
+import Sendotp from './pages/Sendotp';  
 import ResetPass from './pages/Resetpass';     
 import Editpost from './pages/Editpost';
 
