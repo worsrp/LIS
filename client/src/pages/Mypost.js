@@ -1,5 +1,6 @@
 import React,{useState, useEffect } from "react";
 import Axios from 'axios'
+import { Link, Route } from 'react-router-dom';
 
 const MyPost = () =>{
     const [myPost, setMyPost] = useState([]);
@@ -36,9 +37,9 @@ const MyPost = () =>{
                             <h6> Location : {val.location}  </h6>
                             <img alt="User Pic" src="http://localhost:8000/<%=data[0].image%>" class="img-circle img-responsive"></img>
 
-                            <button onClick={() => {editPost(val.post_id)}}> Edit </button>
+                            {/* <button onClick={() => {editPost(val.post_id)}}> Edit </button> */}
+                            <button onClick={() => {editPost(val.post_id)}}> <Link  to="/editpost/" > Edit </Link> </button>
                             <button onClick={() => {deletePost(val.post_id)}}> Delete </button>
-                            
                             
                         </div>
                     ); 
