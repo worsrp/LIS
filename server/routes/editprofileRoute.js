@@ -50,12 +50,10 @@ router.post('/', (req, res) => {
                 return res.send(err);
             }
 
-            const classifiedsadd = {
-                id:user_id,
-				image: req.file.filename
-			};
+            const image = req.file.filename
+
             const sql = "UPDATE user SET image=? WHERE id=?";
-            db.query(sql, classifiedsadd, (err, results) => {  if (err) throw err;
+            db.query(sql,[image,user_id], (err, results) => {  if (err) throw err;
 				res.json({ success: 1 })      
 
 			});  

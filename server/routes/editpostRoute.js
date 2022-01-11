@@ -12,21 +12,21 @@ const db = mysql.createPool({
 // show mypost to edit
 router.get('/:id', (req, res)=> {
     const user_id = 1234;
-    const post_id = 20;
+    const post_id = req.params.id;
     
-    const sqlSelect = "SELECT * FROM POST WHERE post_id = ?";
-    db.query(sqlSelect, [post_id],  (err, result) => {
+    const sqlSelect = "SELECT * FROM POST WHERE user_id =? AND post_id = ?";
+    db.query(sqlSelect, [user_id ,post_id],  (err, result) => {
         res.send(result);
-
+        console.log(result);
+        console.log(post_id);
+        console.log(err);
     })
-    console.log(post_id);
-    
 });
 
 //save post
-router.post('/', (req,res)=> {
+router.post('/:id', (req,res)=> {
     const user_id = 1234;
-    const post_id = 20;
+    const post_id = req.params.id;
 
     const post_name = req.body.post_name
     const description = req.body.description
@@ -50,19 +50,6 @@ router.post('/', (req,res)=> {
         console.log(picture);
     })
 });
-
-//cancel edit post
-router.get('/:id', (req,res)=> {
-    const user_id = 1234;
-    const post_id = req.params.id;
-
-    const sqlSelect = "SELECT * FROM POST WHERE POST.user_id = ? ORDER BY post_id DESC";
-    db.query(sqlSelect, [user_id], (err, result) => {
-        res.send(result);
-    })
-});
-
-
 
 
 

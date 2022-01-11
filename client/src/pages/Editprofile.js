@@ -3,12 +3,12 @@ import Axios from 'axios'
 
 const Editprofile = () =>{
     const [IsError, setIsError] = useState("");       
-    const [emailReg, setEmailReg] = useState("");
+    const [email, setEmail] = useState("");
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [moblie, setMoblie] = useState("");
     const [address, setAddress] = useState("");
-    const [passwordReg, setPasswordReg] = useState("");
+    const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [userInfo, setuserInfo] = useState({
       file:[],
@@ -17,7 +17,7 @@ const Editprofile = () =>{
      
      const checkValidation=(e)=>{
         setConfirmPassword(e.target.value);
-        if(passwordReg != confirmPassword){
+        if(password != confirmPassword){
             setIsError("Confirm Password should be match with password");
         }
     }
@@ -34,19 +34,26 @@ const Editprofile = () =>{
     const [isSucces, setSuccess] = useState(null);
   
     const submit = () =>{
+      if(password !== confirmPassword){
+        alert("Confirm Password is not match with password !");
+    }else{
       const formdata = new FormData(); 
       formdata.append('avatar', userInfo.file);
-      Axios.post("http://localhost:8000/editprofile", {
-          image:formdata,
-        email: emailReg, 
+      Axios.post("http://localhost:8000/editprofile", formdata,{   
+            headers: { "Content-Type": "multipart/form-data" } 
+      })
+      Axios.post("http://localhost:8000/editprofile",{
+        image:formdata,
+        email: email, 
         firstname: firstname, 
         lastname: lastname, 
-        password: passwordReg,
+        password: password,
         moblie: moblie, 
         address: address,
-        }).then(() => {
+      }).then(() => {
             alert("successfully");
         })
+      }
     }
   
     return (
@@ -71,7 +78,7 @@ const Editprofile = () =>{
                 type="text"
                 className="form-controll"
                 onChange={(e) => {
-                    setEmailReg(e.target.value)
+                    setEmail(e.target.value)
                 }}
                 ></input>
             </div>
@@ -131,7 +138,7 @@ const Editprofile = () =>{
                 type="password"
                 className="form-controll"
                 onChange={(e) => {
-                    setPasswordReg(e.target.value)
+                    setPassword(e.target.value)
                 }}
                 ></input>
             </div>

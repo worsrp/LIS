@@ -56,7 +56,7 @@ function App() {
                   </Link>
               </li>
               <li class="nav-item">
-                <Link to="/">
+                <Link to="/favlist">
                   <AiOutlineHeart className="icon-nav" />
                 </Link>
               </li>
@@ -69,7 +69,10 @@ function App() {
                   <Dropdown.Menu style={{ margin: '10px', border: 'white' }}>
                     <Dropdown.Item eventKey="1" 
                     style={{ textAlign: 'right', margin: '5px', outline: 'none', boxShadow: 'none' }}>
-                      Profile</Dropdown.Item>
+                        <Link to="/profile" className="link-nodec">
+                          Profile
+                        </Link>
+                      </Dropdown.Item>
                     <Dropdown.Item eventKey="2" 
                     style={{ textAlign: 'right', margin: '5px', outline: 'none', boxShadow: 'none' }}>
                       Logout</Dropdown.Item>                    
@@ -94,6 +97,8 @@ function App() {
             <Route path="/resetpass">< ResetPass /></Route>
             <Route path="/vertify">< Vertify /></Route>  
             <Route path="/editpost">< Editpost /></Route>
+            <Route path="/resetpass">< ResetPass /></Route>  
+            <Route path="/editpost/:post_id">< Editpost /></Route>
         </div>
       </header>
     </div>
