@@ -13,8 +13,11 @@ const Vertify = () => {
         }).then((response) => {
             if(response.data.message) {
                 setsendOtpStatus(response.data.message);
+                alert(response.data.message);
+                window.location.href = '/resetpass';
             }else{
                 alert("Invalid OTP");
+                window.location.href = '/vertify';
             }
             }
         )
@@ -40,7 +43,7 @@ const Vertify = () => {
                     <input placeholder="OTP...6-digit" onChange={(event) =>{setcode(event.target.value);}}
                         type="text" name="otp" required></input>
                         <br />
-                        <Link to="/resetpass"><button type="submit" onClick={vertify}>Submit</button></Link>
+                        <button type="submit" onClick={vertify}>Submit</button>
                         <button type="submit" onClick={back}>Back</button>
                     <br></br>
                 </div>

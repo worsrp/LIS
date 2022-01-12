@@ -32,11 +32,6 @@ function Login (){
         });
     }, []);
 
-    const history = useHistory();
-    const sendotp = () =>{ 
-        history.push("/sendotp");
-    };
-
     return (
         <center>
         <div className="App Container">
