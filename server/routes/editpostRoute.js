@@ -1,6 +1,10 @@
 import express from 'express';
 import mysql from 'mysql';
+import multer from 'multer';
+import path from 'path';
+import cors from 'cors';
 
+const __dirname = path.resolve();
 const router = express.Router();
 const db = mysql.createPool({
     host: "localhost",
@@ -9,10 +13,20 @@ const db = mysql.createPool({
     database: "LISDatabase",
 });
 
+router.use(cors());
+
+const storage = multer.diskStorage({
+    destination: path.join(__dirname, '../public_html/', 'uploads'),
+    filename: function (req, file, cb) {   
+        // null as first argument means no error
+        cb(null, Date.now() + '-' + file.originalname )  
+    }
+})
+
 // show mypost to edit
 router.get('/:id', (req, res)=> {
     const user_id = 1234;
-    const post_id = req.params.id;
+    const post_id = 20;
     
     const sqlSelect = "SELECT * FROM POST WHERE user_id =? AND post_id = ?";
     db.query(sqlSelect, [user_id ,post_id],  (err, result) => {
@@ -25,19 +39,45 @@ router.get('/:id', (req, res)=> {
 
 //save post
 router.post('/:id', (req,res)=> {
-    const user_id = 1234;
-    const post_id = req.params.id;
+    try{
+        const user_id = 1234;
+    const post_id = 20;
 
-    const post_name = req.body.post_name
-    const description = req.body.description
-    const location = req.body.location
-    const edit_date = req.body.edit_date
-    const post_status = req.body.post_status
-    const picture = req.body.picture
+    const post_name     = req.body.post_name
+    const description   = req.body.description
+    const location      = req.body.location
+    const edit_date     = req.body.edit_date
+    const post_status   = req.body.post_status
+    let upload = multer({ storage: storage}).single('avatar');
 
-    
-    const sqlupdate = "UPDATE POST SET post_name =? ,description =? ,edit_date =? ,post_status =? ,location =? ,picture=?   WHERE post_id =?";
-    db.query(sqlupdate, [post_name ,description ,edit_date ,post_status ,location ,picture ,post_id], (err, result) => {
+        upload(req, res, function(err) {
+            // req.file contains information of uploaded file
+            // req.body contains information of text fields
+
+            if (!req.file) {
+                return res.send('Please select an image to upload');
+            }
+            else if (err instanceof multer.MulterError) {
+                return res.send(err);
+            }
+            else if (err) {
+                return res.send(err); 
+            }
+
+            const image = req.file.filename
+            console.log("testtttttttttttttttttttttttttttt");     
+
+            const sql = "UPDATE POST SET image=? WHERE post_id =?";
+                db.query(sql,[image,post_id], (err, results) => {  if (err) throw err;
+                    res.json({ success: 1 })
+                    console.log("image");     
+                    console.log(image);     
+
+                });  
+        });
+
+    const sqlupdate = "UPDATE POST SET post_name =? ,description =? ,edit_date =? ,post_status =? ,location =? WHERE post_id =?";
+    db.query(sqlupdate, [post_name ,description ,edit_date ,post_status ,location ,post_id ], (err, result) => {
         console.log(err);
         console.log(result);
         console.log(user_id);
@@ -47,10 +87,13 @@ router.post('/:id', (req,res)=> {
         console.log(edit_date);
         console.log(post_status);
         console.log(location);
-        console.log(picture);
     })
-});
+    }
+    catch (err) {
+        console.log(err)
+    }
 
+});
 
 
 export default router;
