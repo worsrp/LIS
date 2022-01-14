@@ -1,6 +1,7 @@
 
 import React, {useState,useEffect } from "react";
 import Axios from "axios";
+import { Link, useHistory } from "react-router-dom";
 
 function Login (){
 
@@ -12,9 +13,11 @@ function Login (){
     Axios.defaults.withCredentials = true;
 
     const login = () => {
+        console.log(email)
+        console.log(password)
         Axios.post('http://localhost:8000/login',{
         email: email,   
-        password: password,
+        password: password
         }).then((response) => {
         if(response.data.message) {
             setLoginStatus(response.data.message);
@@ -26,11 +29,14 @@ function Login (){
 
     useEffect(() => {
         Axios.get("http://localhost:8000/login").then((response) => {
-            if (response.data.loggedIn === true) {
-            setLoginStatus(response.data.user[0].username);
+            console.log(response)                   
+            if(response.data.loggedIn === true) {
+            setLoginStatus(response.data.user[0].firstname + " " +setLoginStatus(response.data.user[0].lastname));
             }
         });
     }, []);
+
+        
 
     const history = useHistory();
     const sendotp = () =>{ 

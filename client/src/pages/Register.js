@@ -1,5 +1,9 @@
+
+import React, {useState,useEffect } from "react";
 import Axios from "axios";
-import React, {useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+
+
 
 function Register (){
     const [IsError, setIsError] = useState("");         
@@ -11,44 +15,41 @@ function Register (){
     const [passwordReg, setPasswordReg] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-
-    Axios.defaults.withCredentials = true;
-
     const register = () => {
-        console.log(emailReg);
-        Axios.post("http://localhost:8000/register", {
-        email: emailReg, 
-        firstname: firstname, 
-        lastname: lastname, 
-        password: passwordReg,
-        moblie: moblie, 
-        address: address
-        }).then(() => {
-            alert("successful register");
-        })
-    };
+        console.log(passwordReg)
+        console.log(confirmPassword)
+        if(passwordReg !== confirmPassword){
+            alert("Confirm Password is not match with password !");
+        }else{ 
+            Axios.post("http://localhost:8000/register", {
+                email: emailReg, 
+                firstname: firstname, 
+                lastname: lastname, 
+                password: passwordReg,
+                moblie: moblie, 
+                address: address
+        }).then((response) => {
+            console.log(response)
+            alert("successfully");
 
-    const checkValidation=(e)=>{
-        setConfirmPassword(e.target.value);
-        if(passwordReg != confirmPassword){
-            setIsError("Confirm Password should be match with password");
-        }else{
-            setIsError("");
-    }
+        });
+        }
     };
     
+
     return (
         <center>
         <div className="App Container">
         <div className="register">
             <h1> Register </h1>
-            <form action="">
             <div className="mb-3">
                 <label htmlFor="name" className="form-label">
                 email:
                 </label>
                 <input
                 type="text"
+                name="emailReg" 
+                required
                 className="form-controll"
                 onChange={(e) => {
                     setEmailReg(e.target.value)
@@ -61,6 +62,8 @@ function Register (){
                 </label>
                 <input
                 type="text"
+                name="firstname" 
+                required
                 className="form-controll"
                 onChange={(e) => {
                     setFirstname(e.target.value)
@@ -73,6 +76,8 @@ function Register (){
                 </label>
                 <input
                 type="text"
+                name="lastname" 
+                required
                 className="form-controll"
                 onChange={(e) => {
                     setLastname(e.target.value)
@@ -85,6 +90,8 @@ function Register (){
                 </label>
                 <input
                 type="text"
+                name="modlie" 
+                required
                 className="form-controll"
                 onChange={(e) => {
                     setMoblie(e.target.value)
@@ -97,6 +104,8 @@ function Register (){
                 </label>
                 <input
                 type="text"
+                name="address" 
+                required
                 className="form-controll"
                 onChange={(e) => {
                     setAddress(e.target.value)
@@ -109,6 +118,8 @@ function Register (){
                 </label>
                 <input
                 type="password"
+                name="passwordReg" 
+                required
                 className="form-controll"
                 onChange={(e) => {
                     setPasswordReg(e.target.value)
@@ -120,18 +131,19 @@ function Register (){
                 Confirm Password :
                 </label>
                 <input
-                type="password"
+                type="password" 
+                name="confirmPassword" 
+                required
                 className="form-controll"
-                onChange={(e) => checkValidation(e)}
+                onChange={(e) =>{ 
+                    setConfirmPassword(e.target.value)
+                }}
                 ></input>
                 <br />
                 <p1>{IsError}</p1>
             </div>
             <br />
-                <button class="btn btn-success" onClick={register}>
-                Register
-                </button>
-            </form>
+            <button class="btn btn-success" onClick={register}>Register</button>
         </div>
         </div>
     </center>
