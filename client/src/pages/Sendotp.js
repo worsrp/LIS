@@ -1,23 +1,26 @@
-import React,{useState, useRef} from "react";
+import React,{useState, useEffect} from "react";
 import Axios from 'axios'
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const Sendotp = () => {
 
     const [email, setEmail] = useState("");
-    const [sendOtpStatus, setsendOtpStatus] = useState("");
-    const emailRef = useRef();
+    const [sendOtpStatus, setsendOtpStatus] = useState("")
 
     const sendotp = () => {
         Axios.post('http://localhost:8000/sendotp',{
         email: email,   
         }).then((response) => {
-            if(response.data.message){
-                sendOtpStatus(response.data.message);
-            }else{
+            if(response.data.message) {
                 setsendOtpStatus(response.data.message);
+                alert(response.data.message);
+                window.location.href = '/vertify';
+            }else{
+                alert("Invalid Email");
+                window.location.href = '/login';
             }
-        })
+            }
+        )
     };   
 
     const history = useHistory();
@@ -41,6 +44,7 @@ const Sendotp = () => {
                 </div>
             </div>  
         </div>
+        <h1>{sendOtpStatus}</h1>
         </center>
     );
 }

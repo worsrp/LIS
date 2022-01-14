@@ -10,7 +10,18 @@ const Editpost = () =>{
     const [Location,setLocation] = useState('')
     const [Description,setDescription] = useState('')
     const [Status,setStatus] = useState('')
-    const [Picture,setPicture] = useState('')
+    const [userInfo, setuserInfo] = useState({
+        file:[],
+        filepreview:null,
+       })
+
+    const handleInputChange = (event) => {
+        setuserInfo({
+            ...userInfo,
+            file:event.target.files[0],
+            filepreview:URL.createObjectURL(event.target.files[0]),
+        });
+    }
 
     useEffect ((post_id) => {
         Axios.get(`http://localhost:8000/editpost/${post_id}`).then((response) => {
@@ -19,7 +30,7 @@ const Editpost = () =>{
         });
     }, []);
 
-    const savePost = () => {
+    const savePost = (post_id) => {
 
         var edittoday = new Date();
         var dd = String(edittoday.getDate()).padStart(2, '0');
@@ -28,14 +39,19 @@ const Editpost = () =>{
         edittoday = yyyy + '-' + mm + '-' + dd;
         console.log(edittoday);
 
-        Axios.post("http://localhost:8000/editpost", { 
+        const formdata = new FormData(); 
+        formdata.append('avatar', userInfo.file);
+        Axios.post(`http://localhost:8000/editpost/${post_id}`, formdata,{   
+            headers: { "Content-Type": "multipart/form-data" } 
+        })
+
+        Axios.post(`http://localhost:8000/editpost/${post_id}`, { 
         post_name: Name,  
         edit_date: edittoday,  
         location: Location,  
         description: Description,
         post_status: Status,
-        picture: Picture,
-        
+        image: formdata,
         }).then(() => {
         alert("successful Edit");
         })
@@ -49,30 +65,33 @@ const Editpost = () =>{
                 {editPost.map((val)=> {
                     return (
                         <div className="myPostCard">
+                            <form>
+                                <label>Post Name : </label>
+                                <input type="text" name="post_name" placeholder = {val.post_name} onChange={(e)=>{ setName(e.target.value) }} required /><br></br>
 
-                            <label>Post Name : </label>
-                            <input type="text" name="post_name" placeholder = {val.post_name} onChange={(e)=>{ setName(e.target.value) }} required /><br></br>
+                                <label className="text-white">Select Image :</label>
+                                <input type="file" className="form-control" name="upload_file"  onChange={handleInputChange} />
+            
+                                <label>Location : </label>
+                                <select name="location" placeholder = {val.location} onChange={(e)=>{ setLocation(e.target.value) }}>
+                                <option value="Chiang Mai">Chiang Mai</option>
+                                <option value="BKK">BKK</option>
+                                <option value="Chiang Rai">Chiang Rai</option>
+                                </select><br></br>
 
-                            <input class="form-control" type="file" name="uploaded_image" accept="" onChange={(e)=>{ setPicture(e.target.value) }}/>
+                                <label>Description : </label>
+                                <input type="text" name="Description" placeholder = {val.description} onChange={(e)=>{ setDescription(e.target.value) }} required /><br></br>
 
-                            <label>Location : </label>
-                            <select name="location" placeholder = {val.location} onChange={(e)=>{ setLocation(e.target.value) }}>
-                            <option value="Chiang Mai">Chiang Mai</option>
-                            <option value="BKK">BKK</option>
-                            <option value="Chiang Rai">Chiang Rai</option>
-                            </select><br></br>
-
-                            <label>Description : </label>
-                            <input type="text" name="Description" placeholder = {val.description} onChange={(e)=>{ setDescription(e.target.value) }} required /><br></br>
-
-                            <label>Post Status : </label>
-                            <input type="text" name="post_status" placeholder = {val.post_status} onChange={(e)=>{ setStatus(e.target.value) }}required /><br></br>
-
+                                <label>Post Status : </label>
+                                <input type="text" name="post_status" placeholder = {val.post_status} onChange={(e)=>{ setStatus(e.target.value) }}required /><br></br>
+                            </form>
                             {/* <button onClick={() => {savePost(val.post_id)}}> Save </button> */}
-                            <button onClick={() => {savePost(val.post_id)}} > Edit </button>
+                            <button class="btn btn-success" onClick={savePost}> Edit </button>
                             <button > <Link  to="/mypost">Cancel</Link> </button>
                             
-                            
+                            {userInfo.filepreview !== null ? 
+                            <img className="previewimg"  src={userInfo.filepreview} alt="UploadImage" />
+                            : null}
                         </div>
                         
                     ); 

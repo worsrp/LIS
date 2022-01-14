@@ -1,7 +1,6 @@
 
-import React, {useState } from "react";
+import React, {useState,useEffect } from "react";
 import Axios from "axios";
-import { useHistory } from "react-router-dom";
 
 function Login (){
 
@@ -9,6 +8,8 @@ function Login (){
     const [password, setPassword] = useState("");
     const [loginStatus, setLoginStatus] = useState("");
         
+
+    Axios.defaults.withCredentials = true;
 
     const login = () => {
         Axios.post('http://localhost:8000/login',{
@@ -20,13 +21,16 @@ function Login (){
         }else{
             setLoginStatus(response.data[0].firstname + " " +response.data[0].lastname);
         }
-        })
+        });
     };
 
-    const history = useHistory();
-    const sendotp = () =>{ 
-        history.push("/sendotp");
-    };
+    useEffect(() => {
+        Axios.get("http://localhost:8000/login").then((response) => {
+            if (response.data.loggedIn === true) {
+            setLoginStatus(response.data.user[0].username);
+            }
+        });
+    }, []);
 
     return (
         <center>
@@ -50,7 +54,7 @@ function Login (){
             }} />
             <br />
             <br />
-            <a onClick={sendotp}> Forgot Password ? </a>
+            <a href="/sendotp"> Forgot Password ? </a>
             <button class="btn btn-success" onClick={login}> Login </button>
         </div>  
         <h1>{loginStatus}</h1>

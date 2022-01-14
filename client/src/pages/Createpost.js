@@ -15,8 +15,20 @@ function CreatePost(props) {
     const [Location,setLocation] = useState('Chiang Mai')
     const [Description,setDescription] = useState('')
     const [Image, setImage] = useState('')
-    //const [fileName, setFileName] = useState("")
-
+    const [userInfo, setuserInfo] = useState({
+        file:[],
+        filepreview:null,
+    });
+    
+    const handleInputChange = (event) => {
+        setuserInfo({
+          ...userInfo,
+          file:event.target.files[0],
+          filepreview:URL.createObjectURL(event.target.files[0]),
+        });
+    
+      }
+    
     
 
     const submitPost = () => {
@@ -26,7 +38,13 @@ function CreatePost(props) {
         var yyyy = today.getFullYear();
         today = yyyy + '-' + mm + '-' + dd;
         console.log(Name);
-        Axios.post("http://localhost:8000/createpost", { 
+        const formdata = new FormData(); 
+        formdata.append('avatar', userInfo.file);
+        Axios.post("http://localhost:8000/createpost", formdata, { 
+            headers: { "Content-Type": "multipart/form-data" } 
+            })
+        Axios.post("http://localhost:8000/editprofile",{
+            image: formdata,
             post_name: Name,  
             category: Category,
             post_date: today,  
@@ -73,14 +91,13 @@ function CreatePost(props) {
                             </Col>
                         </Form.Group>
                         
-
+                        {/* picture */}
                         <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
                             <Col sm="11">
-                                {/* <Form.Control type="file" placeholder="Uplode Image" 
-                                onChange={ (e) => { setImage(e.target.value) }} required  /> */}
-                                <Form.Control class="form-control" type="file" name="uploaded_image" accept=""/>
+                                <label className="text-white">Select Image :</label>
+                                <input type="file" className="form-control" name="upload_file"  onChange={handleInputChange} />             
                             </Col>
-                            </Form.Group>
+                        </Form.Group>
 
                     </Col>
                 </Row>
@@ -131,6 +148,9 @@ function CreatePost(props) {
                 className="pos-center" style = {{ width: '80%'}}>Post</Button>
             </Link>
             </Modal.Footer>
+                {userInfo.filepreview !== null ? 
+                <img className="previewimg"  src={userInfo.filepreview} alt="UploadImage" />
+                : null}
         </Modal>
     </Container>
     );

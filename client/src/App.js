@@ -12,12 +12,13 @@ import Login from './pages/Login';
 import Sendotp from './pages/Sendotp';  
 import ResetPass from './pages/Resetpass';     
 import Editpost from './pages/Editpost';
+import MyPost from "./pages/Mypost";
+import Vertify from "./pages/Vertify";
 
 //import style
 import './custom.scss';
 import { Dropdown } from 'react-bootstrap';
 import { AiOutlinePlus, AiOutlineHeart, AiOutlineUser } from "react-icons/ai";
-import MyPost from "./pages/Mypost";
 
 function App() {
   
@@ -93,6 +94,9 @@ function App() {
             <Route path="/login">< Login /></Route>
             <Route path="/register">< Register /></Route>
             <Route path="/sendotp">< Sendotp /></Route>  
+            <Route path="/resetpass">< ResetPass /></Route>
+            <Route path="/vertify">< Vertify /></Route>  
+            <Route path="/editpost">< Editpost /></Route>
             <Route path="/resetpass">< ResetPass /></Route>  
             <Route path="/editpost/:post_id">< Editpost /></Route>
         </div>
