@@ -15,8 +15,11 @@ const db = mysql.createConnection({
 router.post('/', (req,res) => {
 
     var code = Math.floor((Math.random()*1000000)+123);
+    if(code<100000){
+        code=code+(Math.floor((Math.random()*10)*100000));
+    }
     var expireIn = new Date();
-    var timeExpire = expireIn.getHours() + ":" + expireIn.getMinutes() + ":" + expireIn.getSeconds();
+    var timeExpire = (expireIn.getHours()*100) + expireIn.getMinutes() ;
 
     const email = req.body.email
     const sqlSelect = "SELECT * FROM user WHERE email = ?"
@@ -41,19 +44,23 @@ router.post('/', (req,res) => {
 
     db.query(sqlSelect,[email],(err, result) =>{
         if(result.length > 0){
-            const sqlInsert = "INSERT INTO OTP(email, code, expireIn, timeExpire) VALUES (?,?,?,?);"
-            db.query(sqlInsert,[email, code, expireIn, timeExpire],
-            (err, result) =>{
-                console.log(err);
-            })
-            transporter.sendMail(mailOption, function(error,info){
-                if(error){
-                    console.log(error);
-                }else{
-                    console.log('Email sent: '+ info.response);
-                }
-            })
-            res.send({message: "Please Check your Email !"});
+            if(timeExpire==2359){
+                res.send({message: "Please Try again in 1 minute"});
+            }else{
+                const sqlInsert = "INSERT INTO OTP(email, code, expireIn, timeExpire) VALUES (?,?,?,?);"
+                db.query(sqlInsert,[email, code, expireIn, timeExpire],
+                (err, result) =>{
+                    console.log(err);
+                })
+                // transporter.sendMail(mailOption, function(error,info){
+                //     if(error){
+                //         console.log(error);
+                //     }else{
+                //         console.log('Email sent: '+ info.response);
+                //     }
+                // })
+                res.send({message: "Please Check your Email !"});
+            }
         }else{
             res.send({err: err})
         }

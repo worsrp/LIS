@@ -23,9 +23,7 @@ const ResetPass = () => {
         <div className="resetPass">
             <center>
             <h1> Reset Password </h1>
-                <div className="Container">
                 <div className="ResetPass">
-                    
                     <div class="contact">
                         <form method="post">
                             <label>New Password : </label>
@@ -41,7 +39,6 @@ const ResetPass = () => {
                         <br></br>
                     </div>
                 </div>  
-                </div>
                 </center>
             )
             </div>
