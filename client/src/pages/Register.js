@@ -48,7 +48,8 @@ function Register (){
     }, [check]);
 
     return (
-        <Container className="set-font">
+        <body class="bg-color">
+        <Container >
             <Row style={{ marginTop: '4%', marginLeft: '1%' }}>
                 <Col>
                     <div class="text-banner">Love</div>
@@ -142,6 +143,7 @@ function Register (){
                 </Col>
             </Row>
         </Container>
+        </body>
     );
 }
 
