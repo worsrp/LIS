@@ -1,12 +1,7 @@
 import express from 'express';
 import mysql from 'mysql';
-
-import bodyParser from "body-parser";
-import cookieParser from "cookie-parser";
-import session from "express-session";
 import bcrypt from "bcrypt";
 
-const saltRounds = 10;
 
 const router = express.Router();
 const db = mysql.createConnection({
@@ -14,11 +9,12 @@ const db = mysql.createConnection({
     host: "localhost",
     password: "",
     database: "lisdatabase"
-})
+});
 
 router.get('/', (req, res) => {
         if (req.session.user) {
-        res.send({ loggedIn: true, user: req.session.user });
+            console.log("3")
+        res.send({ loggedIn: true, user : req.session.user});
         } else {
         res.send({ loggedIn: false });
         }
@@ -27,7 +23,6 @@ router.get('/', (req, res) => {
 router.post('/', (req,res) => {
     const email = req.body.email
     const password= req.body.password
-
 
     db.query(
         "SELECT * FROM user WHERE email = ?;",
