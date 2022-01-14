@@ -29,11 +29,11 @@ router.post('/', (req, res) => {
         // 'avatar' is the name of our file input field in the HTML form
         const user_id = 1234
         const email     = req.body.email
-    const firstname = req.body.firstname
-    const lastname  = req.body.lastname
-    const moblie    = req.body.moblie
-    const address   = req.body.address
-    const password  = req.body.password
+        const firstname = req.body.firstname
+        const lastname  = req.body.lastname
+        const moblie    = req.body.moblie
+        const address   = req.body.address
+        const password  = req.body.password
         let upload = multer({ storage: storage}).single('avatar');
 
         upload(req, res, function(err) {
@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
                 return res.send(err);
             }
             else if (err) {
-                return res.send(err);
+                return res.send(err); 
             }
 
             const image = req.file.filename
@@ -61,10 +61,10 @@ router.post('/', (req, res) => {
         });
         
         const sqlInsert = "UPDATE USER SET email=?, firstname=?, lastname=?, password=?, moblie=?, address=? WHERE id=?;"
-    db.query(sqlInsert,[email, firstname, lastname, password, moblie, address,user_id],
-    (err, result) =>{
-        console.log(err);
-    })
+        db.query(sqlInsert,[email, firstname, lastname, password, moblie, address,user_id],
+        (err, result) =>{
+            console.log(err);
+        })
 
     }catch (err) {console.log(err)}
 })

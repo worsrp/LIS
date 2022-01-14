@@ -13,14 +13,15 @@ const Sendotp = () => {
         }).then((response) => {
             if(response.data.message) {
                 setsendOtpStatus(response.data.message);
+                alert(response.data.message);
+                window.location.href = '/vertify';
             }else{
                 alert("Invalid Email");
+                window.location.href = '/login';
             }
             }
         )
     };   
-
-    
 
     const history = useHistory();
     const back = () =>{ 
@@ -37,7 +38,7 @@ const Sendotp = () => {
                     <input placeholder="12345@gmail.com" onChange={(event) =>{setEmail(event.target.value);}}
                         type="text" name="email" required></input>
                         <br />
-                        <Link to="/vertify"><button type="submit" onClick={sendotp}>Send Otp</button></Link>
+                        <button type="submit" onClick={sendotp}>Send Otp</button>
                         <button type="submit" onClick={back}>Back</button>
                     <br></br>
                 </div>
