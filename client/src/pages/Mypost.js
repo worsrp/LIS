@@ -38,7 +38,7 @@ const MyPost = () =>{
                             <img alt="User Pic" src="http://localhost:8000/<%=data[0].image%>" class="img-circle img-responsive"></img>
 
                             {/* <button onClick={() => {editPost(val.post_id)}}> Edit </button> */}
-                            <button onClick={() => {editPost(val.post_id)}}> <Link  to="/editpost/" > Edit </Link> </button>
+                            <button onClick={() => {editPost(val.post_id)}}> <Link  to="/editpost" > Edit </Link> </button>
                             <button onClick={() => {deletePost(val.post_id)}}> Delete </button>
                             
                         </div>
