@@ -36,11 +36,14 @@ const Editprofile = () =>{
     const [isSucces, setSuccess] = useState(null);
   
     const submit = () =>{
+      const formdata = new FormData(); 
+      formdata.append('avatar', userInfo.file);
+      if(email==""||firstname==""||lastname==""||moblie==""||address==""||password==""||confirmPassword==""||userInfo.filepreview==null){
+        alert("Please input your information !");
+      }else{ 
       if(password !== confirmPassword){
         alert("Confirm Password is not match with password !");
       }else{
-      const formdata = new FormData(); 
-      formdata.append('avatar', userInfo.file);
       Axios.post("http://localhost:8000/editprofile", formdata,{   
             headers: { "Content-Type": "multipart/form-data" } 
       })
@@ -56,6 +59,8 @@ const Editprofile = () =>{
             alert("successfully");
         })
       }
+    }
+     
     }
   
     return (
