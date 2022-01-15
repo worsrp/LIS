@@ -17,8 +17,10 @@ const Editprofile = () =>{
      
      const checkValidation=(e)=>{
         setConfirmPassword(e.target.value);
-        if(password != confirmPassword){
+        if(password !== confirmPassword){
             setIsError("Confirm Password should be match with password");
+        }else{
+          setIsError("");
         }
     }
 
@@ -36,7 +38,7 @@ const Editprofile = () =>{
     const submit = () =>{
       if(password !== confirmPassword){
         alert("Confirm Password is not match with password !");
-    }else{
+      }else{
       const formdata = new FormData(); 
       formdata.append('avatar', userInfo.file);
       Axios.post("http://localhost:8000/editprofile", formdata,{   
@@ -70,7 +72,7 @@ const Editprofile = () =>{
         <div className="edit">
             <h1> Edit </h1>
             <form action="">
-            <div className="mb-3">
+              <div className="mb-3">
                 <label htmlFor="name" className="form-label">
                 email:
                 </label>
@@ -81,8 +83,8 @@ const Editprofile = () =>{
                     setEmail(e.target.value)
                 }}
                 ></input>
-            </div>
-            <div className="mb-3">
+              </div>
+              <div className="mb-3">
                 <label htmlFor="name" className="form-label">
                 Firstname :
                 </label>
@@ -93,8 +95,8 @@ const Editprofile = () =>{
                     setFirstname(e.target.value)
                 }}
                 ></input>
-            </div>
-            <div className="mb-3">
+              </div>
+              <div className="mb-3">
                 <label htmlFor="name" className="form-label">
                 Lastname :
                 </label>
@@ -105,8 +107,8 @@ const Editprofile = () =>{
                     setLastname(e.target.value)
                 }}
                 ></input>
-            </div>
-            <div className="mb-3">
+              </div>
+              < div className="mb-3">
                 <label htmlFor="name" className="form-label">
                 Moblie :
                 </label>
@@ -117,8 +119,8 @@ const Editprofile = () =>{
                     setMoblie(e.target.value)
                 }}
                 ></input>
-            </div>
-            <div className="mb-3">
+              </div>
+              <div className="mb-3">
                 <label htmlFor="name" className="form-label">
                 Address :
                 </label>
@@ -129,8 +131,8 @@ const Editprofile = () =>{
                     setAddress(e.target.value)
                 }}
                 ></input>
-            </div>
-            <div className="mb-3">
+              </div>
+              <div className="mb-3">
                 <label htmlFor="name" className="form-label">
                 Password :
                 </label>
@@ -141,8 +143,8 @@ const Editprofile = () =>{
                     setPassword(e.target.value)
                 }}
                 ></input>
-            </div>
-            <div className="mb-3">
+              </div>
+              <div className="mb-3">
                 <label htmlFor="name" className="form-label">
                 Confirm Password :
                 </label>
@@ -153,12 +155,12 @@ const Editprofile = () =>{
                 ></input>
                 <br />
                 <p1>{IsError}</p1>
-            </div>
-            <br />
+              </div>
+              <br />
             </form>
-            <div className="form-row">
-            <button class="btn btn-success" onClick={submit}> Save </button>          
-        </div>
+              <div className="form-row">
+                <button class="btn btn-success" onClick={submit}> Save </button>          
+              </div>
         {userInfo.filepreview !== null ? 
           <img className="previewimg"  src={userInfo.filepreview} alt="UploadImage" />
         : null}

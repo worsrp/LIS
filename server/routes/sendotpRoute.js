@@ -1,6 +1,9 @@
 import express from 'express';
 import mysql from 'mysql';
 
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
 const router = express.Router();
 const db = mysql.createConnection({
     user: "root",
@@ -8,78 +11,58 @@ const db = mysql.createConnection({
     password: "",
     database: "lisdatabase"
 });
-const mailer = (email,otp)=>{
+
+router.post('/', (req,res) => {
+
+    var code = Math.floor((Math.random()*1000000)+123);
+    if(code<100000){
+        code=code+(Math.floor((Math.random()*10)*100000));
+    }
+    var expireIn = new Date();
+    var timeExpire = (expireIn.getHours()*100) + expireIn.getMinutes() ;
+
+    const email = req.body.email
+    const sqlSelect = "SELECT * FROM user WHERE email = ?"
+
     var nodemailer = require('nodemailer');
-    var transporter = nodemail.createTransport({
+    var transporter = nodemailer.createTransport({
         service: 'gmail',
-        port: 587,
-        secure: false,
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
         auth: {
             user: 'arissarapiromwaree@gmail.com',
-            pass: '0962217795'
+            pass: 'umsgvqolzoksqipe'
         }
     });
     var mailOption = {
         from: 'no-reply@example.com',
-        to:'ram@gmail.com',
+        to: req.body.email,
         subject: 'Sending Otp for vertify',
-        text: 'Please vertify'
+        text: 'Code for vertify : '+code+' expire in 2 minutes'
     }
-    transporter.sendMail(mailOption, function(error,info){
-        if(error){
-            console.log(error);
-        }else{
-            console.log('Email sent: '+ info.response);
-        }
-    })
-}
-
-
-const changePassword = async (req,res)=>{
-    //console.log(req.body.email)
-    var data = await user.findOne({email:req.body.email,code:req.body.otpCode});
-    //console.log(data)
-    const response = {};
-    if(data){
-        var currentTime = new Date().getTime();
-        var diff = data.expireIn - currentTime;
-        if(diff<0){
-            response.statusText ='error'
-            response.message = 'Token already expired';
-        }else{
-            var user = await user.findOne({email:req.body.email});
-            user.password = req.body.password;
-            user.save();
-            response.statusText ='Success'
-            response.message = 'Password changed successfully';
-        }
-        
-    }else{
-        response.statusText ='error'
-        response.message = 'Invalid Otp';
-    }
-    res.status(200).json(response);
-}
-
-router.post('/', (req,res) => {
-    console.log(req.body.email)
-    const email = req.body.email
-    const sqlSelect = "SELECT * FROM user WHERE email = ?"
-    var responseType = {};
 
     db.query(sqlSelect,[email],(err, result) =>{
         if(result.length > 0){
-            console.log(result.length);
-            var otpcode = Math.floor((Math.random()*1000)+123);
-            var optData = new Otp({
-                email:req.body.email,
-                code:otpcode,
-                expireIn: new Date().getTime()+ 300*1000
-            })
-            //var otpResponse = await optData.save();
-            res.send({ message: "pls check mail"});
+            if(timeExpire==2359){
+                res.send({message: "Please Try again in 1 minute"});
+            }else{
+                const sqlInsert = "INSERT INTO OTP(email, code, expireIn, timeExpire) VALUES (?,?,?,?);"
+                db.query(sqlInsert,[email, code, expireIn, timeExpire],
+                (err, result) =>{
+                    console.log(err);
+                })
+                // transporter.sendMail(mailOption, function(error,info){
+                //     if(error){
+                //         console.log(error);
+                //     }else{
+                //         console.log('Email sent: '+ info.response);
+                //     }
+                // })
+                res.send({message: "Please Check your Email !"});
+            }
         }else{
-            res.send({ message: "invalid email"});
+            res.send({err: err})
         }
         }
     )

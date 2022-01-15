@@ -1,5 +1,6 @@
 import React,{useState, useEffect } from "react";
 import { Link, Route } from 'react-router-dom';
+import Axios from 'axios'
 
 //import routes
 import Feed from './pages/Feed';
@@ -12,16 +13,31 @@ import Login from './pages/Login';
 import Sendotp from './pages/Sendotp';  
 import ResetPass from './pages/Resetpass';     
 import Editpost from './pages/Editpost';
+import MyPost from "./pages/Mypost";
+import Vertify from "./pages/Vertify";
 
 //import style
 import './custom.scss';
 import { Dropdown } from 'react-bootstrap';
 import { AiOutlinePlus, AiOutlineHeart, AiOutlineUser } from "react-icons/ai";
-import MyPost from "./pages/Mypost";
+import { GrSearch } from "react-icons/gr";
+import { Form, Row, Col } from 'react-bootstrap';
 
 function App() {
   
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const [search, setSearch] = useState('');
+  const [feedPost, setFeedPost] = useState([]);
+
+  const searchPost = () => {
+    if(search !== ''){
+        Axios.post("http://localhost:8000/feed", { 
+            item: search
+        }).then((response) => {
+            setFeedPost(response.data);
+        })
+    }
+  };
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
@@ -37,11 +53,40 @@ function App() {
     </a>
   ));
 
+  if (window.location.pathname === '/register' || window.location.pathname === '/login') return (
+    <div>
+            <Route path="/createpost"><CreatePost/></Route>
+            <Route path="/feed"><Feed /></Route>
+            <Route path="/favlist"><Favlist /></Route>
+            <Route path="/mypost"><MyPost /></Route>
+            <Route path="/profile"><Profile /></Route>  
+            <Route path="/editprofile"><Editprofile /></Route> 
+            <Route path="/login">< Login /></Route>
+            <Route path="/register">< Register /></Route>
+            <Route path="/sendotp">< Sendotp /></Route>  
+            <Route path="/resetpass">< ResetPass /></Route>
+            <Route path="/vertify">< Vertify /></Route>  
+            <Route path="/editpost">< Editpost /></Route>
+            <Route path="/resetpass">< ResetPass /></Route>  
+            <Route path="/editpost/:post_id">< Editpost /></Route>
+        </div>
+  );
   return (
     <div className="App">
       <header className="App-header">
         <nav class="navbar navbar-expand-lg navbar-light bg-#FFF">
           <a class="navbar-brand" href="/"><b class="comname">Love is Sharing.</b></a>
+          <Form>
+                <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                    <Form.Label column sm="1">
+                        <GrSearch className="icon-large search-icon-pos" style={{ marginLeft: '70px' }} />
+                    </Form.Label>
+                    <Col sm="3">
+                    <Form.Control type="text" placeholder="What are you looking for?"
+                    className="search-bar search-bar-pos"/>
+                    </Col>
+                </Form.Group>
+            </Form>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto icon-pos">
               <li class="nav-item">
@@ -55,7 +100,7 @@ function App() {
                   </Link>
               </li>
               <li class="nav-item">
-                <Link to="/">
+                <Link to="/favlist">
                   <AiOutlineHeart className="icon-nav" />
                 </Link>
               </li>
@@ -68,7 +113,10 @@ function App() {
                   <Dropdown.Menu style={{ margin: '10px', border: 'white' }}>
                     <Dropdown.Item eventKey="1" 
                     style={{ textAlign: 'right', margin: '5px', outline: 'none', boxShadow: 'none' }}>
-                      Profile</Dropdown.Item>
+                        <Link to="/profile" className="link-nodec">
+                          Profile
+                        </Link>
+                      </Dropdown.Item>
                     <Dropdown.Item eventKey="2" 
                     style={{ textAlign: 'right', margin: '5px', outline: 'none', boxShadow: 'none' }}>
                       Logout</Dropdown.Item>                    
@@ -90,6 +138,9 @@ function App() {
             <Route path="/login">< Login /></Route>
             <Route path="/register">< Register /></Route>
             <Route path="/sendotp">< Sendotp /></Route>  
+            <Route path="/resetpass">< ResetPass /></Route>
+            <Route path="/vertify">< Vertify /></Route>  
+            <Route path="/editpost">< Editpost /></Route>
             <Route path="/resetpass">< ResetPass /></Route>  
             <Route path="/editpost/:post_id">< Editpost /></Route>
         </div>
