@@ -61,7 +61,6 @@ const Feed = () =>{
                             setStart(start-1); setEnd(end-1); 
                         }
                     }}/>
-                    <div>{start}</div>
                 </Col>
                 <Col xs lg="10" >
                     <CardGroup style={{ width: '100%' }}>
@@ -98,7 +97,6 @@ const Feed = () =>{
                             setStart(start+1); setEnd(end+1); 
                         }
                     }}/>
-                    <div>{end}</div>
                 </Col>
             </Row>            
         </Container>
