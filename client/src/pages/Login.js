@@ -3,6 +3,7 @@ import React, {useState,useEffect } from "react";
 import Axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 
+
 function Login (){
 
     const [email, setEmail] = useState("");
@@ -28,8 +29,7 @@ function Login (){
     };
 
     useEffect(() => {
-        Axios.get("http://localhost:8000/login").then((response) => {
-            console.log(response)                   
+        Axios.get("http://localhost:8000/login").then((response) => {                  
             if(response.data.loggedIn === true) {
             setLoginStatus(response.data.user[0].firstname + " " +setLoginStatus(response.data.user[0].lastname));
             }

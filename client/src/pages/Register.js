@@ -22,9 +22,12 @@ function Register (){
     const [check, setCheck] = useState(false);
     const [alertShow, setAlertShow] = useState(false);
 
-    Axios.defaults.withCredentials = true;
-
     const register = () => {
+        console.log(emailReg)
+        console.log(firstname)
+        console.log(lastname)
+        console.log(moblie)
+        console.log(address)
         console.log(passwordReg)
         console.log(confirmPassword)
         if(passwordReg !== confirmPassword){
@@ -38,6 +41,7 @@ function Register (){
                 moblie: moblie, 
                 address: address
         }).then((response) => {
+            console.log("seuccess")
             console.log(response)
             alert("successfully");
 
@@ -45,7 +49,6 @@ function Register (){
         }
     };
     
-
     useEffect(() =>{
         if(passwordReg !== confirmPassword){
             setIsError("Password does not match!");
@@ -57,6 +60,7 @@ function Register (){
     }, [check]);
 
 
+    
     return (
         <body class="bg-color">
         <Container >
@@ -156,5 +160,7 @@ function Register (){
         </body>
     );
 }
+
+
 
 export default Register;

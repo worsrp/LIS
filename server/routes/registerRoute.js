@@ -31,6 +31,7 @@ router.post('/', (req,res) => {
         ,[email, firstname, lastname, hash, moblie, address],
     (err, result) =>{
         console.log(err);
+        console.log(result);
     });
     });
 });

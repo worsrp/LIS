@@ -2,7 +2,6 @@ import express from 'express';
 import mysql from 'mysql';
 import bcrypt from "bcrypt";
 
-
 const router = express.Router();
 const db = mysql.createConnection({
     user: "root",
@@ -10,15 +9,15 @@ const db = mysql.createConnection({
     password: "",
     database: "lisdatabase"
 });
-
+  
 router.get('/', (req, res) => {
-        if (req.session.user) {
-            console.log("3")
-        res.send({ loggedIn: true, user : req.session.user});
-        } else {
-        res.send({ loggedIn: false });
-        }
-});
+            if (req.session.user) {
+                console.log("3")
+            res.send({ loggedIn: true, user : req.session.user});
+            } else {
+            res.send({ loggedIn: false });
+            }
+    });
 
 router.post('/', (req,res) => {
     const email = req.body.email
