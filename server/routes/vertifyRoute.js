@@ -10,15 +10,17 @@ const db = mysql.createConnection({
 });
 
 router.post('/', (req,res) => {
-    
+
     const email = 'sarinyapamontree@gmail.com';
     const otp = req.body.code
     const temp = new Date();
-    const date = temp.getFullYear() + "-" + temp.getMonth() + "-" + temp.getDay();
-    const time = temp.getHours() + ":" + temp.getMinutes() + ":" + temp.getSeconds();
-    const sqlSelect = "SELECT * FROM otp WHERE email = ? ORDER BY expireIn DESC LIMIT 1"
+    const sqlSelect = "SELECT * FROM otp WHERE email = ? AND code = ? ORDER BY expireIn DESC LIMIT 1"
     var expireIn,timeExpire,code;
-
+    if(temp.getMonth()+1<10){
+        var date = (temp.getFullYear()) + "-0" + ((temp.getMonth()+1)) + "-" + temp.getDate();
+    }else{
+        var date = (temp.getFullYear()) + "-" + ((temp.getMonth()+1)) + "-" + temp.getDate();
+    }
     db.query(sqlSelect,[email,otp],(err, result) =>{
         console.log(email);
         if(result.length > 0){
@@ -28,28 +30,25 @@ router.post('/', (req,res) => {
                 timeExpire=row.timeExpire;
                 code=row.code;
             })
-            console.log(otp);
-            console.log(code);        
-            console.log(date);
-            console.log(expireIn);
-            // if(compare_dates(date,expireIn)){
-            //     
-            // //     if(time-timeExpire<3){
-                    
-                    if(otp==code){
-                        console
+
+                if(String(date)==expireIn){
+                    if(temp.getHours()==((timeExpire)-(timeExpire%100))/100 && temp.getMinutes()>=(timeExpire%100) && 
+                    temp.getMinutes()-(timeExpire%100)<=2){
                         res.send({message: "Reset Password"})
                     }else{
-                        res.send({err: err})
+                        if(temp.getHours()==((((timeExpire)-(timeExpire%100))/100)+1) && temp.getMinutes()<(timeExpire%100) && 
+                        (timeExpire%100)-temp.getMinutes()>=58){
+                            res.send({message: "Reset Password"})
+                        }
+                        else{
+                            res.send({message: "OTP is already expired"})
+                        }
                     }
-            //     }else{
-            //         res.send({err: err})
-            //     }
-            // }else{
-            //     res.send({err: err})
-            // }
+                }else{
+                res.send({message: "OTP is already expired"})
+                }
         }else{
-            res.send({err: err})
+            res.send({message: "Invalid OTP"})
         }
     });
 })

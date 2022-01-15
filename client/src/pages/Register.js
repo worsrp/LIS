@@ -1,5 +1,6 @@
+
+import React, {useState,useEffect } from "react";
 import Axios from "axios";
-import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 
 //import style
@@ -21,22 +22,33 @@ function Register (){
     const [check, setCheck] = useState(false);
     const [alertShow, setAlertShow] = useState(false);
 
-    Axios.defaults.withCredentials = true;
-
     const register = () => {
-        console.log(emailReg);
-        Axios.post("http://localhost:8000/register", {
-        email: emailReg, 
-        firstname: firstname, 
-        lastname: lastname, 
-        password: passwordReg,
-        moblie: moblie, 
-        address: address
-        }).then(() => {
-            alert("successful register");
-        })
-    };
+        console.log(emailReg)
+        console.log(firstname)
+        console.log(lastname)
+        console.log(moblie)
+        console.log(address)
+        console.log(passwordReg)
+        console.log(confirmPassword)
+        if(passwordReg !== confirmPassword){
+            alert("Confirm Password is not match with password !");
+        }else{ 
+            Axios.post("http://localhost:8000/register", {
+                email: emailReg, 
+                firstname: firstname, 
+                lastname: lastname, 
+                password: passwordReg,
+                moblie: moblie, 
+                address: address
+        }).then((response) => {
+            console.log("seuccess")
+            console.log(response)
+            alert("successfully");
 
+        });
+        }
+    };
+    
     useEffect(() =>{
         if(passwordReg !== confirmPassword){
             setIsError("Password does not match!");
@@ -47,6 +59,8 @@ function Register (){
         }
     }, [check]);
 
+
+    
     return (
         <body class="bg-color">
         <Container >
@@ -146,5 +160,7 @@ function Register (){
         </body>
     );
 }
+
+
 
 export default Register;

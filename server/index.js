@@ -3,8 +3,6 @@ import cors from 'cors';
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-import bcrypt from "bcrypt";
-
 
 //import routers
 import createpostRoute from './routes/createpostRoute.js'
@@ -23,18 +21,18 @@ import editpostRoute from './routes/editpostRoute.js';
 
 const app = express();
 
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(cors());
 app.use(express.json());
 
 app.use(
     cors({
-        origin: ["http://localhost:3000"],
-        methods: ["GET", "POST"],
-        credentials: true,
+      origin: ["http://localhost:3000"],
+      methods: ["GET", "POST"],
+      credentials: true,
     })
-);
+  );
+
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(
     session({
@@ -61,7 +59,7 @@ app.use("/mypost", mypostRoute);
 app.use("/register", registerRoute); 
 
 app.use("/login", loginRoute);
- 
+
 app.use("/editpost", editpostRoute);
 
 app.use("/editprofile", editprofileRoute);
@@ -74,6 +72,7 @@ app.use("/resetpass", resetpassRoute);
 
 app.listen(8000, () =>{
     console.log("Running on port 8000");
+
 })
 
 

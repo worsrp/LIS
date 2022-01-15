@@ -17,8 +17,10 @@ const Editprofile = () =>{
      
      const checkValidation=(e)=>{
         setConfirmPassword(e.target.value);
-        if(password != confirmPassword){
+        if(password !== confirmPassword){
             setIsError("Confirm Password should be match with password");
+        }else{
+          setIsError("");
         }
     }
 
