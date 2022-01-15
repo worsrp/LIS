@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from "react";
 import Axios from 'axios'
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Sendotp = () => {
 
@@ -14,7 +14,7 @@ const Sendotp = () => {
             if(response.data.message=="Please Check your Email !") {
                 setsendOtpStatus(response.data.message);
                 alert(response.data.message);
-                window.location.href = '/vertify';
+                window.location.href = `/vertify/${email}`;
             }else if(response.data.message=="Please Try again in 1 minute"){
                 alert(response.data.message);
                 window.location.href = '/login';
