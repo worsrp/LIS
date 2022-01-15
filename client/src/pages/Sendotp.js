@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React,{useState} from "react";
 import Axios from 'axios'
 import { useHistory } from "react-router-dom";
 
@@ -14,7 +14,7 @@ const Sendotp = () => {
             if(response.data.message=="Please Check your Email !") {
                 setsendOtpStatus(response.data.message);
                 alert(response.data.message);
-                window.location.href = `/vertify/${email}`;
+                window.location.href = `/vertify?${email}`;
             }else if(response.data.message=="Please Try again in 1 minute"){
                 alert(response.data.message);
                 window.location.href = '/login';
@@ -37,8 +37,9 @@ const Sendotp = () => {
                 <h1> Send OTP for Vetify </h1>
                 <label>Enter Email</label>
                 <div class="contact">
-                    <input placeholder="12345@gmail.com" onChange={(event) =>{setEmail(event.target.value);}}
-                        type="text" name="email" required></input>
+                    <input type="text" placeholder="12345@gmail.com"
+                    pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" required
+                    onChange={(event) =>{setEmail(event.target.value);}} ></input>
                         <br />
                         <button type="submit" onClick={sendotp}>Send Otp</button>
                         <button type="submit" onClick={back}>Back</button>
