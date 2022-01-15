@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from "react";
 import Axios from 'axios'
-import { useHistory,useSearchParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Vertify = () => {
 
@@ -13,8 +13,8 @@ const Vertify = () => {
     //     });
     // }, []);
 
-    const [searchParams, setSearchParams] = useSearchParams();
-    searchParams.get("")
+    // const [searchParams, setSearchParams] = useSearchParams();
+    // searchParams.get("")
 
     const vertify = () => {
         Axios.post('http://localhost:8000/vertify',{
