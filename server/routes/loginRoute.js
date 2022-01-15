@@ -9,7 +9,6 @@ const db = mysql.createConnection({
     password: "",
     database: "lisdatabase"
 });
-  
 router.get('/', (req, res) => {
             if (req.session.user) {
                 console.log("3")
