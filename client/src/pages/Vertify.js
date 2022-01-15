@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React,{useState} from "react";
 import Axios from 'axios'
 import { useHistory } from "react-router-dom";
 
@@ -7,18 +7,18 @@ const Vertify = () => {
     const [code, setcode] = useState("");
     const [sendOtpStatus, setsendOtpStatus] = useState("")
 
-    // useEffect (() => {
-    //     Axios.get("http://localhost:8000/vertify").then((response) => {
-    //         setsendOtpStatus(response.data);
-    //     });
-    // }, []);
-
-    // const [searchParams, setSearchParams] = useSearchParams();
-    // searchParams.get("")
+    let urlString = window.location.href; 
+    var email;
+    let paramString = urlString.split('?')[1];
+    let queryString = new URLSearchParams(paramString);
+        for(let pair of queryString.entries()) {
+            email = pair[0];
+        }
 
     const vertify = () => {
         Axios.post('http://localhost:8000/vertify',{
-        code: code,   
+        code: code, 
+        email: email 
         }).then((response) => {
             if(response.data.message == "Reset Password") {
                 setsendOtpStatus(response.data.message);
@@ -39,11 +39,6 @@ const Vertify = () => {
     const back = () =>{ 
         history.push("/sendotp");
     }
-
-    // const history = useHistory();
-    // const back = () =>{ 
-    //     history.push("/login");
-    // }
 
     return (
         <center>

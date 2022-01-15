@@ -9,9 +9,9 @@ const db = mysql.createConnection({
     database: "lisdatabase"
 });
 
-router.post('/:email', (req,res) => {
+router.post('/', (req,res) => {
 
-    const email = req.params.email;
+    const email = req.body.email;
     const otp = req.body.code
     const temp = new Date();
     const sqlSelect = "SELECT * FROM otp WHERE email = ? AND code = ? ORDER BY expireIn DESC LIMIT 1"
@@ -22,7 +22,6 @@ router.post('/:email', (req,res) => {
         var date = (temp.getFullYear()) + "-" + ((temp.getMonth()+1)) + "-" + temp.getDate();
     }
     db.query(sqlSelect,[email,otp],(err, result) =>{
-        console.log(email);
         if(result.length > 0){
             Object.keys(result).forEach(function(key) {
                 var row = result[key];
@@ -30,7 +29,6 @@ router.post('/:email', (req,res) => {
                 timeExpire=row.timeExpire;
                 code=row.code;
             })
-            console.log(email);
                 if(String(date)==expireIn){
                     if(temp.getHours()==((timeExpire)-(timeExpire%100))/100 && temp.getMinutes()>=(timeExpire%100) && 
                     temp.getMinutes()-(timeExpire%100)<=2){
