@@ -62,6 +62,11 @@ body {
     padding-left: 30px;
 }
 
+.icon-arrow{
+    font-size: 48px;
+    color: #000;
+}
+
 .text-sim{
     color: #000;
 }
@@ -84,6 +89,11 @@ body {
 .text-banner{
     font-size: 80px;
     font-weight: 700;
+}
+
+.text-credit{
+    font-size: 12px;
+    color: lightgray;
 }
 
 .login-banner{
@@ -157,13 +167,58 @@ textarea:focus, input:focus{
     margin: 15%;
 }
 
+.card-feed{
+    margin: 40px;
+    border: none;
+    box-shadow: 4px 4px 4px rgba(0,0,0,0.20);
+}
+
+.card-footer {
+    align-self: flex-end;
+    flex: 1 1 auto;
+}
+
+.login-card{
+    width: 30rem;
+    border-radius: 20px;
+    box-shadow: 4px 4px 4px rgba(0,0,0,0.20);
+    margin-top: 6vh;
+}
+
 .dash-bottom{
     border-bottom: 2px dashed lightgray;
 }
 
-.bth-login{
+.btn-login{
     width: 102px;
     height: 48px;
-    background-color: red;
+    background-color: navy !important;
     border: none;
+}
+
+textarea:hover, 
+input:hover, 
+textarea:active, 
+input:active, 
+textarea:focus, 
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+}
+
+.form-control:focus {
+    border-color:lightgray;
+}
+
+.no-border:focus {
+    border-color:lightgray;
+    box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
 }

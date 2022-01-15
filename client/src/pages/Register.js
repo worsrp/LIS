@@ -150,7 +150,7 @@ function Register (){
                     </Row>
                     <Row style={{ marginTop: '5%' }}>
                         <Col style={{  textAlign: 'end' }}>
-                        <Button style={{ backgroundColor: 'darkblue', border: 'none', width: '15%' }}
+                        <Button className="btn-login"
                         onClick={ register } >Register</Button>
                         </Col>
                     </Row>
