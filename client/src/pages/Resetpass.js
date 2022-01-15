@@ -15,6 +15,7 @@ const ResetPass = () => {
             password: password
         }).then(() => {
             alert("successful reset password");
+            window.location.href = '/login';
         })
         } 
     }
