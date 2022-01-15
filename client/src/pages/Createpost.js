@@ -14,7 +14,6 @@ function CreatePost(props) {
     const [Category,setCategory] = useState('Fashion')
     const [Location,setLocation] = useState('Chiang Mai')
     const [Description,setDescription] = useState('')
-    const [Image, setImage] = useState('')
     const [userInfo, setuserInfo] = useState({
         file:[],
         filepreview:null,
@@ -43,14 +42,12 @@ function CreatePost(props) {
         Axios.post("http://localhost:8000/createpost", formdata, { 
             headers: { "Content-Type": "multipart/form-data" } 
             })
-        Axios.post("http://localhost:8000/editprofile",{
-            image: formdata,
+        Axios.post("http://localhost:8000/createpost",{
             post_name: Name,  
             category: Category,
             post_date: today,  
             location: Location,  
             description: Description,
-            picture: Image
         }).then(() => {
             alert("successful insert");
         })

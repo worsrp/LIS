@@ -11,16 +11,18 @@ const Sendotp = () => {
         Axios.post('http://localhost:8000/sendotp',{
         email: email,   
         }).then((response) => {
-            if(response.data.message) {
+            if(response.data.message=="Please Check your Email !") {
                 setsendOtpStatus(response.data.message);
                 alert(response.data.message);
                 window.location.href = '/vertify';
+            }else if(response.data.message=="Please Try again in 1 minute"){
+                alert(response.data.message);
+                window.location.href = '/login';
             }else{
                 alert("Invalid Email");
                 window.location.href = '/login';
             }
-            }
-        )
+        })
     };   
 
     const history = useHistory();

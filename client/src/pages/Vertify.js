@@ -11,12 +11,15 @@ const Vertify = () => {
         Axios.post('http://localhost:8000/vertify',{
         code: code,   
         }).then((response) => {
-            if(response.data.message) {
+            if(response.data.message == "Reset Password") {
                 setsendOtpStatus(response.data.message);
                 alert(response.data.message);
                 window.location.href = '/resetpass';
+            }else if(response.data.message == "OTP is already expired"){
+                alert(response.data.message);
+                window.location.href = '/login';
             }else{
-                alert("Invalid OTP");
+                alert(response.data.message);
                 window.location.href = '/vertify';
             }
             }
