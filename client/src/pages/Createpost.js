@@ -26,9 +26,7 @@ function CreatePost(props) {
           filepreview:URL.createObjectURL(event.target.files[0]),
         });
     
-      }
-    
-    
+      };
 
     const submitPost = () => {
         var today = new Date();
@@ -39,19 +37,26 @@ function CreatePost(props) {
         console.log(Name);
         const formdata = new FormData(); 
         formdata.append('avatar', userInfo.file);
-        Axios.post("http://localhost:8000/createpost", formdata, { 
+        formdata.append('post_name', Name);
+        formdata.append('category', Category);
+        formdata.append('post_datr', today);
+        formdata.append('location', Location);
+        formdata.append('description', Description);
+
+
+        Axios.post("http://localhost:8000/createpost",formdata ,{
             headers: { "Content-Type": "multipart/form-data" } 
-            })
-        Axios.post("http://localhost:8000/createpost",{
-            post_name: Name,  
-            category: Category,
-            post_date: today,  
-            location: Location,  
-            description: Description,
         }).then(() => {
             alert("successful insert");
         })
+        
+        // Axios.post("http://localhost:8000/createpost",formdata,{
+        //     headers: { "Content-Type": "multipart/form-data" } 
+        // })
+
     };
+
+
 
     return (
     <Container>
