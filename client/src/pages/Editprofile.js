@@ -1,5 +1,6 @@
 import React,{useState, useEffect } from "react";
 import Axios from 'axios'
+import { Link } from 'react-router-dom';
 
 const Editprofile = () =>{
     const [IsError, setIsError] = useState("");       
@@ -36,11 +37,14 @@ const Editprofile = () =>{
     const [isSucces, setSuccess] = useState(null);
   
     const submit = () =>{
+      const formdata = new FormData(); 
+      formdata.append('avatar', userInfo.file);
+      if(email==""||firstname==""||lastname==""||moblie==""||address==""||password==""||confirmPassword==""||userInfo.filepreview==null){
+        alert("Please input your information !");
+      }else{ 
       if(password !== confirmPassword){
         alert("Confirm Password is not match with password !");
       }else{
-      const formdata = new FormData(); 
-      formdata.append('avatar', userInfo.file);
       Axios.post("http://localhost:8000/editprofile", formdata,{   
             headers: { "Content-Type": "multipart/form-data" } 
       })
@@ -56,6 +60,8 @@ const Editprofile = () =>{
             alert("successfully");
         })
       }
+    }
+     
     }
   
     return (
@@ -159,7 +165,7 @@ const Editprofile = () =>{
               <br />
             </form>
               <div className="form-row">
-                <button class="btn btn-success" onClick={submit}> Save </button>          
+                <Link to={"/profile"}><button class="btn btn-success" onClick={submit}> Save </button></Link>        
               </div>
         {userInfo.filepreview !== null ? 
           <img className="previewimg"  src={userInfo.filepreview} alt="UploadImage" />

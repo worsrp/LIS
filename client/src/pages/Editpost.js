@@ -14,7 +14,7 @@ const Editpost = () =>{
         file:[],
         filepreview:null,
        })
-
+ 
     const handleInputChange = (event) => {
         setuserInfo({
             ...userInfo,
@@ -26,7 +26,6 @@ const Editpost = () =>{
     useEffect ((post_id) => {
         Axios.get(`http://localhost:8000/editpost/${post_id}`).then((response) => {
             seteditPost(response.data);
-            console.log(post_id);
         });
     }, []);
 
@@ -60,7 +59,6 @@ const Editpost = () =>{
     return (
         <div className="myPost">
             <h2>Edit Post</h2>
-
             <div>
                 {editPost.map((val)=> {
                     return (
@@ -85,7 +83,7 @@ const Editpost = () =>{
                                 <label>Post Status : </label>
                                 <input type="text" name="post_status" placeholder = {val.post_status} onChange={(e)=>{ setStatus(e.target.value) }}required /><br></br>
                             </form>
-                            {/* <button onClick={() => {savePost(val.post_id)}}> Save </button> */}
+
                             <button class="btn btn-success" onClick={savePost}> Edit </button>
                             <button > <Link  to="/mypost">Cancel</Link> </button>
                             
