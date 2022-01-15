@@ -1,5 +1,6 @@
 import React,{useState, useEffect } from "react";
 import Axios from 'axios'
+import { Link } from 'react-router-dom';
 
 const Editprofile = () =>{
     const [IsError, setIsError] = useState("");       
@@ -164,7 +165,7 @@ const Editprofile = () =>{
               <br />
             </form>
               <div className="form-row">
-                <button class="btn btn-success" onClick={submit}> Save </button>          
+                <Link to={"/profile"}><button class="btn btn-success" onClick={submit}> Save </button></Link>        
               </div>
         {userInfo.filepreview !== null ? 
           <img className="previewimg"  src={userInfo.filepreview} alt="UploadImage" />
