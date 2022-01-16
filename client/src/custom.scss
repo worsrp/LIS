@@ -86,6 +86,11 @@ body {
     font-weight: 700;
 }
 
+.text-body{
+    font-size: 14px;
+    color: #000;
+}
+
 .text-banner{
     font-size: 80px;
     font-weight: 700;
@@ -159,10 +164,6 @@ textarea:focus, input:focus{
     box-shadow: none !important;
 }
 
-.fav-btn{
-    border-radius: 20px;
-}
-
 .card-content{
     margin: 15%;
 }
@@ -194,6 +195,42 @@ textarea:focus, input:focus{
     height: 48px;
     background-color: navy !important;
     border: none;
+}
+
+.btn-remove{
+    border-radius: 20px;
+    background-color: #CC444A !important;
+    border-color: #CC444A;
+    color: white;
+}
+
+.btn-remove:hover{
+    border-radius: 20px;
+    background-color: white !important;
+    border-color: #CC444A;
+    color: #CC444A;
+}
+
+.btn-fav{
+    border-radius: 20px;
+    background-color: white !important;
+    border-color: #CC444A;
+    color: #CC444A ;
+}
+
+.btn-fav:hover{
+    border-radius: 20px;
+    background-color: #CC444A !important;
+    border-color: #CC444A;
+    color: white;
+}
+
+.fav-sty{
+    color: black;
+}
+
+.fav-sty:hover{
+    color: white;
 }
 
 textarea:hover, 
