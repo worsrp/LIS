@@ -23,13 +23,6 @@ function Register (){
     const [alertShow, setAlertShow] = useState(false);
 
     const register = () => {
-        console.log(emailReg)
-        console.log(firstname)
-        console.log(lastname)
-        console.log(moblie)
-        console.log(address)
-        console.log(passwordReg)
-        console.log(confirmPassword)
         if(passwordReg !== confirmPassword){
             alert("Confirm Password is not match with password !");
         }else{ 
@@ -41,7 +34,6 @@ function Register (){
                 moblie: moblie, 
                 address: address
         }).then((response) => {
-            console.log("seuccess")
             console.log(response)
             alert("successfully");
 
@@ -104,7 +96,7 @@ function Register (){
                                 onChange={(e) => { setEmailReg(e.target.value) }} />
                             </Col>
                             <Col>
-                                <Form.Control type="text" placeholder="Mobile number"
+                                <Form.Control type="text" placeholder="Mobile number" 
                                 onChange={(e) => { setMoblie(e.target.value) }}  />
                             </Col>
                         </Row>
@@ -113,7 +105,7 @@ function Register (){
                         </Row>
                         <Row style={{ marginTop: '1%' }}>
                             <Col>
-                                <Form.Control as="textarea" rows={2} style={{ resize: 'none' }} placeholder="Address" 
+                                <Form.Control as="textarea" rows={2} style={{ resize: 'none' }} placeholder="Address" required
                                 onChange={(e) => { setAddress(e.target.value) }} />
                             </Col>
                         </Row>

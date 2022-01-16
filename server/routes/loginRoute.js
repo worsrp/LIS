@@ -1,6 +1,8 @@
 import express from 'express';
 import mysql from 'mysql';
 import bcrypt from "bcrypt";
+import {body, validationResult} from "express-validator";
+import path from 'path';
 
 const router = express.Router();
 const db = mysql.createConnection({
@@ -9,13 +11,34 @@ const db = mysql.createConnection({
     password: "",
     database: "lisdatabase"
 });
-router.get('/', (req, res) => {
+
+// DECLARING CUSTOM MIDDLEWARE
+const ifNotLoggedin = (req, res, next) => {
+    if(!req.session.isLoggedIn){
+        return res.render('login-register');
+    }
+    next();
+}
+const ifLoggedin = (req,res,next) => {
+    if(req.session.isLoggedIn){
+        return res.redirect('/');
+    }
+    next();
+}
+// END OF CUSTOM MIDDLEWARE
+
+
+
+router.get('/', (req, res,) => {
+    console.log("0")
             if (req.session.user) {
-                console.log("3")
+                console.log("1")
             res.send({ loggedIn: true, user : req.session.user});
             } else {
+                console.log("2")
             res.send({ loggedIn: false });
             }
+    
     });
 
 router.post('/', (req,res) => {
