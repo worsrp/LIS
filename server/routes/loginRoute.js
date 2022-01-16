@@ -12,21 +12,6 @@ const db = mysql.createConnection({
     database: "lisdatabase"
 });
 
-// DECLARING CUSTOM MIDDLEWARE
-const ifNotLoggedin = (req, res, next) => {
-    if(!req.session.isLoggedIn){
-        return res.render('login-register');
-    }
-    next();
-}
-const ifLoggedin = (req,res,next) => {
-    if(req.session.isLoggedIn){
-        return res.redirect('/');
-    }
-    next();
-}
-// END OF CUSTOM MIDDLEWARE
-
 
 
 router.get('/', (req, res,) => {
