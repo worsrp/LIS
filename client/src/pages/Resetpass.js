@@ -6,12 +6,20 @@ const ResetPass = () => {
     const [password, setPass] = useState("");
     const [confirm_password, setConfirmPass] = useState("");
 
+    let urlString = window.location.href; 
+    var email;
+    let paramString = urlString.split('?')[1];
+    let queryString = new URLSearchParams(paramString);
+        for(let pair of queryString.entries()) {
+            email = pair[0];
+        }
     const setPassword = () => {
         if(password !== confirm_password){
             alert("Confirm Password is not match with password !");
         }else{
             console.log(password);
             Axios.post("http://localhost:8000/resetpass", { 
+            email : email,
             password: password
         }).then(() => {
             alert("successful reset password");
