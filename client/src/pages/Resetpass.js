@@ -1,4 +1,4 @@
-import React,{useState, useEffect } from "react";
+import React,{useState} from "react";
 import Axios from 'axios'
 
 const ResetPass = () => {
@@ -15,6 +15,7 @@ const ResetPass = () => {
             password: password
         }).then(() => {
             alert("successful reset password");
+            window.location.href = '/login';
         })
         } 
     }

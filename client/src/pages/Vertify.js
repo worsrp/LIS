@@ -1,15 +1,24 @@
-import React,{useState, useEffect} from "react";
+import React,{useState} from "react";
 import Axios from 'axios'
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Vertify = () => {
 
     const [code, setcode] = useState("");
     const [sendOtpStatus, setsendOtpStatus] = useState("")
 
+    let urlString = window.location.href; 
+    var email;
+    let paramString = urlString.split('?')[1];
+    let queryString = new URLSearchParams(paramString);
+        for(let pair of queryString.entries()) {
+            email = pair[0];
+        }
+
     const vertify = () => {
         Axios.post('http://localhost:8000/vertify',{
-        code: code,   
+        code: code, 
+        email: email 
         }).then((response) => {
             if(response.data.message == "Reset Password") {
                 setsendOtpStatus(response.data.message);
@@ -31,11 +40,6 @@ const Vertify = () => {
         history.push("/sendotp");
     }
 
-    // const history = useHistory();
-    // const back = () =>{ 
-    //     history.push("/login");
-    // }
-
     return (
         <center>
         <div className="Container">
@@ -47,7 +51,7 @@ const Vertify = () => {
                         type="text" name="otp" required></input>
                         <br />
                         <button type="submit" onClick={vertify}>Submit</button>
-                        <button type="submit" onClick={back}>Back</button>
+                        <button type="submit" onClick={back}>Resend OTP</button>
                     <br></br>
                 </div>
             </div>  

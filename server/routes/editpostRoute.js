@@ -25,10 +25,10 @@ const storage = multer.diskStorage({
 
 // show mypost to edit
 router.get('/:id', (req, res)=> {
-    const user_id = 1234;
-    const post_id = 20;
+    const user_id = 1234; 
+    const post_id = req.params.id;
     
-    const sqlSelect = "SELECT * FROM POST WHERE user_id =? AND post_id = ?";
+    const sqlSelect = "SELECT * FROM POST WHERE user_id =? AND post_id =?";
     db.query(sqlSelect, [user_id ,post_id],  (err, result) => {
         res.send(result);
         console.log(result);
@@ -41,57 +41,56 @@ router.get('/:id', (req, res)=> {
 router.post('/:id', (req,res)=> {
     try{
         const user_id = 1234;
-    const post_id = 20;
+        const post_id = req.params.id;
 
-    const post_name     = req.body.post_name
-    const description   = req.body.description
-    const location      = req.body.location
-    const edit_date     = req.body.edit_date
-    const post_status   = req.body.post_status
-    let upload = multer({ storage: storage}).single('avatar');
+        const post_name     = req.body.post_name
+        const description   = req.body.description
+        const location      = req.body.location
+        const edit_date     = req.body.edit_date
+        const post_status   = req.body.post_status
+        let upload = multer({ storage: storage}).single('avatar');
 
-        upload(req, res, function(err) {
-            // req.file contains information of uploaded file
-            // req.body contains information of text fields
+            upload(req, res, function(err) {
+                // req.file contains information of uploaded file
+                // req.body contains information of text fields
 
-            if (!req.file) {
-                return res.send('Please select an image to upload');
-            }
-            else if (err instanceof multer.MulterError) {
-                return res.send(err);
-            }
-            else if (err) {
-                return res.send(err); 
-            }
+                if (!req.file) {
+                    return res.send('Please select an image to upload');
+                }
+                else if (err instanceof multer.MulterError) {
+                    return res.send(err);
+                }
+                else if (err) {
+                    return res.send(err); 
+                }
 
-            const image = req.file.filename
-            console.log("testtttttttttttttttttttttttttttt");     
+                const image = req.file.filename 
 
-            const sql = "UPDATE POST SET image=? WHERE post_id =?";
-                db.query(sql,[image,post_id], (err, results) => {  if (err) throw err;
-                    res.json({ success: 1 })
-                    console.log("image");     
-                    console.log(image);     
+                const sql = "UPDATE POST SET image=? WHERE post_id =?";
+                    db.query(sql,[image,post_id], (err, results) => {  if (err) throw err;
+                        res.json({ success: 1 })
+                        console.log("image");     
+                        console.log(image);     
 
-                });  
-        });
+                    });  
+            });
 
-    const sqlupdate = "UPDATE POST SET post_name =? ,description =? ,edit_date =? ,post_status =? ,location =? WHERE post_id =?";
-    db.query(sqlupdate, [post_name ,description ,edit_date ,post_status ,location ,post_id ], (err, result) => {
-        console.log(err);
-        console.log(result);
-        console.log(user_id);
-        console.log(post_id);
-        console.log(post_name);
-        console.log(description);
-        console.log(edit_date);
-        console.log(post_status);
-        console.log(location);
-    })
-    }
-    catch (err) {
-        console.log(err)
-    }
+        const sqlupdate = "UPDATE POST SET post_name =? ,description =? ,edit_date =? ,post_status =? ,location =? WHERE post_id =?";
+        db.query(sqlupdate, [post_name ,description ,edit_date ,post_status ,location ,post_id ], (err, result) => {
+            console.log(err);
+            console.log(result);
+            console.log(user_id);
+            console.log(post_id);
+            console.log(post_name);
+            console.log(description);
+            console.log(edit_date);
+            console.log(post_status);
+            console.log(location);
+        })
+        }
+        catch (err) {
+            console.log(err)
+        }
 
 });
 

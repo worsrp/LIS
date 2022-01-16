@@ -18,8 +18,13 @@ router.post('/', (req,res) => {
     if(code<100000){
         code=code+(Math.floor((Math.random()*10)*100000));
     }
-    var expireIn = new Date();
-    var timeExpire = (expireIn.getHours()*100) + expireIn.getMinutes() ;
+    var temp = new Date();
+    if(temp.getMonth()+1<10){
+        var expireIn = (temp.getFullYear()) + "-0" + ((temp.getMonth()+1)) + "-" + temp.getDate();
+    }else{
+        var expireIn = (temp.getFullYear()) + "-" + ((temp.getMonth()+1)) + "-" + temp.getDate();
+    }
+    var timeExpire = (temp.getHours()*100) + temp.getMinutes() ;
 
     const email = req.body.email
     const sqlSelect = "SELECT * FROM user WHERE email = ?"
@@ -52,13 +57,13 @@ router.post('/', (req,res) => {
                 (err, result) =>{
                     console.log(err);
                 })
-                // transporter.sendMail(mailOption, function(error,info){
-                //     if(error){
-                //         console.log(error);
-                //     }else{
-                //         console.log('Email sent: '+ info.response);
-                //     }
-                // })
+                transporter.sendMail(mailOption, function(error,info){
+                    if(error){
+                        console.log(error);
+                    }else{
+                        console.log('Email sent: '+ info.response);
+                    }
+                })
                 res.send({message: "Please Check your Email !"});
             }
         }else{
