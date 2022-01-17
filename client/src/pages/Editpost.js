@@ -1,6 +1,7 @@
-import React,{useState, useEffect } from "react";
+import React,{useEffect, useState, Component} from "react";
 import Axios from 'axios'
 import { Link, Route } from 'react-router-dom';
+
 
 
 
@@ -23,11 +24,28 @@ const Editpost = () =>{
         });
     }
 
-    useEffect ((post_id) => {
-        Axios.get(`http://localhost:8000/editpost/${post_id}`).then((response) => {
-            seteditPost(response.data);
-        });
-    }, []);
+    let urlString = window.location.href; 
+    var post_id;
+    let paramString = urlString.split('?')[1];
+    let queryString = new URLSearchParams(paramString);
+        for(let pair of queryString.entries()) {
+            post_id = pair[0];
+        }
+        parseInt(post_id);
+        console.log(post_id); 
+            Axios.get(`http://localhost:8000/editpost/${post_id}`,{
+                post_id: post_id
+                }).then((response)=>{
+                    seteditPost(response.data);
+                });
+
+            
+        
+            
+        
+            
+        
+            
 
     const savePost = (post_id) => {
 
