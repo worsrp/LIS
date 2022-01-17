@@ -12,10 +12,9 @@ const db = mysql.createConnection({
 router.post('/', (req,res) => {
     const email = req.body.email;
     const password = req.body.password
-    
     const sqlUpdate = "UPDATE USER SET password = ? WHERE email = ?;"
-    db.query(sqlUpdate, [password,id], (err,result)=>{
-        console.log(err);
+    db.query(sqlUpdate, [password,email], (err,result)=>{
+        res.send({err: err})
     })
 })
 
