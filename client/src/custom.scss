@@ -53,6 +53,13 @@ body {
     color: #000;
 }
 
+.icon-neg {
+    font-size: 20px;
+    margin: 2px;
+    margin-right: 4px;
+    color: white;
+}
+
 .icon-pos{
     position: absolute;
     right: 60px;
@@ -101,6 +108,10 @@ body {
     color: lightgray;
 }
 
+.text-error{
+    color: #CC444A;
+}
+
 .login-banner{
     font-size: 80px;
     font-weight: 700;
@@ -121,6 +132,22 @@ body {
 .pos-right{
     position: absolute;
     right: 30px;
+}
+
+.pos-picimg{
+    position: absolute;
+    left: 415px;
+    top: 280px;
+}
+
+.profile-pic{
+    width: 210px; 
+    height: 210px;
+    border: solid 5px;
+    border-color: white;
+    position: absolute;
+    top: 190px;
+    margin-left: 40px;
 }
 
 .modal-content  {
@@ -223,6 +250,11 @@ textarea:focus, input:focus{
     background-color: #CC444A !important;
     border-color: #CC444A;
     color: white;
+}
+
+.btn-trans{
+    border: none !important;
+    background-color: transparent !important;
 }
 
 .fav-sty{

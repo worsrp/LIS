@@ -20,6 +20,7 @@ import Vertify from "./pages/Vertify";
 import './custom.scss';
 import { Dropdown } from 'react-bootstrap';
 import { AiOutlinePlus, AiOutlineHeart, AiOutlineUser } from "react-icons/ai";
+import { FiMenu } from "react-icons/fi";
 import { GrSearch } from "react-icons/gr";
 import { Form, Row, Col } from 'react-bootstrap';
 
@@ -54,7 +55,7 @@ function App() {
     </a>
   ));
 
-    if (window.location.pathname === '/register' || window.location.pathname === '/login') return (
+    if (window.location.pathname === '/register' || window.location.pathname === '/login') return (      
       <span>
             <Route path="/createpost"><CreatePost/></Route>
             <Route path="/feed"><Feed /></Route>
@@ -89,6 +90,27 @@ function App() {
         </div>
       );
   }
+
+  const sideBar = () => {
+    if (window.location.pathname === '/profile' 
+        || window.location.pathname === '/mypost'
+        || window.location.pathname === '/editprofile') return (
+      <Col xs={2} style={{ marginLeft: '60px', marginTop: '30px' }}>
+        <Link to='/profile' className="link-nodec">
+          <Row>
+            <Col xs={1}><FiMenu className="icon-sim" style={{ marginTop: '5px'}} /></Col>
+            <Col className="text-title" style={{ textAlign: 'start', marginLeft: '5px' }}>My Profile</Col>
+          </Row>
+        </Link>
+        <Link to='/mypost'  className="link-nodec">
+          <Row style={{ marginTop: '15px'}}>
+            <Col xs={1}><FiMenu className="icon-sim" style={{ marginTop: '5px'}} /></Col>
+            <Col className="text-title" style={{ textAlign: 'start', marginLeft: '5px' }}>My Post</Col>
+          </Row>
+        </Link>
+      </Col>
+    );
+}
 
   return (
     <div className="App">
@@ -140,22 +162,24 @@ function App() {
                 </ul>
               </div>
             </nav>
-        <div>
-            <Route path="/createpost"><CreatePost/></Route>
-            <Route path="/feed"><Feed /></Route>
-            <Route path="/favlist"><Favlist /></Route>
-            <Route path="/mypost"><MyPost /></Route>
-            <Route path="/profile"><Profile /></Route>  
-            <Route path="/editprofile"><Editprofile /></Route> 
-            <Route path="/login">< Login /></Route>
-            <Route path="/register">< Register /></Route>
-            <Route path="/sendotp">< Sendotp /></Route>  
-            <Route path="/resetpass">< ResetPass /></Route>
-            <Route path="/vertify">< Vertify /></Route>  
-            <Route path="/editpost">< Editpost /></Route>
-            <Route path="/resetpass">< ResetPass /></Route>  
-            <Route path="/editpost/:post_id">< Editpost /></Route>
-        </div>
+            <Row>
+              { sideBar() }
+              <Col> <Route path="/createpost"><CreatePost/></Route>
+                <Route path="/feed"><Feed /></Route>
+                <Route path="/favlist"><Favlist /></Route>
+                <Route path="/mypost"><MyPost /></Route>
+                <Route path="/profile"><Profile /></Route>  
+                <Route path="/editprofile"><Editprofile /></Route> 
+                <Route path="/login">< Login /></Route>
+                <Route path="/register">< Register /></Route>
+                <Route path="/sendotp">< Sendotp /></Route>  
+                <Route path="/resetpass">< ResetPass /></Route>
+                <Route path="/vertify">< Vertify /></Route>  
+                <Route path="/editpost">< Editpost /></Route>
+                <Route path="/resetpass">< ResetPass /></Route>  
+                <Route path="/editpost/:post_id">< Editpost /></Route>
+              </Col>
+            </Row>
       </header>
     </div>
   );
