@@ -16,9 +16,10 @@ const ResetPass = () => {
     const setPassword = () => {
         if(password !== confirm_password){
             alert("Confirm Password is not match with password !");
+            window.location.reload();
         }else{
             console.log(password);
-            Axios.post("http://localhost:8000/resetpass", { 
+            Axios.post(`http://localhost:8000/resetpass?${email}`, { 
             email : email,
             password: password
         }).then(() => {
@@ -32,25 +33,17 @@ const ResetPass = () => {
         <div className="resetPass">
             <center>
             <h1> Reset Password </h1>
-                <div className="ResetPass">
-                    <div class="contact">
-                        <form method="post">
-                            <label>New Password : </label>
-                            <input onChange={(event) =>{setPass(event.target.value);}}
-                            type="password" id="password" name="password" required></input>
-                            <br />
-                            <label>Confirm New Password : </label>
-                            <input onChange={(event) => setConfirmPass(event.target.value)}
-                            type="password" name="confirm_password" required></input>
-                            <br />
-                            <button type="submit" onClick={setPassword}>Reset</button>
-                        </form>
-                        <br></br>
-                    </div>
-                </div>  
-                </center>
-            )
-            </div>
+            <label>New Password : </label>
+            <input onChange={(event) =>{setPass(event.target.value);}}
+            type="password" name="password" required></input>
+            <br />
+            <label>Confirm New Password : </label>
+            <input onChange={(event) => setConfirmPass(event.target.value)}
+            type="password" name="confirm_password" required></input>
+            <br />
+            <button type="submit" onClick={setPassword}>Reset</button>
+            </center>
+        </div>
     );
 };
 

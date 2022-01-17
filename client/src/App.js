@@ -68,8 +68,7 @@ function App() {
             <Route path="/sendotp">< Sendotp /></Route>  
             <Route path="/resetpass">< ResetPass /></Route>
             <Route path="/vertify">< Vertify /></Route>  
-            <Route path="/editpost">< Editpost /></Route>
-            <Route path="/resetpass">< ResetPass /></Route>  
+            <Route path="/editpost">< Editpost /></Route> 
             <Route path="/editpost/:post_id">< Editpost /></Route>
       </span>
     );
