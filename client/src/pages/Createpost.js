@@ -1,6 +1,8 @@
-import React,{useState, useEffect } from "react";
+import React,{useState, useEffect, useContext } from "react";
 import Axios from 'axios'
 import { Link } from 'react-router-dom';
+import { AuthContext } from "../Auth";
+
 
 //import style
 import '../custom.scss';
@@ -10,14 +12,15 @@ import { BiCategory } from "react-icons/bi";
 //เหลือใส่รูป
 
 function CreatePost(props) {
-    const [Name,setName] = useState('')
-    const [Category,setCategory] = useState('Fashion')
-    const [Location,setLocation] = useState('Chiang Mai')
-    const [Description,setDescription] = useState('')
+    const [post_name,setName] = useState('')
+    const [category,setCategory] = useState('Fashion')
+    const [location,setLocation] = useState('Chiang Mai')
+    const [description,setDescription] = useState('')
     const [userInfo, setuserInfo] = useState({
         file:[],
         filepreview:null,
     });
+    const { currentUser } = useContext(AuthContext);
     
     const handleInputChange = (event) => {
         setuserInfo({
@@ -29,37 +32,43 @@ function CreatePost(props) {
       };
 
     const submitPost = () => {
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-        today = yyyy + '-' + mm + '-' + dd;
-        console.log(Name);
+        var post_date = new Date();
+        var dd = String(post_date.getDate()).padStart(2, '0');
+        var mm = String(post_date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = post_date.getFullYear();
+        post_date = yyyy + '-' + mm + '-' + dd;
+        console.log(post_name);
         const formdata = new FormData(); 
         formdata.append('avatar', userInfo.file);
-        formdata.append('post_name', Name);
-        formdata.append('category', Category);
-        formdata.append('post_datr', today);
-        formdata.append('location', Location);
-        formdata.append('description', Description);
+        // formdata.append('post_name', Name);
+        // formdata.append('category', Category);
+        // formdata.append('post_datr', today);
+        // formdata.append('location', Location);
+        // formdata.append('description', Description);
+        // formdata.append('post_id', currentUser.uid);
+        // alert(formdata.getAll("post_name"));
+        Axios.post("http://localhost:8000/createpost",{
+            post_name: post_name,  
+            post_date: post_date,  
+            location: location,  
+            description: description,
+            category: category
+        }).then(() =>{
 
-
-        Axios.post("http://localhost:8000/createpost",formdata ,{
+        });
+        Axios.post(`http://localhost:8000/createpost`,formdata ,{
+            post_name: post_name,  
             headers: { "Content-Type": "multipart/form-data" } 
         }).then(() => {
-            alert("successful insert");
+            
         })
         
-        // Axios.post("http://localhost:8000/createpost",formdata,{
-        //     headers: { "Content-Type": "multipart/form-data" } 
-        // })
-
     };
-
 
 
     return (
     <Container>
+        
         <Modal
             {...props}
             size="lg"
@@ -130,10 +139,84 @@ function CreatePost(props) {
                             <Col sm="7">
                                 <Form.Select aria-label="Default select example"
                                 onChange={ (e) => { setLocation(e.target.value) }}>
-                                    <option>select location</option>
-                                    <option value="Bangkok">Bangkok</option>
-                                    <option value="Chiang Mai">Chiang Mai</option>
-                                    <option value="Chiang Rai">Chiang Rai</option>
+                                <option>select location</option>
+                                <option value="Bangkok">Bangkok</option>
+                                <option value="Krabi">Krabi</option>
+                                <option value="Kanchanaburi">Kanchanaburi</option>
+                                <option value="Kalasin">Kalasin</option>
+                                <option value="Kamphaeng Phet">Kamphaeng Phet</option>
+                                <option value="Khon Kaen">Khon Kaen</option>
+                                <option value="Chanthaburi">Chanthaburi</option>
+                                <option value="Chachoengsao">Chachoengsao</option>
+                                <option value="Chonburi">Chonburi</option>
+                                <option value="Chainat">Chainat</option>
+                                <option value="Chaiyaphum">Chaiyaphum</option>
+                                <option value="Chumphon">Chumphon</option>
+                                <option value="Chiang Rai">Chiang Rai</option>
+                                <option value="Chiang Mai">Chiang Mai</option>
+                                <option value="Trang">Trang</option>
+                                <option value="Trat">Trat</option>
+                                <option value="Tak">Tak</option>
+                                <option value="Nakhon Nayok">Nakhon Nayok</option>
+                                <option value="Nakhon Pathom">Nakhon Pathom</option>
+                                <option value="Nakhon Phanom">Nakhon Phanom</option>
+                                <option value="Nakhon Ratchasima">Nakhon Ratchasima</option>
+                                <option value="Nakhon Si Thammarat">Nakhon Si Thammarat</option>
+                                <option value="Nakhon Sawan">Nakhon Sawan</option>
+                                <option value="Nonthaburi">Nonthaburi</option>
+                                <option value="Narathiwat">Narathiwat</option>
+                                <option value="Nan">Nan</option>
+                                <option value="Bueng Kan">Bueng Kan</option>
+                                <option value="Buriram">Buriram</option>
+                                <option value="Pathum Thani">Pathum Thani</option>
+                                <option value="Prachuap Khiri Khan">Prachuap Khiri Khan</option>
+                                <option value="Prachinburi">Prachinburi</option>
+                                <option value="Pattani">Pattani</option>
+                                <option value="Phra Nakhon Si Ayutthaya">Phra Nakhon Si Ayutthaya</option>
+                                <option value="Phayao">Phayao</option>
+                                <option value="Phang Nga">Phang Nga</option>
+                                <option value="Phatthalung">Phatthalung</option>
+                                <option value="Phichit">Phichit</option>
+                                <option value="Phitsanulok">Phitsanulok</option>
+                                <option value="Phetchaburi">Phetchaburi</option>
+                                <option value="Phetchabun">Phetchabun</option>
+                                <option value="Phrae">Phrae</option>
+                                <option value="Phuket">Phuket</option>
+                                <option value="Maha Sarakham">Maha Sarakham</option>
+                                <option value="Mukdahan">Mukdahan</option>
+                                <option value="Mae Hong Son">Mae Hong Son</option>
+                                <option value="Yasothon">Yasothon</option>
+                                <option value="Yala">Yala</option>
+                                <option value="Roi Et">Roi Et</option>
+                                <option value="Ranong">Ranong</option>
+                                <option value="Rayong">Rayong</option>
+                                <option value="Ratchaburi">Ratchaburi</option>
+                                <option value="Lopburi">Lopburi</option>
+                                <option value="Lampang">Lampang</option>
+                                <option value="Lamphun">Lamphun</option>
+                                <option value="Loei">Loei</option>
+                                <option value="Sisaket">Sisaket</option>
+                                <option value="Sakon Nakhon">Sakon Nakhon</option>
+                                <option value="Songkhla">Songkhla</option>
+                                <option value="Satun">Satun</option>
+                                <option value="Samut Prakan">Samut Prakan</option>
+                                <option value="Samut Songkhram">Samut Songkhram</option>
+                                <option value="Samut Sakhon">Samut Sakhon</option>
+                                <option value="Sa Kaeo">Sa Kaeo</option>
+                                <option value="Saraburi">Saraburi</option>
+                                <option value="Sing Buri">Sing Buri</option>
+                                <option value="Sukhothai">Sukhothai</option>
+                                <option value="Suphan Buri">Suphan Buri</option>
+                                <option value="Surat Thani">Surat Thani</option>
+                                <option value="Surin">Surin</option>
+                                <option value="Nong Khai">Nong Khai</option> 
+                                <option value="Nong Bua Lamphu">Nong Bua Lamphu</option>
+                                <option value="Ang Thong">Ang Thong</option>
+                                <option value="Amnat Charoen">Amnat Charoen</option>
+                                <option value="Udon Thani">Udon Thani</option>
+                                <option value="Uttaradit">Uttaradit</option>
+                                <option value="Uthai Thani">Uthai Thani</option>
+                                <option value="Ubon Ratchathani">Ubon Ratchathani</option>
                                 </Form.Select>
                             </Col>
                         </Form.Group>

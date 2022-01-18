@@ -1,6 +1,8 @@
-import React,{useEffect, useState, Component} from "react";
+import React,{useEffect, useState, useContext} from "react";
 import Axios from 'axios'
 import { Link, Route } from 'react-router-dom';
+import { AuthContext } from "../Auth";
+
 
 const Editpost = () =>{
     const [editPost, seteditPost] = useState([]);
@@ -12,6 +14,7 @@ const Editpost = () =>{
         file:[],
         filepreview:null,
        })
+    const { currentUser } = useContext(AuthContext);
  
     const handleInputChange = (event) => {
         setuserInfo({

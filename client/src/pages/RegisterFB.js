@@ -68,9 +68,9 @@ function Register (){
         }
     }, [check]);
 
-    if (currentUser !== null){
-        return <Redirect to="/feed" />;
-    }
+    // if (currentUser !== null){
+    //     return <Redirect to="/feed" />;
+    // }
 
     
     return (
