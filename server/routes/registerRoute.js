@@ -21,14 +21,15 @@ router.post('/', (req,res) => {
     const moblie    = req.body.moblie
     const address   = req.body.address
     const password  = req.body.password
+    const uid = req.body.uid
 
     bcrypt.hash(password, saltRounds, (err, hash) => {
         if (err) {
             console.log(err);
         }
     db.query(
-        "INSERT INTO USER(email, firstname, lastname, password, moblie, address) VALUES (?,?,?,?,?,?)"
-        ,[email, firstname, lastname, hash, moblie, address],
+        "INSERT INTO USER(email, firstname, lastname, password, moblie, address, uid) VALUES (?,?,?,?,?,?,?)"
+        ,[email, firstname, lastname, hash, moblie, address, uid],
     (err, result) =>{
         console.log(err);
         console.log(result);

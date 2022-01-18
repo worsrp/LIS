@@ -1,6 +1,8 @@
-import React,{useState, useEffect } from "react";
-import { Link, Route } from 'react-router-dom';
+import React,{useState, useEffect, useContext } from "react";
+import { Link, Redirect, Route, Switch } from 'react-router-dom';
 import Axios from 'axios'
+import { AuthContext } from "./Auth";
+import firebaseConfig from "./config";
 
 //import routes
 import Feed from './pages/Feed';
@@ -8,8 +10,8 @@ import Favlist from './pages/Favlist';
 import Profile from './pages/Profile';
 import Editprofile from './pages/Editprofile';
 import CreatePost from './pages/Createpost';
-import Register from './pages/Register';
-import Login from './pages/Login';  
+import Register from './pages/RegisterFB';
+import Login from './pages/LoginFB';  
 import Sendotp from './pages/Sendotp';  
 import ResetPass from './pages/Resetpass';     
 import Editpost from './pages/Editpost';
@@ -30,6 +32,13 @@ function App() {
   const [search, setSearch] = useState('');
   const [feedPost, setFeedPost] = useState([]);
   const [feed, setFeed] = useState(false);
+
+  const { currentUser } = useContext(AuthContext);
+
+    // if(currentUser === null){
+    //       return <Redirect to="/login" />;
+    // }
+
 
   const searchPost = () => {
     if(search !== ''){
@@ -56,21 +65,21 @@ function App() {
   ));
 
     if (window.location.pathname === '/register' || window.location.pathname === '/login') return (      
-      <span>
+      <Switch>
             <Route path="/createpost"><CreatePost/></Route>
             <Route path="/feed"><Feed /></Route>
             <Route path="/favlist"><Favlist /></Route>
             <Route path="/mypost"><MyPost /></Route>
             <Route path="/profile"><Profile /></Route>  
             <Route path="/editprofile"><Editprofile /></Route> 
-            <Route path="/login">< Login /></Route>
+            <Route path="/login"><Login /></Route>
             <Route path="/register">< Register /></Route>
             <Route path="/sendotp">< Sendotp /></Route>  
             <Route path="/resetpass">< ResetPass /></Route>
             <Route path="/vertify">< Vertify /></Route>  
             <Route path="/editpost">< Editpost /></Route> 
             <Route path="/editpost/:post_id">< Editpost /></Route>
-      </span>
+      </Switch>
     );
 
 
@@ -152,7 +161,8 @@ function App() {
                             </Link>
                           </Dropdown.Item>
                         <Dropdown.Item eventKey="2" 
-                        style={{ textAlign: 'right', margin: '5px', outline: 'none', boxShadow: 'none' }}>
+                        style={{ textAlign: 'right', margin: '5px', outline: 'none', boxShadow: 'none' }}
+                        onClick={() => firebaseConfig.auth().signOut()} >
                           Logout</Dropdown.Item>                    
                       </Dropdown.Menu>
                     </Dropdown>
@@ -161,9 +171,14 @@ function App() {
                 </ul>
               </div>
             </nav>
+            {/* {currentUser !== null ? (
+              <h1>Current User uid : {currentUser.uid} </h1>
+            ) : (
+              <h1> You are not login yet</h1>
+            )} */}
             <Row>
               { sideBar() }
-              <Col> <Route path="/createpost"><CreatePost/></Route>
+              <Switch> <Route path="/createpost"><CreatePost/></Route>
                 <Route path="/feed"><Feed /></Route>
                 <Route path="/favlist"><Favlist /></Route>
                 <Route path="/mypost"><MyPost /></Route>
@@ -177,7 +192,7 @@ function App() {
                 <Route path="/editpost">< Editpost /></Route>
                 <Route path="/resetpass">< ResetPass /></Route>  
                 <Route path="/editpost/:post_id">< Editpost /></Route>
-              </Col>
+              </Switch>
             </Row>
       </header>
     </div>
