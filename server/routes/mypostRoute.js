@@ -30,19 +30,6 @@ router.delete('/:id', (req,res)=> {
     })
 });
 
-// // edit post 
-// router.get('/:id', (req,res)=> {
-//     const user_id = 1234;
-//     const post_id = req.params.id;
-
-//     const sqlSelect = "SELECT * FROM POST WHERE post_id = ?";
-//     db.query(sqlSelect, [user_id] ,post_id, (err, result) => {
-//         res.send(result);
-//         console.log(post_id);
-//         console.log(result);
-//         console.log(err);
-//     })
-// });
 
 
 

@@ -32,6 +32,7 @@ router.get('/:id', (req, res)=> {
     db.query(sqlSelect, [user_id ,postid],  (err, result) => {
         res.send(result);
     })
+    console.log(postid);
 });
 
 
