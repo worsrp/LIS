@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req,res) => {
     const email = req.body.email
-    const password= req.body.password
+    const password = req.body.password
 
     db.query(
         "SELECT * FROM user WHERE email = ?;",
