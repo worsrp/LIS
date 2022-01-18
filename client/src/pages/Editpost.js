@@ -2,9 +2,6 @@ import React,{useEffect, useState, Component} from "react";
 import Axios from 'axios'
 import { Link, Route } from 'react-router-dom';
 
-
-
-
 const Editpost = () =>{
     const [editPost, seteditPost] = useState([]);
     const [Name,setName] = useState('')
@@ -31,24 +28,15 @@ const Editpost = () =>{
         for(let pair of queryString.entries()) {
             post_id = pair[0];
         }
-        parseInt(post_id);
-        console.log(post_id); 
-            Axios.get(`http://localhost:8000/editpost/${post_id}`,{
-                post_id: post_id
-                }).then((response)=>{
-                    seteditPost(response.data);
-                });
+    parseInt(post_id);
 
+    useEffect (() => {
+        Axios.get(`http://localhost:8000/editpost/${post_id}`).then((response) => {
+            seteditPost(response.data);
+        });
+    }, []);
             
-        
-            
-        
-            
-        
-            
-
-    const savePost = (post_id) => {
-
+    const savePost = () => {
         var edittoday = new Date();
         var dd = String(edittoday.getDate()).padStart(2, '0');
         var mm = String(edittoday.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -58,17 +46,18 @@ const Editpost = () =>{
 
         const formdata = new FormData(); 
         formdata.append('avatar', userInfo.file);
-        Axios.post(`http://localhost:8000/editpost/${post_id}`, formdata,{   
+
+        Axios.post(`http://localhost:8000/editpost/${post_id}`,formdata,{   
             headers: { "Content-Type": "multipart/form-data" } 
         })
 
         Axios.post(`http://localhost:8000/editpost/${post_id}`, { 
-        post_name: Name,  
-        edit_date: edittoday,  
-        location: Location,  
-        description: Description,
-        post_status: Status,
-        image: formdata,
+            post_name: Name,  
+            edit_date: edittoday,  
+            location: Location,  
+            description: Description,
+            post_status: Status,
+            image: formdata,
         }).then(() => {
         alert("successful Edit");
         })
@@ -102,7 +91,7 @@ const Editpost = () =>{
                                 <input type="text" name="post_status" placeholder = {val.post_status} onChange={(e)=>{ setStatus(e.target.value) }}required /><br></br>
                             </form>
 
-                            <button class="btn btn-success" onClick={savePost}> Edit </button>
+                            <button onClick={() => {savePost(val.post_id)}}> Edit </button>
                             <button > <Link  to="/mypost">Cancel</Link> </button>
                             
                             {userInfo.filepreview !== null ? 
