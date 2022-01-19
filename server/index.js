@@ -4,7 +4,6 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 
-
 //import routers
 import createpostRoute from './routes/createpostRoute.js'
 import feedRoute from './routes/feedRoute.js'
@@ -20,7 +19,6 @@ import vertifyRoute from './routes/vertifyRoute.js'
 import editprofileRoute from './routes/editprofileRoute.js'
 import editpostRoute from './routes/editpostRoute.js';
 
-import authRoute from './routes/authRoute.js';
 const app = express();
 
 app.use(express.json());
@@ -35,7 +33,8 @@ app.use(
 
 app.use(cookieParser());
 
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended: true}));
+
 
 app.use(
     session({
@@ -48,8 +47,6 @@ app.use(
         },
     })
 );
-
-app.use("/auth", authRoute);
 
 app.use("/createpost", createpostRoute);
 
