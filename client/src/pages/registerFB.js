@@ -1,6 +1,7 @@
-import React, {useState,useEffect } from "react";
+import React, {useState, useEffect, useContext } from "react";
 import Axios from "axios";
 import { Link, Redirect } from 'react-router-dom';
+import { AuthContext } from "../Auth";
 import firebaseConfig from "../config";
 
 //import style
@@ -21,7 +22,7 @@ function Register (){
     const [confirmPassword, setConfirmPassword] = useState("");
     const [check, setCheck] = useState(false);
     const [alertShow, setAlertShow] = useState(false);
-    const [currentUser, setCurrentUser] = useState(null);
+    const [newUser, setNewUser] = useState(null);
 
     const register = () => {
 
@@ -55,7 +56,7 @@ function Register (){
                         address: address,
                         uid: connectID.uid
         })
-        setCurrentUser(res.user);
+        setNewUser(res.user);
     }   
     
     useEffect(() =>{
@@ -68,9 +69,11 @@ function Register (){
         }
     }, [check]);
 
-    // if (currentUser !== null){
-    //     return <Redirect to="/feed" />;
-    // }
+    const { currentUser } = useContext(AuthContext);
+    
+    if (currentUser !== null || newUser !== null){
+        return <Redirect to="/feed" />;
+    }
 
     
     return (

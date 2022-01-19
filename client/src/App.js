@@ -10,8 +10,8 @@ import Favlist from './pages/Favlist';
 import Profile from './pages/Profile';
 import Editprofile from './pages/Editprofile';
 import CreatePost from './pages/Createpost';
-import Register from './pages/RegisterFB';
-import Login from './pages/LoginFB';  
+import Register from './pages/registerFB';
+import Login from './pages/loginFB';  
 import Sendotp from './pages/Sendotp';  
 import ResetPass from './pages/Resetpass';     
 import Editpost from './pages/Editpost';
@@ -170,26 +170,26 @@ function App() {
                 </ul>
               </div>
             </nav>
-            {/* {currentUser !== null ? (
-              <h1>Current User uid : {currentUser.uid} </h1>
-            ) : (
-              <h1> You are not login yet</h1>
-            )} */}
             <Row>
               { sideBar() }
-              <Switch> <Route path="/createpost"><CreatePost/></Route>
-                <Route path="/feed"><Feed /></Route>
-                <Route path="/favlist"><Favlist /></Route>
-                <Route path="/mypost"><MyPost /></Route>
-                <Route path="/profile"><Profile /></Route>  
-                <Route path="/editprofile"><Editprofile /></Route> 
-                <Route path="/login">< Login /></Route>
-                <Route path="/register">< Register /></Route>
-                <Route path="/sendotp">< Sendotp /></Route>  
-                <Route path="/resetpass">< ResetPass /></Route>
-                <Route path="/vertify">< Vertify /></Route>  
-                <Route path="/editpost">< Editpost /></Route>
-              </Switch>
+              <Col>
+                <Switch> 
+                  <Route path="/createpost"><CreatePost/></Route>
+                  <Route path="/feed"><Feed /></Route>
+                  <Route path="/favlist"><Favlist /></Route>
+                  <Route path="/mypost"><MyPost /></Route>
+                  <Route path="/profile"><Profile /></Route>  
+                  <Route path="/editprofile"><Editprofile /></Route> 
+                  <Route path="/login">< Login /></Route>
+                  <Route path="/register">< Register /></Route>
+                  <Route path="/sendotp">< Sendotp /></Route>  
+                  <Route path="/resetpass">< ResetPass /></Route>
+                  <Route path="/vertify">< Vertify /></Route>  
+                  <Route path="/editpost">< Editpost /></Route>
+                  <Route path="/resetpass">< ResetPass /></Route>  
+                  <Route path="/editpost/:post_id">< Editpost /></Route>
+                </Switch>
+              </Col>
             </Row>
       </header>
     </div>
