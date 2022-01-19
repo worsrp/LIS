@@ -9,14 +9,15 @@ const db = mysql.createPool({
     database: "LISDatabase",
 });
 
-router.get('/', (req, res)=> {
-    const user_id = 1234;
-    const sqlSelect = "SELECT * FROM USER WHERE id=?"
-    db.query(sqlSelect, [user_id], (err, result) => {
+router.get('/:uid', (req, res)=> {
+    const uid = req.params.uid;
+    const sqlSelect = "SELECT * FROM USER WHERE uid=?"
+    db.query(sqlSelect, [uid], (err, result) => {
         if(err){
             console.log(err);
         }else{
             res.send(result);  
+            console.log(result);
         }
     })
 });

@@ -6,8 +6,8 @@ import { Link, Route } from 'react-router-dom';
 import '../custom.scss';
 import { Card, Button, Row, Col, Container, Image } from 'react-bootstrap';
 import { GrLocation } from "react-icons/gr";
-import { IoCloseCircle } from "react-icons/io5";
-import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { BiCategory } from "react-icons/bi";
 
 const MyPost = () =>{
     const [myPost, setMyPost] = useState([]);
@@ -41,26 +41,43 @@ const MyPost = () =>{
             <Container className="justify-content-md-center">
                 {myPost.map((val)=> {
                     return (
-                        <Card className="card-mypost pos-center" style={{ marginTop: '20px' }}>
+                        <Card className="card-mypost pos-center" style={{ marginTop: '30px' }}>
                             <Row>
                                 <Col xs={4}>
                                     <Image avariant="left" src="http://localhost:8000/<%=data[0].image%>"
                                     style={{ width: '210px', height: '210px', margin: '10px'}}/>
                                 </Col>
                                 <Col xs={5}>
-                                        <h1>{val.post_name}</h1>
-                                        <Card.Text style={{ height: '100px'}}>{val.description}</Card.Text>
-                                            <Col style={{ marginTop: '20px', marginLeft: '-10px'}}>
-                                                <GrLocation className="icon-sim" /> : {val.location}
-                                            </Col>     
-                                </Col>
-                                <Col xs={2} style={{ marginTop: '12px', marginRight: '-40px'}}>
+                                    <Row style={{ height: '75%'}}>
+                                        <Col>
+                                            <Card.Title className="text-huge-header" style={{ marginTop: '10px' }}>{val.post_name}</Card.Title>
+                                            <Card.Text className="text-sub-header">
+                                                <BiCategory className="icon-sim" style={{ marginBottom: '3px'}} />
+                                                {val.category}
+                                            </Card.Text>
+                                            <Card.Text >{val.description}</Card.Text>
+                                        </Col>
+                                    </Row>    
                                     <Row>
-                                        <Button onClick={() => {editPost(val.post_id)}}> Edit </Button>
+                                            <Col className="text-sub-header" style={{ marginTop: '20px', marginLeft: '-10px'}}>
+                                                <GrLocation className="icon-sim" style={{ marginBottom: '6px' }} /> 
+                                                {val.location}
+                                            </Col>     
+                                    </Row>
+                                </Col>
+                                <Col xs={2} style={{ marginTop: '8%', marginLeft: '20px'}}>
+                                    <Row>
+                                        <Button className="btn-edit" onClick={() => {editPost(val.post_id)}}>
+                                        <AiFillEdit className="icon-sim" style={{ marginRight: '8px' }} />
+                                            Edit 
+                                        </Button>
                                     </Row>
                                         {/* <button onClick={() => {editPost(val.post_id)}}> <Link  to="/editpost" > Edit </Link> </button> */}
-                                    <Row>
-                                        <Button   Button onClick={() => {deletePost(val.post_id)}}> Delete </Button>
+                                    <Row style={{ marginTop: '10px' }}>
+                                        <Button className="btn-delete" onClick={() => {deletePost(val.post_id)}}>
+                                            <AiFillDelete className="icon-sim" style={{ marginRight: '2px' }} />
+                                            Delete 
+                                        </Button>
                                     </Row>
                                 </Col>
                             </Row>
@@ -74,16 +91,3 @@ const MyPost = () =>{
 };
 
 export default MyPost;
-
-{/* <div className="myPostCard">
-                            <h3> Name : {val.post_name} </h3> 
-                            <h5> Description : </h5>  
-                            <h6> {val.description} </h6>
-                            <h6> Location : {val.location}  </h6>
-                            <img alt="User Pic" src="http://localhost:8000/<%=data[0].image%>" class="img-circle img-responsive"></img>
-
-                            <button onClick={() => {editPost(val.post_id)}}> Edit </button>
-                            <button onClick={() => {editPost(val.post_id)}}> <Link  to="/editpost" > Edit </Link> </button> 
-                            <button onClick={() => {deletePost(val.post_id)}}> Delete </button>
-                            
-                        </div> */}

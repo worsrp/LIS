@@ -14,7 +14,7 @@ const Profile = () =>{
     const { currentUser } = useContext(AuthContext);
 
     useEffect (() => {
-        Axios.get("http://localhost:8000/profile").then((response) => {
+        Axios.get(`http://localhost:8000/profile/${currentUser.uid}`).then((response) => {
             setProfile(response.data);
         });
     }, []);
@@ -23,46 +23,50 @@ const Profile = () =>{
     return (
         <>
         {currentUser !== null ?(
-                <Container>
-                {profile.map((val)=> {
-                            return (
-                                <Container>
-                                <Row style={{ marginRight: '20px'}} >
-                                    <Image src={require(`../profilebanner.png`)} />
-                                </Row>
-                                <Row> 
-                                <Col xs={4}>
-                                    { val.image !== null ?
-                                    <Image src={require(`../../../public_html/uploads/${val.image}`)}
-                                    roundedCircle className="profile-pic" />
-                                    : <Image src={require(`../nopic.jpg`)}
-                                    roundedCircle className="profile-pic" />}
-                                </Col>
-                                <Col>
-                                <Row>
-                                    <Col style={{ marginTop: '10px', marginLeft: '-60px'}}>
-                                        <div>
-                                            <h1> {val.firstname}     {val.lastname}</h1> 
-                                            <h5 style={{ marginTop: '10px'}}> Email : {val.email}</h5>  
-                                            <h5 style={{ marginTop: '10px'}}> Mobile : {val.moblie}</h5>  
-                                            <h5 style={{ marginTop: '10px'}}> Address : {val.address}</h5>         
-                                        </div>
+            <>
+                        <div>
+                            {profile.map((val) => {
+                                return(
+                                <> 
+                                    <Container>
+                                    <Row style={{ marginRight: '20px'}} >
+                                        <Image src={require(`../profilebanner.png`)} />
+                                    </Row>
+                                    <Row> 
+                                    <Col xs={4}>
+                                        { val.image !== null ?
+                                        <Image src={require(`../../../public_html/uploads/${val.image}`)}
+                                        roundedCircle className="profile-pic" />
+                                        : <Image src={require(`../nopic.jpg`)}
+                                        roundedCircle className="profile-pic" />}
                                     </Col>
-                                    <Col xs={3} style={{ marginTop: '10px', marginLeft: '40px'}}>
-                                        <Link  to="/editprofile">
-                                            <Button className="btn-login" > 
-                                                <AiFillEdit className="icon-sim" style={{ marginRight: '8px' }} />
-                                                Edit 
-                                            </Button>
-                                        </Link>
+                                    <Col>
+                                    <Row>
+                                        <Col style={{ marginTop: '10px', marginLeft: '-60px'}}>
+                                            <div>
+                                                <h1> {val.firstname}     {val.lastname}</h1> 
+                                                <h5 style={{ marginTop: '10px'}}> Email : {val.email}</h5>  
+                                                <h5 style={{ marginTop: '10px'}}> Mobile : {val.moblie}</h5>  
+                                                <h5 style={{ marginTop: '10px'}}> Address : {val.address}</h5>         
+                                            </div>
+                                        </Col>
+                                        <Col xs={3} style={{ marginTop: '10px', marginLeft: '40px'}}>
+                                            <Link  to="/editprofile">
+                                                <Button className="btn-login" > 
+                                                    <AiFillEdit className="icon-sim" style={{ marginRight: '8px' }} />
+                                                    Edit 
+                                                </Button>
+                                            </Link>
+                                        </Col>
+                                    </Row>
                                     </Col>
-                                </Row>
-                                </Col>
-                                </Row>
-                                </Container>
-                            ); 
-                        })}
-            </Container> 
+                                    </Row>
+                                    </Container>
+                                </>
+                                )
+                            })}
+                        </div>
+            </>
         ):(
             <h1>Please Login</h1>
         )}
