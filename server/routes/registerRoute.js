@@ -1,10 +1,7 @@
 import express from 'express';
 import mysql from 'mysql';
-import bcrypt from "bcrypt";
 
-const bcrypt = require("bcrypt");
-const { validateToken } = require("../middlewares/AuthMiddleware");
-const { sign } = require("jsonwebtoken");
+import bcrypt from "bcrypt";
 
 const saltRounds = 10;
 
@@ -17,7 +14,7 @@ const db = mysql.createConnection({
 })
 
 
-router.post('/', async (req,res) => {
+router.post('/', (req,res) => {
     const email     = req.body.email
     const firstname = req.body.firstname
     const lastname  = req.body.lastname
@@ -30,11 +27,11 @@ router.post('/', async (req,res) => {
             console.log(err);
         }
     db.query(
-        "INSERT INTO user(email, firstname, lastname, password, moblie, address) VALUES (?,?,?,?,?,?)"
+        "INSERT INTO USER(email, firstname, lastname, password, moblie, address) VALUES (?,?,?,?,?,?)"
         ,[email, firstname, lastname, hash, moblie, address],
     (err, result) =>{
-        res.json("SUCCESS");
         console.log(err);
+        console.log(result);
     });
     });
 });

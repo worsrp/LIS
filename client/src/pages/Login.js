@@ -1,8 +1,7 @@
 
-import React, {useState,useEffect, useContext } from "react";
+import React, {useState,useEffect } from "react";
 import Axios from "axios";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { AuthContext } from "../helpers/AuthContext";
 
 //import style
 import '../custom.scss';
@@ -10,45 +9,43 @@ import { Row, Col, Container, Card, Button, InputGroup, FormControl } from 'reac
 import { FaUserAlt, FaKey } from "react-icons/fa";
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 
-
 function Login (){
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginStatus, setLoginStatus] = useState("");
-    const { setAuthState } = useContext(AuthContext);
-
         
 
     Axios.defaults.withCredentials = true;
 
-    const login = (event) => {
-        event.preventDefault();
+
+
+    
+
+    const login = () => {
         console.log(email)
         console.log(password)
-
-        Axios.post('http://localhost:8000/auth/login',{  
+        Axios.post('http://localhost:8000/login',{
         email: email,   
         password: password
         }).then((response) => {
-
-        if(response.data.message) 
-        {
-            alert(response.data.message);
-            console.log("No")
+        if(response.data.message) {
+            setLoginStatus(response.data.message);
         }else{
-            console.log("yes")
-         //   window.location.href = `/auth?${email}`;
-         localStorage.setItem("accessToken", response.data.token);
-         setAuthState({
-           firstname: response.data.firstname,
-           id: response.data.id,
-           status: true,
-        });
+            setLoginStatus(response.data[0].firstname + " " +response.data[0].lastname);
         }
         });
     };
-    
+
+    useEffect(() => {
+        Axios.get("http://localhost:8000/login").then((response) => {                  
+            if(response.data.loggedIn === true) {
+            setLoginStatus(response.data.user[0].firstname + " " +setLoginStatus(response.data.user[0].lastname));
+            }
+        });
+    }, []);
+
+        
 
     const history = useHistory();
     const sendotp = () =>{ 
@@ -97,7 +94,7 @@ function Login (){
                             </Link>
                             <div className="dash-bottom" style={{ paddingTop: '8%' }}></div>
                             <Col style={{ textAlign: 'end', marginTop: '8%' }}>
-                            <Button className="btn-login" type="submit"
+                            <Button className="btn-login"
                             onClick={ login } >Log in</Button>
                             </Col>
                             <Row style={{ paddingTop: '15%', textAlign: 'center' }}>
@@ -115,6 +112,7 @@ function Login (){
                     </Card>
                 </Col>
             </Row>
+        <div>{loginStatus}</div>
     </Container>
     );
     }
