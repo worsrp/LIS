@@ -2,7 +2,7 @@ import express from 'express';
 import mysql from 'mysql';
 import multer from 'multer';
 import path from 'path';
-import cors from 'cors';
+import cors from 'cors'; 
 
 const __dirname = path.resolve();
 const router = express.Router();
@@ -22,20 +22,19 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname )  
     }
 })
-
+ 
 // show mypost to edit
 router.get('/:id', (req, res)=> {
-    const user_id = 1234; 
-    const post_id = req.params.id;
-    
+    const user_id = 1234;
+    const postid = req.params.id;
+
     const sqlSelect = "SELECT * FROM POST WHERE user_id =? AND post_id =?";
-    db.query(sqlSelect, [user_id ,post_id],  (err, result) => {
+    db.query(sqlSelect, [user_id ,postid],  (err, result) => {
         res.send(result);
-        console.log(result);
-        console.log(post_id);
-        console.log(err);
     })
+    console.log(postid);
 });
+
 
 //save post
 router.post('/:id', (req,res)=> {
@@ -62,7 +61,7 @@ router.post('/:id', (req,res)=> {
                 }
                 else if (err) {
                     return res.send(err); 
-                }
+                } 
 
                 const image = req.file.filename 
 

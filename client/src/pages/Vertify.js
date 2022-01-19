@@ -21,12 +21,11 @@ const Vertify = () => {
         email: email 
         }).then((response) => {
             if(response.data.message == "Reset Password") {
-                setsendOtpStatus(response.data.message);
                 alert(response.data.message);
-                window.location.href = '/resetpass';
+                window.location.href = `/resetpass?${email}`;
             }else if(response.data.message == "OTP is already expired"){
                 alert(response.data.message);
-                window.location.href = '/login';
+                window.location.reload();
             }else{
                 alert(response.data.message);
                 window.location.href = '/vertify';
@@ -56,7 +55,6 @@ const Vertify = () => {
                 </div>
             </div>  
         </div>
-        <h1>{sendOtpStatus}</h1>
         </center>
     );
 }

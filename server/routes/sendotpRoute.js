@@ -18,6 +18,9 @@ router.post('/', (req,res) => {
     if(code<100000){
         code=code+(Math.floor((Math.random()*10)*100000));
     }
+    if(code>1000000){
+        code = code%1000000;
+    }
     var temp = new Date();
     if(temp.getMonth()+1<10){
         var expireIn = (temp.getFullYear()) + "-0" + ((temp.getMonth()+1)) + "-" + temp.getDate();
@@ -57,13 +60,13 @@ router.post('/', (req,res) => {
                 (err, result) =>{
                     console.log(err);
                 })
-                transporter.sendMail(mailOption, function(error,info){
-                    if(error){
-                        console.log(error);
-                    }else{
-                        console.log('Email sent: '+ info.response);
-                    }
-                })
+                // transporter.sendMail(mailOption, function(error,info){
+                //     if(error){
+                //         console.log(error);
+                //     }else{
+                //         console.log('Email sent: '+ info.response);
+                //     }
+                // })
                 res.send({message: "Please Check your Email !"});
             }
         }else{

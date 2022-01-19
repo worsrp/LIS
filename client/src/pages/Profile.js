@@ -1,10 +1,12 @@
-import React,{useState, useEffect } from "react";
+import React,{useState, useEffect, useContext } from "react";
 import Axios from 'axios'
 import { Link } from 'react-router-dom';
 
+
 //import style
 import '../custom.scss';
-import { Card, Button, Container, Image} from 'react-bootstrap';
+import { Card, Button, Container, Image, Row, Col } from 'react-bootstrap';
+import { AiFillEdit } from "react-icons/ai";
 
 const Profile = () =>{
     const [profile, setProfile] = useState([]);
@@ -19,21 +21,42 @@ const Profile = () =>{
 
     return (
         <Container>
-            hello
-            <Button> 
-            <Link  to="/editprofile">Edit</Link>
-            </Button>
             {profile.map((val)=> {
                         return (
-                            <Card>
-                                <Image src={require(`../../../public_html/uploads/${val.image}`)}/>
-                                <div>
-                                    <h3> {val.firstname}     {val.lastname}</h3> 
-                                    <h5> Email : {val.email}</h5>  
-                                    <h5> Mobile : {val.moblie}</h5>  
-                                    <h5> Address : {val.address}</h5>         
-                                </div>
-                            </Card>
+                            <Container>
+                            <Row style={{ marginRight: '20px'}} >
+                                <Image src={require(`../profilebanner.png`)} />
+                            </Row>
+                            <Row> 
+                            <Col xs={4}>
+                                { val.image !== null ?
+                                <Image src={require(`../../../public_html/uploads/${val.image}`)}
+                                roundedCircle className="profile-pic" />
+                                : <Image src={require(`../nopic.jpg`)}
+                                roundedCircle className="profile-pic" />}
+                            </Col>
+                            <Col>
+                            <Row>
+                                <Col style={{ marginTop: '10px', marginLeft: '-60px'}}>
+                                    <div>
+                                        <h1> {val.firstname}     {val.lastname}</h1> 
+                                        <h5 style={{ marginTop: '10px'}}> Email : {val.email}</h5>  
+                                        <h5 style={{ marginTop: '10px'}}> Mobile : {val.moblie}</h5>  
+                                        <h5 style={{ marginTop: '10px'}}> Address : {val.address}</h5>         
+                                    </div>
+                                </Col>
+                                <Col xs={3} style={{ marginTop: '10px', marginLeft: '40px'}}>
+                                    <Link  to="/editprofile">
+                                        <Button className="btn-login" > 
+                                            <AiFillEdit className="icon-sim" style={{ marginRight: '8px' }} />
+                                            Edit 
+                                        </Button>
+                                    </Link>
+                                </Col>
+                            </Row>
+                            </Col>
+                            </Row>
+                            </Container>
                         ); 
                     })}
         </Container> 

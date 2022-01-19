@@ -21,6 +21,7 @@ router.post('/', (req,res) => {
     }else{
         var date = (temp.getFullYear()) + "-" + ((temp.getMonth()+1)) + "-" + temp.getDate();
     }
+    
     db.query(sqlSelect,[email,otp],(err, result) =>{
         if(result.length > 0){
             Object.keys(result).forEach(function(key) {
@@ -37,8 +38,7 @@ router.post('/', (req,res) => {
                         if(temp.getHours()==((((timeExpire)-(timeExpire%100))/100)+1) && temp.getMinutes()<(timeExpire%100) && 
                         (timeExpire%100)-temp.getMinutes()>=58){
                             res.send({message: "Reset Password"})
-                        }
-                        else{
+                        }else{
                             res.send({message: "OTP is already expired"})
                         }
                     }

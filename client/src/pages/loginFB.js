@@ -1,7 +1,8 @@
-
-import React, {useState,useEffect } from "react";
+import React, {useState, useContext } from "react";
 import Axios from "axios";
 import { Link, Redirect, useHistory } from "react-router-dom";
+import { AuthContext } from "../Auth";
+import firebaseConfig from "../config";
 
 //import style
 import '../custom.scss';
@@ -13,41 +14,33 @@ function Login (){
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loginStatus, setLoginStatus] = useState("");
-        
+    
 
-    Axios.defaults.withCredentials = true;
+    //Axios.defaults.withCredentials = true;
 
     const login = () => {
-        console.log(email)
-        console.log(password)
-        Axios.post('http://localhost:8000/login',{
-        email: email,   
-        password: password
-        }).then((response) => {
-        if(response.data.message) {
-            setLoginStatus(response.data.message);
-        }else{
-            setLoginStatus(response.data[0].firstname + " " +response.data[0].lastname);
+
+        try{
+
+            firebaseConfig.auth().signInWithEmailAndPassword(email, password);
+
+        }catch(error){
+            alert(error);
         }
-        });
     };
-
-    useEffect(() => {
-        Axios.get("http://localhost:8000/login").then((response) => {                  
-            if(response.data.loggedIn === true) {
-            setLoginStatus(response.data.user[0].firstname + " " +setLoginStatus(response.data.user[0].lastname));
-            }
-        });
-    }, []);
-
-        
 
     const history = useHistory();
     const sendotp = () =>{ 
         history.push("/sendotp");
     };
 
+
+    const { currentUser } = useContext(AuthContext);
+
+    if (currentUser !== null){
+        return <Redirect to="feed" />;
+    }
+        
     return (
         <Container className="login-bg">
             <Row>
@@ -108,8 +101,6 @@ function Login (){
                     </Card>
                 </Col>
             </Row>
-        <div>{loginStatus}</div>
     </Container>
-    );
-    }
+    )};
 export default Login;

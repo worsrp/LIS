@@ -1,8 +1,6 @@
 import express from 'express';
 import mysql from 'mysql';
 import bcrypt from "bcrypt";
-import {body, validationResult} from "express-validator";
-import path from 'path';
 
 const router = express.Router();
 const db = mysql.createConnection({
@@ -11,24 +9,18 @@ const db = mysql.createConnection({
     password: "",
     database: "lisdatabase"
 });
-
-
-
-router.get('/', (req, res,) => {
-    console.log("0")
+router.get('/', (req, res) => {
             if (req.session.user) {
-                console.log("1")
+                console.log("3")
             res.send({ loggedIn: true, user : req.session.user});
             } else {
-                console.log("2")
             res.send({ loggedIn: false });
             }
-    
     });
 
 router.post('/', (req,res) => {
     const email = req.body.email
-    const password= req.body.password
+    const password = req.body.password
 
     db.query(
         "SELECT * FROM user WHERE email = ?;",

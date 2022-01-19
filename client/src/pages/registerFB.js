@@ -1,7 +1,7 @@
-
 import React, {useState,useEffect } from "react";
 import Axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import firebaseConfig from "../config";
 
 //import style
 import '../custom.scss';
@@ -12,45 +12,54 @@ import { MdError } from "react-icons/md";
 
 function Register (){
     const [IsError, setIsError] = useState("");         
-    const [emailReg, setEmailReg] = useState("");
+    const [email, setemail] = useState("");
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [moblie, setMoblie] = useState("");
     const [address, setAddress] = useState("");
-    const [passwordReg, setPasswordReg] = useState("");
+    const [password, setpassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [check, setCheck] = useState(false);
     const [alertShow, setAlertShow] = useState(false);
+    const [currentUser, setCurrentUser] = useState(null);
 
     const register = () => {
-        console.log(emailReg)
-        console.log(firstname)
-        console.log(lastname)
-        console.log(moblie)
-        console.log(address)
-        console.log(passwordReg)
-        console.log(confirmPassword)
-        if(passwordReg !== confirmPassword){
+
+        if(password !== confirmPassword){
             alert("Confirm Password is not match with password !");
         }else{ 
-            Axios.post("http://localhost:8000/register", {
-                email: emailReg, 
-                firstname: firstname, 
-                lastname: lastname, 
-                password: passwordReg,
-                moblie: moblie, 
-                address: address
-        }).then((response) => {
-            console.log("seuccess")
-            console.log(response)
-            alert("successfully");
 
-        });
-        }
-    };
+            try{
+
+                firebaseConfig.auth().createUserWithEmailAndPassword(email, password)
+                .then((response) => {
+                    userConnected(response)
+                });
+    
+    
+            }catch(error){
+                alert(error);
+            }
+
+        };
+    }
+
+    async function userConnected (res){
+        const connectID = await res.user;
+        Axios.post("http://localhost:8000/register", {
+                        email: email, 
+                        firstname: firstname, 
+                        lastname: lastname, 
+                        password: password,
+                        moblie: moblie, 
+                        address: address,
+                        uid: connectID.uid
+        })
+        setCurrentUser(res.user);
+    }   
     
     useEffect(() =>{
-        if(passwordReg !== confirmPassword){
+        if(password !== confirmPassword){
             setIsError("Password does not match!");
             setAlertShow(true);
         }else{
@@ -59,6 +68,9 @@ function Register (){
         }
     }, [check]);
 
+    // if (currentUser !== null){
+    //     return <Redirect to="/feed" />;
+    // }
 
     
     return (
@@ -82,7 +94,7 @@ function Register (){
                     <Row style={{ marginTop: '5%', borderBottom: '2px dashed lightgray', paddingBottom: '7%' }}>
                         <Row style={{ marginTop: '1%' }}>
                             <Col>First name</Col>
-                            <Col>Last name</Col>
+                            <Col>Last name</Col> 
                         </Row>
                         <Row style={{ marginTop: '1%' }}>
                             <Col>
@@ -101,7 +113,7 @@ function Register (){
                         <Row style={{ marginTop: '1%' }}>
                             <Col>
                                 <Form.Control type="email" placeholder="email address" 
-                                onChange={(e) => { setEmailReg(e.target.value) }} />
+                                onChange={(e) => { setemail(e.target.value) }} />
                             </Col>
                             <Col>
                                 <Form.Control type="text" placeholder="Mobile number"
@@ -126,7 +138,7 @@ function Register (){
                         <Row style={{ marginTop: '1%' }}>
                             <Col>
                                 <Form.Control type="password" placeholder="Password" 
-                                onChange={(e) => { setPasswordReg(e.target.value) }} />
+                                onChange={(e) => { setpassword(e.target.value) }} />
                             </Col>
                             <Col>
                                 <Form.Control type="password" placeholder="Confirm your password" 

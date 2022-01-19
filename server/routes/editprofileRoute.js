@@ -56,8 +56,8 @@ router.post('/', (req, res) => {
             db.query(sql,[image,user_id], (err, results) => {  if (err) throw err;
 				res.json({ success: 1 })      
 
-			});  
-
+			});   
+  
         });
         
         const sqlInsert = "UPDATE USER SET email=?, firstname=?, lastname=?, password=?, moblie=?, address=? WHERE id=?;"

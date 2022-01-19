@@ -22,7 +22,7 @@ router.get('/', (req, res)=> {
         }
     })
 });
-4
+
 router.post('/', (req,res)=> {
     const user_id = 1234;
 

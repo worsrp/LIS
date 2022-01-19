@@ -3,7 +3,7 @@ import Axios from 'axios'
 
 //import style
 import '../custom.scss';
-import { Card, Button, Form, Row, Col, Container, Modal, CardGroup } from 'react-bootstrap';
+import { Card, Button, Form, Row, Col, Container, Carousel, CardGroup } from 'react-bootstrap';
 import { GrSearch, GrLocation } from "react-icons/gr";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
@@ -33,7 +33,7 @@ const Feed = () =>{
     };
 
     //add post to favlist
-    const addFav = (id) => {
+    const addFav = (id) =>{
         // alert("added to favorite list");
         Axios.post("http://localhost:8000/fav", { 
             post_id: id
@@ -64,8 +64,8 @@ const Feed = () =>{
                 </Col>
                 <Col xs lg="10" >
                     <CardGroup style={{ width: '100%' }}>
-                    {feedPost.slice(start, end).map((val)=> {
-                                return (
+                    {feedPost.slice(start,end).map((val)=> {
+                        return(
                                     <Card className="card-feed">
                                         <Card.Img variant="top" src="holder.js/100px180" />
                                         <Card.Body>
@@ -77,16 +77,17 @@ const Feed = () =>{
                                                                     <GrLocation className="icon-sim" /> : {val.location}
                                                                 </Col>  
                                                                 <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
-                                                                    <Button variant="outline-danger" className="fav-btn">
-                                                                    <AiOutlineHeart className="icon-sim"/>
-                                                                        favorite
+                                                                    <Button className="btn-fav"
+                                                                    onClick = {() => {addFav(val.post_id)}} >
+                                                                    <AiOutlineHeart className="icon-sim" />
+                                                                        <span className="fav-sty">favorite</span>
                                                                     </Button>
                                                                 </Col>
                                                             </Row>
                                             </Card.Footer>
                                         </Card.Body>
                                     </Card>
-                                ); 
+                        )
                             })}
                     </CardGroup>
                 </Col>

@@ -2,6 +2,13 @@ import React,{useState, useEffect } from "react";
 import Axios from 'axios'
 import { Link } from 'react-router-dom';
 
+//import style
+import '../custom.scss';
+import { Card, Button, Container, Image, Row, Col, Form } from 'react-bootstrap';
+import { MdError } from "react-icons/md";
+import { BsImage } from "react-icons/bs";
+
+
 const Editprofile = () =>{
     const [IsError, setIsError] = useState("");       
     const [email, setEmail] = useState("");
@@ -11,19 +18,22 @@ const Editprofile = () =>{
     const [address, setAddress] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [check, setCheck] = useState(false);
+    const [alertShow, setAlertShow] = useState(false);
     const [userInfo, setuserInfo] = useState({
       file:[],
       filepreview:null,
-     });
-     
-     const checkValidation=(e)=>{
-        setConfirmPassword(e.target.value);
-        if(password !== confirmPassword){
-            setIsError("Confirm Password should be match with password");
-        }else{
+    });
+    
+    useEffect(() =>{
+      if(password !== confirmPassword){
+          setIsError("Password does not match!");
+          setAlertShow(true);
+      }else{
           setIsError("");
-        }
-    }
+          setAlertShow(false);
+      }
+    }, [check]);
 
     const handleInputChange = (event) => {
       setuserInfo({
@@ -61,115 +71,115 @@ const Editprofile = () =>{
         })
       }
     }
-     
     }
   
     return (
       <div className="container mr-60">
-        <h3 className="text-white">React Image Upload And Preview Using Node Js - <span> codeat21.com </span> </h3>
+          <Container>
+            <Form>
+                            <Row style={{ marginRight: '20px'}} >
+                                <Image src={require(`../profilebanner.png`)} />
+                            </Row>
+                            <Row> 
+                            <Col xs={4}>
+                              {userInfo.filepreview !== null ? 
+                                <Image src={userInfo.filepreview}
+                                roundedCircle className="profile-pic" />
+                              : <Image src={require(`../nopic.jpg`)}
+                              roundedCircle className="profile-pic" />} 
+                              <Button type="file" className="pos-picimg btn-trans" onChange={handleInputChange}>
+                                <BsImage className="icon-neg" />
+                                <span style={{ color: 'white' }}>change image</span>
+                              </Button>
+                              
+                            </Col>
+                            <Col>
+                            <Row>
+                                <Col style={{ marginTop: '10px', marginLeft: '-60px'}}>
+                                    <div>
+                                          <Row style={{ marginTop: '10px' }}>
+                                            <Col xs={4} style={{ textAlign: 'end' , paddingTop: '5px' }}>
+                                              <h5>First name :</h5>
+                                            </Col>
+                                            <Col>
+                                              <Form.Control type="text" placeholder="first name" style={{ width: '200px' }}
+                                              onChange={(e) => { setFirstname(e.target.value) }} />
+                                            </Col>
+                                          </Row>
+                                          <Row style={{ marginTop: '10px' }}>
+                                            <Col xs={4} style={{ textAlign: 'end' , paddingTop: '5px' }}>
+                                              <h5>Last name :</h5>
+                                            </Col>
+                                            <Col>
+                                              <Form.Control type="text" placeholder="last name" style={{ width: '200px' }}
+                                              onChange={(e) => { setLastname(e.target.value) }} />
+                                            </Col>
+                                          </Row>
+                                          <Row style={{ marginTop: '10px' }}>
+                                            <Col xs={4} style={{ textAlign: 'end' , paddingTop: '5px' }}>
+                                              <h5>Mobile :</h5>
+                                            </Col>
+                                            <Col>
+                                              <Form.Control type="text" placeholder="Mobile" style={{ width: '200px' }}
+                                              onChange={(e) => { setMoblie(e.target.value) }} />
+                                            </Col>
+                                          </Row>
+                                          <Row style={{ marginTop: '10px' }}>
+                                            <Col xs={4} style={{ textAlign: 'end' , paddingTop: '5px' }}>
+                                              <h5>Address :</h5>
+                                            </Col>
+                                            <Col>
+                                              <Form.Control type="text" placeholder="New address" style={{ width: '200px' }}
+                                              onChange={(e) => { setAddress(e.target.value) }} />
+                                            </Col>
+                                          </Row>
+                                          <Row style={{ marginTop: '10px' }}>
+                                            <Col xs={4} style={{ textAlign: 'end' , paddingTop: '5px' }}>
+                                              <h5>New password :</h5>
+                                            </Col>
+                                            <Col>
+                                              <Form.Control type="password" placeholder="password" style={{ width: '200px' }}
+                                              onChange={(e) => { setPassword(e.target.value) }} />
+                                            </Col>
+                                          </Row>
+                                          <Row style={{ marginTop: '10px' }}>
+                                            <Col xs={4} style={{ textAlign: 'end' , paddingTop: '5px' }}>
+                                              <h5>Confirm password :</h5>
+                                            </Col>
+                                            <Col>
+                                              <Form.Control type="password" placeholder="confirm password" style={{ width: '200px' }}
+                                              onChange={(e) => { 
+                                                setConfirmPassword(e.target.value);
+                                                setCheck(!check); 
+                                              }} />
+                                            </Col>
+                                          </Row>     
+                                          <Row style={{ marginTop: '1%' }}>
+                                              <Col className="text-error" style={{ paddingLeft: '250px' }}>
+                                                  {alertShow === false ? (
+                                                      <span></span>
+                                                      ) : (
+                                                          <MdError className="icon-sim" />
+                                                      )}
+                                                  {IsError}
+                                              </Col>
+                                          </Row>
+                                    </div>
+                                </Col>
+                            </Row>
+                            </Col>
+                            </Row>
+              </Form>
+            </Container>
   
         <div className="formdesign">
         {isSucces !== null ? <h4> {isSucces} </h4> :null }
           <div className="form-row">
-            <label className="text-white">Select Image :</label>
             <input type="file" className="form-control" name="upload_file"  onChange={handleInputChange} />
           </div>
-        </div>
-        <div className="edit">
-            <h1> Edit </h1>
-            <form action="">
-              <div className="mb-3">
-                <label htmlFor="name" className="form-label">
-                email:
-                </label>
-                <input
-                type="text"
-                className="form-controll"
-                onChange={(e) => {
-                    setEmail(e.target.value)
-                }}
-                ></input>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="name" className="form-label">
-                Firstname :
-                </label>
-                <input
-                type="text"
-                className="form-controll"
-                onChange={(e) => {
-                    setFirstname(e.target.value)
-                }}
-                ></input>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="name" className="form-label">
-                Lastname :
-                </label>
-                <input
-                type="text"
-                className="form-controll"
-                onChange={(e) => {
-                    setLastname(e.target.value)
-                }}
-                ></input>
-              </div>
-              < div className="mb-3">
-                <label htmlFor="name" className="form-label">
-                Moblie :
-                </label>
-                <input
-                type="text"
-                className="form-controll"
-                onChange={(e) => {
-                    setMoblie(e.target.value)
-                }}
-                ></input>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="name" className="form-label">
-                Address :
-                </label>
-                <input
-                type="text"
-                className="form-controll"
-                onChange={(e) => {
-                    setAddress(e.target.value)
-                }}
-                ></input>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="name" className="form-label">
-                Password :
-                </label>
-                <input
-                type="password"
-                className="form-controll"
-                onChange={(e) => {
-                    setPassword(e.target.value)
-                }}
-                ></input>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="name" className="form-label">
-                Confirm Password :
-                </label>
-                <input
-                type="password"
-                className="form-controll"
-                onChange={(e) => checkValidation(e)}
-                ></input>
-                <br />
-                <p1>{IsError}</p1>
-              </div>
-              <br />
-            </form>
               <div className="form-row">
                 <Link to={"/profile"}><button class="btn btn-success" onClick={submit}> Save </button></Link>        
               </div>
-        {userInfo.filepreview !== null ? 
-          <img className="previewimg"  src={userInfo.filepreview} alt="UploadImage" />
-        : null}
         </div>
   
       </div>

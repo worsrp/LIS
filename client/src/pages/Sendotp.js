@@ -29,7 +29,7 @@ const Sendotp = () => {
     const back = () =>{ 
         history.push("/login");
     }
-
+ 
     return (
         <center>
         <div className="Container">
