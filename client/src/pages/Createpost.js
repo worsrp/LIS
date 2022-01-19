@@ -20,6 +20,7 @@ function CreatePost(props) {
         file:[],
         filepreview:null,
     });
+    const [post_id,setId] = useState([])
     const { currentUser } = useContext(AuthContext);
     
     const handleInputChange = (event) => {
@@ -53,15 +54,20 @@ function CreatePost(props) {
             location: location,  
             description: description,
             category: category
-        }).then(() =>{
-
+        }).then((response) =>{
+            setId(response.data);
+        }).then(()=>{
+            post_id.map((val)=>{
+                alert(val.post_id);
+            })
         });
-        Axios.post(`http://localhost:8000/createpost`,formdata ,{
-            post_name: post_name,  
-            headers: { "Content-Type": "multipart/form-data" } 
-        }).then(() => {
-            
-        })
+
+        // Axios.post(`http://localhost:8000/createpost/${post_id}`,formdata ,{
+        //     post_name: post_name,  
+        //     headers: { "Content-Type": "multipart/form-data" } 
+        // }).then(() => {
+        //     window.location.href = `/createpostimage?${post_id}`;
+        // })
         
     };
 
@@ -102,13 +108,13 @@ function CreatePost(props) {
                             </Col>
                         </Form.Group>
                         
-                        {/* picture */}
+                        {/* picture
                         <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
                             <Col sm="11">
                                 <label className="text-white">Select Image :</label>
                                 <input type="file" className="form-control" name="upload_file"  onChange={handleInputChange} />             
                             </Col>
-                        </Form.Group>
+                        </Form.Group> */}
 
                     </Col>
                 </Row>
@@ -233,9 +239,9 @@ function CreatePost(props) {
                 className="pos-center" style = {{ width: '80%'}}>Post</Button>
             </Link>
             </Modal.Footer>
-                {userInfo.filepreview !== null ? 
+                {/* {userInfo.filepreview !== null ? 
                 <img className="previewimg"  src={userInfo.filepreview} alt="UploadImage" />
-                : null}
+                : null} */}
         </Modal>
     </Container>
     );
