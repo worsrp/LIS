@@ -20,17 +20,9 @@ function CreatePost(props) {
         file:[],
         filepreview:null,
     });
-    const [post_id,setId] = useState([])
+    const [post_id,setId] = useState('')
+    const [insertobject,setinsertobject] = useState([])
     const { currentUser } = useContext(AuthContext);
-    
-    const handleInputChange = (event) => {
-        setuserInfo({
-          ...userInfo,
-          file:event.target.files[0],
-          filepreview:URL.createObjectURL(event.target.files[0]),
-        });
-    
-      };
 
     const submitPost = () => {
         var post_date = new Date();
@@ -41,46 +33,31 @@ function CreatePost(props) {
         console.log(post_name);
         const formdata = new FormData(); 
         formdata.append('avatar', userInfo.file);
-        // formdata.append('post_name', Name);
-        // formdata.append('category', Category);
-        // formdata.append('post_datr', today);
-        // formdata.append('location', Location);
-        // formdata.append('description', Description);
-        // formdata.append('post_id', currentUser.uid);
-        // alert(formdata.getAll("post_name"));
+        
         Axios.post("http://localhost:8000/createpost",{
             post_name: post_name,  
             post_date: post_date,  
-            location: location,  
+            location: location,   
             description: description,
             category: category
         }).then((response) =>{
-            setId(response.data);
-        }).then(()=>{
-            post_id.map((val)=>{
-                alert(val.post_id);
-            })
+            setId(response.data.insertId);
+            alert(Object.keys(insertobject));
+            console.log(post_id);
+            // console.log(response.data);
+            console.log(response.data.insertId);
+            window.location.href = `/createpostimage?${post_id}`;
         });
-
-        // Axios.post(`http://localhost:8000/createpost/${post_id}`,formdata ,{
-        //     post_name: post_name,  
-        //     headers: { "Content-Type": "multipart/form-data" } 
-        // }).then(() => {
-        //     window.location.href = `/createpostimage?${post_id}`;
-        // })
-        
     };
-
+    
 
     return (
     <Container>
-        
         <Modal
             {...props}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
-            centered
-        >
+            centered >
             <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter" 
                 className="text-header" style={{ paddingLeft : '250px' }}>
@@ -108,13 +85,6 @@ function CreatePost(props) {
                             </Col>
                         </Form.Group>
                         
-                        {/* picture
-                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                            <Col sm="11">
-                                <label className="text-white">Select Image :</label>
-                                <input type="file" className="form-control" name="upload_file"  onChange={handleInputChange} />             
-                            </Col>
-                        </Form.Group> */}
 
                     </Col>
                 </Row>
@@ -239,9 +209,6 @@ function CreatePost(props) {
                 className="pos-center" style = {{ width: '80%'}}>Post</Button>
             </Link>
             </Modal.Footer>
-                {/* {userInfo.filepreview !== null ? 
-                <img className="previewimg"  src={userInfo.filepreview} alt="UploadImage" />
-                : null} */}
         </Modal>
     </Container>
     );

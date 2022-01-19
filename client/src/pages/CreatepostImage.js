@@ -11,15 +11,6 @@ const Editpost = () =>{
         filepreview:null,
        })
     const { currentUser } = useContext(AuthContext);
- 
-    const handleInputChange = (event) => {
-        setuserInfo({
-            ...userInfo,
-            file:event.target.files[0],
-            filepreview:URL.createObjectURL(event.target.files[0]),
-        });
-    }
-
     let urlString = window.location.href; 
     var post_id;
     let paramString = urlString.split('?')[1];
@@ -34,8 +25,18 @@ const Editpost = () =>{
             seteditPost(response.data);
         });
     }, []);
+ 
+    const handleInputChange = (event) => {
+        setuserInfo({
+            ...userInfo,
+            file:event.target.files[0],
+            filepreview:URL.createObjectURL(event.target.files[0]),
+        });
+    }
+
+    
             
-    const savePost = () => {
+    const savePost = (post_id) => {
         var edittoday = new Date();
         var dd = String(edittoday.getDate()).padStart(2, '0');
         var mm = String(edittoday.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -60,20 +61,20 @@ const Editpost = () =>{
                         <div className="myPostCard">
                             <form>
                                 <label>Post Name : </label>
-                                <input type="text" name="post_name" value = {val.post_name} onChange={(e)=>{ setName(e.target.value) }} required /><br></br>
+                                <input type="text" name="post_name" value = {val.post_name}  required /><br></br>
 
                                 <label className="text-white">Select Image :</label>
-                                <input type="file" className="form-control" name="upload_file"  onChange={handleInputChange} />
+                                <input type="file" className="form-control" name="upload_file" />
             
                                 <label>Location : </label>
-                                <select name="location" value= {val.location} onChange={(e)=>{ setLocation(e.target.value) }}>
+                                <select name="location" value= {val.location} >
                                 </select><br></br>
 
                                 <label>Description : </label>
-                                <input type="text" name="Description" value = {val.description} onChange={(e)=>{ setDescription(e.target.value) }} required /><br></br>
+                                <input type="text" name="Description" value = {val.description}  required /><br></br>
 
                                 <label>Post Status : </label>
-                                <input type="text" name="post_status" value = {val.post_status} onChange={(e)=>{ setStatus(e.target.value) }}required /><br></br>
+                                <input type="text" name="post_status" value = {val.post_status} required /><br></br>
                             </form>
 
                             <button onClick={() => {savePost(val.post_id)}}> Edit </button>

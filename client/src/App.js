@@ -17,6 +17,7 @@ import ResetPass from './pages/Resetpass';
 import Editpost from './pages/Editpost';
 import MyPost from "./pages/Mypost";
 import Vertify from "./pages/Vertify";
+import CreatepostImage from "./pages/CreatepostImage";
 
 //import style
 import './custom.scss';
@@ -78,6 +79,7 @@ function App() {
             <Route path="/resetpass">< ResetPass /></Route>
             <Route path="/vertify">< Vertify /></Route>  
             <Route path="/editpost">< Editpost /></Route> 
+            <Route path="/ceratepostimage"> <CreatepostImage/></Route>
       </Switch>
     );
 
@@ -186,8 +188,7 @@ function App() {
                   <Route path="/resetpass">< ResetPass /></Route>
                   <Route path="/vertify">< Vertify /></Route>  
                   <Route path="/editpost">< Editpost /></Route>
-                  <Route path="/resetpass">< ResetPass /></Route>  
-                  <Route path="/editpost/:post_id">< Editpost /></Route>
+                  <Route path="/ceratepostimage"> <CreatepostImage/></Route>
                 </Switch>
               </Col>
             </Row>
