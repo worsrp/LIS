@@ -1,7 +1,8 @@
 
 import React, {useState,useEffect } from "react";
 import Axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import * as Yup from "yup";
 
 //import style
 import '../custom.scss';
@@ -22,10 +23,27 @@ function Register (){
     const [check, setCheck] = useState(false);
     const [alertShow, setAlertShow] = useState(false);
 
+    const validationSchema = Yup.object().shape({
+        emailReg: Yup.string().min(10).max(50).required(),
+        firstname: Yup.string().min(4).max(20).required(),
+        lastname: Yup.string().min(4).max(20).required(),        
+        moblie: Yup.string().min(9).max(10).required(),
+        address: Yup.string().min(4).max(100).required(),
+        passwordReg: Yup.string().min(8).max(20).required(),
+        confirmPassword: Yup.string().min(8).max(20).required(),
+        });
+
     const register = () => {
+        console.log(emailReg)
+        console.log(firstname)
+        console.log(lastname)
+        console.log(moblie)
+        console.log(address)
+        console.log(passwordReg)
+        console.log(confirmPassword)  
         if(passwordReg !== confirmPassword){
             alert("Confirm Password is not match with password !");
-        }else{ 
+       }else{ 
             Axios.post("http://localhost:8000/register", {
                 email: emailReg, 
                 firstname: firstname, 
@@ -36,9 +54,9 @@ function Register (){
         }).then((response) => {
             console.log(response)
             alert("successfully");
-
+          //  window.location.href = '/login';
         });
-        }
+       }
     };
     
     useEffect(() =>{
@@ -51,8 +69,6 @@ function Register (){
         }
     }, [check]);
 
-
-    
     return (
         <body class="bg-color">
         <Container >
@@ -96,7 +112,7 @@ function Register (){
                                 onChange={(e) => { setEmailReg(e.target.value) }} />
                             </Col>
                             <Col>
-                                <Form.Control type="text" placeholder="Mobile number" 
+                                <Form.Control type="text" placeholder="Mobile number"
                                 onChange={(e) => { setMoblie(e.target.value) }}  />
                             </Col>
                         </Row>
@@ -105,7 +121,7 @@ function Register (){
                         </Row>
                         <Row style={{ marginTop: '1%' }}>
                             <Col>
-                                <Form.Control as="textarea" rows={2} style={{ resize: 'none' }} placeholder="Address" required
+                                <Form.Control as="textarea" rows={2} style={{ resize: 'none' }} placeholder="Address" 
                                 onChange={(e) => { setAddress(e.target.value) }} />
                             </Col>
                         </Row>
