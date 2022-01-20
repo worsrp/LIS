@@ -1,6 +1,7 @@
-import React,{useState, useEffect } from "react";
+import React,{useState, useEffect, useContext } from "react";
 import Axios from 'axios'
 import { Link } from 'react-router-dom';
+import { AuthContext } from "../Auth";
 
 //import style
 import '../custom.scss';
@@ -11,7 +12,6 @@ import { BsImage } from "react-icons/bs";
 
 const Editprofile = () =>{
     const [IsError, setIsError] = useState("");       
-    const [email, setEmail] = useState("");
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [moblie, setMoblie] = useState("");
@@ -24,7 +24,7 @@ const Editprofile = () =>{
       file:[],
       filepreview:null,
     });
-    
+    const { currentUser } = useContext(AuthContext);
     useEffect(() =>{
       if(password !== confirmPassword){
           setIsError("Password does not match!");
@@ -49,16 +49,16 @@ const Editprofile = () =>{
     const submit = () =>{
       const formdata = new FormData(); 
       formdata.append('avatar', userInfo.file);
-      if(email==""||firstname==""||lastname==""||moblie==""||address==""||password==""||confirmPassword==""||userInfo.filepreview==null){
+      if(firstname==""||lastname==""||moblie==""||address==""||password==""||confirmPassword==""||userInfo.filepreview==null){
         alert("Please input your information !");
       }else{ 
       if(password !== confirmPassword){
         alert("Confirm Password is not match with password !");
       }else{
-      Axios.post("http://localhost:8000/editprofile", formdata,{   
+      Axios.post(`http://localhost:8000/editprofile/${currentUser.uid}`, formdata,{   
             headers: { "Content-Type": "multipart/form-data" } 
       })
-      Axios.post("http://localhost:8000/editprofile",{
+      Axios.post(`http://localhost:8000/editprofile/${currentUser.uid}`,{
         image:formdata,
         email: email, 
         firstname: firstname, 
@@ -178,7 +178,13 @@ const Editprofile = () =>{
             <input type="file" className="form-control" name="upload_file"  onChange={handleInputChange} />
           </div>
               <div className="form-row">
-                <Link to={"/profile"}><button class="btn btn-success" onClick={submit}> Save </button></Link>        
+                <table>
+                  <td>
+                    <button class="btn btn-success" onClick={submit}> Save </button></td>
+                    <td>
+                      <Link to={"/profile"}><button class="btn btn-success"> Back </button></Link>
+                      </td>
+                      </table>         
               </div>
         </div>
   
