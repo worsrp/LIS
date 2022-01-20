@@ -24,11 +24,10 @@ const storage = multer.diskStorage({
     }
 })
 
-router.post('/', (req, res) => {	
+router.post('/:uid', (req, res) => {
+    const uid = req.params.uid;	
     try {
         // 'avatar' is the name of our file input field in the HTML form
-        const user_id = 1234
-        const email     = req.body.email
         const firstname = req.body.firstname
         const lastname  = req.body.lastname
         const moblie    = req.body.moblie
@@ -52,16 +51,16 @@ router.post('/', (req, res) => {
 
             const image = req.file.filename
 
-            const sql = "UPDATE user SET image=? WHERE id=?";
-            db.query(sql,[image,user_id], (err, results) => {  if (err) throw err;
+            const sql = "UPDATE user SET image=? WHERE uid=?";
+            db.query(sql,[image,uid], (err, results) => {  if (err) throw err;
 				res.json({ success: 1 })      
 
 			});   
   
         });
         
-        const sqlInsert = "UPDATE USER SET email=?, firstname=?, lastname=?, password=?, moblie=?, address=? WHERE id=?;"
-        db.query(sqlInsert,[email, firstname, lastname, password, moblie, address,user_id],
+        const sqlInsert = "UPDATE USER SET firstname=?, lastname=?, password=?, moblie=?, address=? WHERE uid=?;"
+        db.query(sqlInsert,[firstname, lastname, password, moblie, address,uid],
         (err, result) =>{
             console.log(err);
         })

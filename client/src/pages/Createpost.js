@@ -42,11 +42,12 @@ function CreatePost(props) {
             category: category
         }).then((response) =>{
             setId(response.data.insertId);
-            alert(Object.keys(insertobject));
-            console.log(post_id);
+            alert(post_id);
             // console.log(response.data);
             console.log(response.data.insertId);
-            window.location.href = `/createpostimage?${post_id}`;
+            window.location.href = `/createpostimage?${response.data.insertId}`;
+            Axios.get(`http://localhost:8000/createpost/${response.data.insertId}`)
+            console.log(response.data.insertId);
         });
     };
     

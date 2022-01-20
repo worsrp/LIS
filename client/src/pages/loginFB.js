@@ -8,7 +8,6 @@ import firebaseConfig from "../config";
 import '../custom.scss';
 import { Row, Col, Container, Card, Button, InputGroup, FormControl } from 'react-bootstrap';
 import { FaUserAlt, FaKey } from "react-icons/fa";
-import '../../node_modules/font-awesome/css/font-awesome.min.css';
 
 function Login (){
 
@@ -49,7 +48,7 @@ function Login (){
                     <Card className="login-card">
                         <div class="card-content">
                             <div class="text-sub-banner dash-bottom">Hello</div>                            
-                            <InputGroup className="mb-3" style={{ marginTop: '10%' }} >
+                            <InputGroup className="mb-3" style={{ marginTop: '5%' }} >
                                 <InputGroup.Text id="basic-addon1"
                                 style={{ backgroundColor: 'transparent', borderRight:'none', height: '50px', borderRadius: '20px 0px 0px 20px' }}>
                                     <FaUserAlt style={{ marginLeft: '10px' }} />
@@ -75,18 +74,22 @@ function Login (){
                                 onChange={(e) => { setPassword(e.target.value) }}
                                 />
                             </InputGroup>
-                            <Link to='/sendotp' className="link-nodec">
-                            <div className="text-offer">Forgot your password?</div>
-                            </Link>
-                            <div className="dash-bottom" style={{ paddingTop: '8%' }}></div>
-                            <Col style={{ textAlign: 'end', marginTop: '8%' }}>
-                            <Button className="btn-login"
-                            onClick={ login } >Log in</Button>
-                            </Col>
-                            <Row style={{ paddingTop: '15%', textAlign: 'center' }}>
-                                <Col>Do not have an account yet?</Col>
+                            <div className="dash-bottom" style={{ paddingTop: '1%' }}></div>
+                            <Row style={{ marginTop: '5%' }}>
+                                <Col xs={7} style={{ marginTop: '4%'}}>
+                                    <Link to='/sendotp' className="link-nodec">
+                                    <div className="text-offer">Forgot your password?</div>
+                                    </Link>
+                                </Col>
+                                <Col style={{ textAlign: 'end' }}>
+                                <Button className="btn-login"
+                                onClick={ login } >Log in</Button>
+                                </Col>
                             </Row>
-                            <Row style={{ paddingTop: '8%', textAlign: 'center' }}>
+                            <Row style={{ paddingTop: '15%', textAlign: 'center' }}>
+                                <Col className="text-body">Do not have an account yet?</Col>
+                            </Row>
+                            <Row style={{ paddingTop: '3%', textAlign: 'center' }}>
                                 <Link to="/register" className="link-nodec">
                                     <Col className="text-offer">Register here</Col>
                                 </Link>

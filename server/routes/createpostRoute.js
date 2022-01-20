@@ -37,14 +37,23 @@ router.post('/', (req, res) => {
     const post_date = req.body.post_date
     const edit_date = req.body.post_date
     const imagest = ''
-
-
             
     const sqlInsert = "INSERT INTO POST (post_name,user_id,description,category,post_date,edit_date,post_status,location,image) VALUES (?,?,?,?,?,?,?,?,?);"
     db.query(sqlInsert, [post_name,USER_ID,description,category,post_date,edit_date,STATUS,location,imagest], (err,result)=>{
-        console.log(result);
         res.send(result);
     }) 
+});
+
+router.get('/:id', (req, res)=> {
+    const user_id = 1234;
+    const post_id = req.params.id;
+
+    const sqlSelect = "SELECT * FROM POST WHERE user_id =? AND post_id =?";
+    db.query(sqlSelect, [user_id ,post_id],  (err, result) => {
+        res.send(result);
+        console.log(post_id);
+    })
+    console.log(post_id);
 });
 
 router.post('/:id', (req, res) => {
@@ -79,16 +88,7 @@ router.post('/:id', (req, res) => {
             });
 });
 
-router.get('/:id', (req, res)=> {
-    const user_id = 1234;
-    const postid = req.params.id;
 
-    const sqlSelect = "SELECT * FROM POST WHERE user_id =? AND post_id =?";
-    db.query(sqlSelect, [user_id ,postid],  (err, result) => {
-        res.send(result);
-    })
-    console.log(postid);
-});
 
 
 
