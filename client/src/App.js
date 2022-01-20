@@ -79,7 +79,7 @@ function App() {
             <Route path="/resetpass">< ResetPass /></Route>
             <Route path="/vertify">< Vertify /></Route>  
             <Route path="/editpost">< Editpost /></Route> 
-            <Route path="/ceratepostimage"> <CreatepostImage/></Route>
+            <Route path="/createpostimage"> <CreatepostImage/></Route>
       </Switch>
     );
 
@@ -188,7 +188,7 @@ function App() {
                   <Route path="/resetpass">< ResetPass /></Route>
                   <Route path="/vertify">< Vertify /></Route>  
                   <Route path="/editpost">< Editpost /></Route>
-                  <Route path="/ceratepostimage"> <CreatepostImage/></Route>
+                  <Route path="/createpostimage"> <CreatepostImage/></Route>
                 </Switch>
               </Col>
             </Row>

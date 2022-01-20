@@ -18,7 +18,7 @@ router.post('/', (req,res) => {
     const email     = req.body.email
     const firstname = req.body.firstname
     const lastname  = req.body.lastname
-    const moblie    = req.body.moblie
+    const mobile    = req.body.moblie
     const address   = req.body.address
     const password  = req.body.password
     const uid = req.body.uid
@@ -29,8 +29,8 @@ router.post('/', (req,res) => {
             console.log(err);
         }
     db.query(
-        "INSERT INTO USER(email, firstname, lastname, password, moblie, address, image, uid) VALUES (?,?,?,?,?,?,?,?)"
-        ,[email, firstname, lastname, hash, moblie, address, IMAGE ,uid],
+        "INSERT INTO USER(email, firstname, lastname, password, mobile, address, image, uid) VALUES (?,?,?,?,?,?,?,?)"
+        ,[email, firstname, lastname, hash, mobile, address, IMAGE ,uid],
     (err, result) =>{
         console.log(err);
         console.log(result);
