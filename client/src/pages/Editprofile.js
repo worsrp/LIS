@@ -60,7 +60,6 @@ const Editprofile = () =>{
       })
       Axios.post(`http://localhost:8000/editprofile/${currentUser.uid}`,{
         image:formdata,
-        email: email, 
         firstname: firstname, 
         lastname: lastname, 
         password: password,
