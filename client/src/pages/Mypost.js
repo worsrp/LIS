@@ -41,6 +41,7 @@ const MyPost = () =>{
             <Container className="justify-content-md-center">
                 {myPost.map((val)=> {
                     return (
+
                         <Card className="card-mypost pos-center" style={{ marginTop: '30px' }}>
                             <Row>
                                 <Col xs={4}>
@@ -67,10 +68,10 @@ const MyPost = () =>{
                                 </Col>
                                 <Col xs={2} style={{ marginTop: '8%', marginLeft: '20px'}}>
                                     <Row>
-                                        <Button className="btn-edit" onClick={() => {editPost(val.post_id)}}>
-                                        <AiFillEdit className="icon-sim" style={{ marginRight: '8px' }} />
-                                            Edit 
-                                        </Button>
+                                            <Button className="btn-edit" onClick={() => {editPost(val.post_id);}}>
+                                            <AiFillEdit className="icon-sim" style={{ marginRight: '8px' }} />
+                                                Edit 
+                                            </Button>
                                     </Row>
                                         {/* <button onClick={() => {editPost(val.post_id)}}> <Link  to="/editpost" > Edit </Link> </button> */}
                                     <Row style={{ marginTop: '10px' }}>

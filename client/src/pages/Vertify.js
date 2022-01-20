@@ -2,6 +2,11 @@ import React,{useState} from "react";
 import Axios from 'axios'
 import { useHistory } from "react-router-dom";
 
+//import style
+import '../custom.scss';
+import { Row, Col, Container, Card, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Si1Password } from "react-icons/si";
+
 const Vertify = () => {
 
     const [code, setcode] = useState("");
@@ -40,22 +45,51 @@ const Vertify = () => {
     }
 
     return (
-        <center>
-        <div className="Container">
-            <div className="VertifyOTP">
-                <h1> Vertification </h1>
-                <label>Enter OTP from your Email</label>
-                <div class="contact">
-                    <input placeholder="OTP...6-digit" onChange={(event) =>{setcode(event.target.value);}}
-                        type="text" name="otp" required></input>
-                        <br />
-                        <button type="submit" onClick={vertify}>Submit</button>
-                        <button type="submit" onClick={back}>Resend OTP</button>
-                    <br></br>
-                </div>
-            </div>  
-        </div>
-        </center>
+        <Container className="login-bg">
+        <Row>
+                <Col style={{ paddingTop: '25vh', paddingLeft: '10%' }}>
+                    <div class="login-banner">Love</div>
+                    <div class="login-banner">is Sharing.</div>
+                </Col>
+                <Col>
+                    <Card className="reset-card">
+                        <div class="card-content">
+                        <Row style={{ textAlign: 'center' }}>
+                            <div class="text-huge-header dash-bottom">Reset password</div>  
+                            <div style={{ marginTop: '10%', textAlign: 'center' }}>Please check your email to vertify an OTP</div>                            
+                            <InputGroup className="mb-3" style={{ marginTop: '10px' }} >
+                                <InputGroup.Text id="basic-addon1"
+                                style={{ backgroundColor: 'transparent', borderRight:'none', height: '50px', borderRadius: '20px 0px 0px 20px' }}>
+                                    <Si1Password style={{ marginLeft: '10px' }} />
+                                </InputGroup.Text>
+                                <FormControl className="form-control no-border"
+                                style={{  borderLeft:'none', borderRadius: '0px 20px 20px 0px' }}
+                                placeholder="Please enter an OTP"
+                                type="text"
+                                aria-describedby="basic-addon1"
+                                onChange={(e) => { setcode(e.target.value) }}
+                                />
+                            </InputGroup>
+                            </Row>
+                            <Row style={{ textAlign: 'center' }}>
+                                <Col style={{ textAlign: 'end', marginTop: '8%' }}>
+                                <Button className="btn-delete"
+                                onClick={ back } >Cancel</Button>
+                                </Col>
+                                <Col style={{ textAlign: 'end', marginTop: '8%' }}>
+                                <Button className="btn-login"
+                                onClick={ vertify } >Vertify</Button>
+                                </Col>
+                                <Col xs={1}></Col>
+                            </Row>
+                            <Row style={{ paddingTop: '15%', textAlign: 'center' }}>
+                                <Col className="text-credit">powerded by Saoluck 2022</Col>
+                            </Row>
+                        </div>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 
