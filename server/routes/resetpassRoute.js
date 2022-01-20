@@ -9,18 +9,21 @@ const db = mysql.createConnection({
     password: "",
     database: "lisdatabase"
 })
+const saltRounds = 10;
 
 router.post('/', (req,res) => {
+    
     const email = req.body.email;
-    const password = req.body.password
-    const sqlUpdate = "UPDATE USER SET password = ? WHERE email = ?;"
+    const password = req.body.password;
 
     bcrypt.hash(password, saltRounds, (err, hash) => {
         if (err) {
             console.log(err);
         }
 
-    db.query(sqlUpdate, [hash,email], (err,result)=>{
+    db.query("UPDATE USER SET password = ? WHERE email = ?", [hash,email], (err,result)=>{
+        console.log(email)
+        console.log(hash);
         res.send({err: err})
     })
     })
