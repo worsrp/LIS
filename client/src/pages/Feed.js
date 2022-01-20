@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from "react";
+import React,{ useState, useEffect, useContext } from "react";
 import Axios from 'axios'
 
 //import style
@@ -7,16 +7,19 @@ import { Card, Button, Form, Row, Col, Container, Carousel, CardGroup } from 're
 import { GrSearch, GrLocation } from "react-icons/gr";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
+import { AuthContext } from "../Auth";
 
 const Feed = () =>{
     const [search, setSearch] = useState('');
     const [feedPost, setFeedPost] = useState([]);
     const [start, setStart] = useState(0);
     const [end, setEnd] = useState(3);
+    const { currentUser } = useContext(AuthContext);
 
     //show all post
     useEffect (() => {
-        Axios.get("http://localhost:8000/feed").then((response) => {
+        Axios.get(`http://localhost:8000/feed/${currentUser.uid}`, {
+        }).then((response) => {
             setFeedPost(response.data);
         });
     }, []);
@@ -25,7 +28,8 @@ const Feed = () =>{
     const searchPost = () => {
         if(search !== ''){
             Axios.post("http://localhost:8000/feed", { 
-                item: search
+                item: search,
+                uid: currentUser.uid
             }).then((response) => {
                 setFeedPost(response.data);
             })
@@ -36,20 +40,22 @@ const Feed = () =>{
     const addFav = (id) =>{
         // alert("added to favorite list");
         Axios.post("http://localhost:8000/fav", { 
-            post_id: id
+            post_id: id,
+            uid: currentUser.uid
         })
     };
 
     return (
         <Container>
-            <Form>
+            <Form onChange={()=>{searchPost()}}>
                 <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
                     <Form.Label column sm="1">
                         <GrSearch className="icon-large search-icon-pos" style={{ marginLeft: '70px' }} />
                     </Form.Label>
                     <Col sm="3">
                     <Form.Control type="text" placeholder="What are you looking for?"
-                    className="search-bar search-bar-pos"/>
+                    className="search-bar search-bar-pos"
+                    onChange={ (e) => { setSearch(e.target.value) }}/>
                     </Col>
                 </Form.Group>
             </Form>
@@ -67,7 +73,12 @@ const Feed = () =>{
                     {feedPost.slice(start,end).map((val)=> {
                         return(
                                     <Card className="card-feed">
-                                        <Card.Img variant="top" src="holder.js/100px180" />
+                                        {val.image.length>10?(
+                                        <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />):(
+                                            <div>
+
+                                            </div>
+                                        )}
                                         <Card.Body>
                                             <Card.Title>{val.post_name}</Card.Title>
                                             <Card.Text style={{ height: '100px'}}>{val.description}</Card.Text>

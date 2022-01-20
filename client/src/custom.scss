@@ -123,6 +123,10 @@ body {
     font-weight: 700;
 }
 
+.text-error{
+    color: #CC444A;
+}
+
 .pos-center{
     margin-left: auto;
     margin-right: auto;
@@ -204,7 +208,14 @@ textarea:focus, input:focus{
     width: 30rem;
     border-radius: 20px;
     box-shadow: 4px 4px 4px rgba(0,0,0,0.20);
-    margin-top: 6vh;
+    margin-top: 4vh;
+}
+
+.reset-card{
+    width: 30rem;
+    border-radius: 20px;
+    box-shadow: 4px 4px 4px rgba(0,0,0,0.20);
+    margin-top: 15vh;
 }
 
 .dash-bottom{
@@ -271,6 +282,19 @@ textarea:focus, input:focus{
 
 .fav-sty:hover{
     color: white;
+}
+
+.pic-sim{
+    width: 220px;
+    height: 200px;
+}
+.profile-pic{
+    width: 220px;
+    height: 220px;
+    position: absolute;
+    border: 7px solid white;
+    top: 200px;
+    left: 380px;
 }
 
 

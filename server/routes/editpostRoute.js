@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname )  
     }
 })
- 
+
 // show mypost to edit
 router.get('/:id', (req, res)=> {
     const user_id = 1234;
@@ -43,10 +43,10 @@ router.post('/:id', (req,res)=> {
         const post_id = req.params.id;
 
         const post_name     = req.body.post_name
+        const category      = req.body.category
         const description   = req.body.description
         const location      = req.body.location
         const edit_date     = req.body.edit_date
-        const post_status   = req.body.post_status
         let upload = multer({ storage: storage}).single('avatar');
 
             upload(req, res, function(err) {
@@ -74,8 +74,8 @@ router.post('/:id', (req,res)=> {
                     });  
             });
 
-        const sqlupdate = "UPDATE POST SET post_name =? ,description =? ,edit_date =? ,post_status =? ,location =? WHERE post_id =?";
-        db.query(sqlupdate, [post_name ,description ,edit_date ,post_status ,location ,post_id ], (err, result) => {
+        const sqlupdate = "UPDATE POST SET post_name =? ,description =?,category =? ,edit_date =? ,location =? WHERE post_id =?";
+        db.query(sqlupdate, [post_name ,description ,category ,edit_date ,location ,post_id ], (err, result) => {
             console.log(err);
             console.log(result);
             console.log(user_id);
@@ -83,7 +83,6 @@ router.post('/:id', (req,res)=> {
             console.log(post_name);
             console.log(description);
             console.log(edit_date);
-            console.log(post_status);
             console.log(location);
         })
         }

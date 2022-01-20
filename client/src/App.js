@@ -17,6 +17,7 @@ import ResetPass from './pages/Resetpass';
 import Editpost from './pages/Editpost';
 import MyPost from "./pages/Mypost";
 import Vertify from "./pages/Vertify";
+import CreatepostImage from "./pages/CreatepostImage";
 
 //import style
 import './custom.scss';
@@ -64,7 +65,11 @@ function App() {
     </a>
   ));
 
-    if (window.location.pathname === '/register' || window.location.pathname === '/login') return (      
+    if (window.location.pathname === '/register' 
+        || window.location.pathname === '/login'
+        || window.location.pathname === '/sendotp'
+        || window.location.pathname === '/vertify'
+        || window.location.pathname === '/resetpass') return (      
       <Switch>
             <Route path="/createpost"><CreatePost/></Route>
             <Route path="/feed"><Feed /></Route>
@@ -78,6 +83,7 @@ function App() {
             <Route path="/resetpass">< ResetPass /></Route>
             <Route path="/vertify">< Vertify /></Route>  
             <Route path="/editpost">< Editpost /></Route> 
+            <Route path="/createpostimage"> <CreatepostImage/></Route>
       </Switch>
     );
 
@@ -101,7 +107,8 @@ function App() {
   const sideBar = () => {
     if (window.location.pathname === '/profile' 
         || window.location.pathname === '/mypost'
-        || window.location.pathname === '/editprofile') return (
+        || window.location.pathname === '/editprofile'
+        || window.location.pathname === '/editpost') return (
       <Col xs={2} style={{ marginLeft: '60px', marginTop: '30px' }}>
         <Link to='/profile' className="link-nodec">
           <Row>
@@ -186,8 +193,7 @@ function App() {
                   <Route path="/resetpass">< ResetPass /></Route>
                   <Route path="/vertify">< Vertify /></Route>  
                   <Route path="/editpost">< Editpost /></Route>
-                  <Route path="/resetpass">< ResetPass /></Route>  
-                  <Route path="/editpost/:post_id">< Editpost /></Route>
+                  <Route path="/createpostimage"> <CreatepostImage/></Route>
                 </Switch>
               </Col>
             </Row>
