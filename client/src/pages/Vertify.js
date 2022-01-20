@@ -33,7 +33,7 @@ const Vertify = () => {
                 window.location.reload();
             }else{
                 alert(response.data.message);
-                window.location.href = '/vertify';
+                window.location.reload();
             }
             }
         )

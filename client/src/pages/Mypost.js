@@ -1,4 +1,4 @@
-import React,{useState, useEffect } from "react";
+import React,{useState, useEffect, useContext } from "react";
 import Axios from 'axios'
 import { Link, Route } from 'react-router-dom';
 
@@ -8,21 +8,28 @@ import { Card, Button, Row, Col, Container, Image } from 'react-bootstrap';
 import { GrLocation } from "react-icons/gr";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
+import { AuthContext } from "../Auth"; 
 
 const MyPost = () =>{
     const [myPost, setMyPost] = useState([]);
+    const { currentUser } = useContext(AuthContext);
 
     //get post
     useEffect (() => {
-        Axios.get("http://localhost:8000/mypost").then((response) => {
+        Axios.get("http://localhost:8000/mypost",{
+            uid : currentUser.uid 
+        }).then((response) => {
             setMyPost(response.data);
         });
     }, []);
 
     //delete post
     const deletePost = (post_id) => {
-        if(window.confirm("Do you want to delete this post ")){
-            Axios.delete(`http://localhost:8000/mypost/${post_id}`);
+        if(window.confirm("Do you want to delete this post ?")){
+            Axios.delete(`http://localhost:8000/mypost/${post_id}`,{
+                uid : currentUser.uid 
+            });
+            window.location.reload();
         }
     };
 

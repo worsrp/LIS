@@ -10,7 +10,7 @@ const db = mysql.createPool({
 });
 
 router.get('/', (req, res)=> {
-    const user_id = 1234;
+    const user_id = req.body.id;
 
     // show post of user
     const sqlSelect = "SELECT * FROM POST WHERE POST.user_id = ? ORDER BY post_id DESC";
@@ -20,7 +20,7 @@ router.get('/', (req, res)=> {
 });
 
 router.delete('/:id', (req,res)=> {
-    const user_id = 1234;
+    const user_id = req.body.id;
     const post_id = req.params.id;
 
     //delete post
