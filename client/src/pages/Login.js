@@ -108,7 +108,6 @@ function Login (){
                     </Card>
                 </Col>
             </Row>
-        <div>{loginStatus}</div>
     </Container>
     );
     }
