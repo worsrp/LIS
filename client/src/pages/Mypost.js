@@ -52,8 +52,13 @@ const MyPost = () =>{
                         <Card className="card-mypost pos-center" style={{ marginTop: '30px' }}>
                             <Row>
                                 <Col xs={4}>
-                                    <Image avariant="left" src="http://localhost:8000/<%=data[0].image%>"
-                                    style={{ width: '210px', height: '210px', margin: '10px'}}/>
+                                {val.image.length>10?(
+                                        <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} 
+                                            style={{ width: '210px', height: '210px', margin: '10px'}}/>):(
+                                            <div>
+
+                                            </div>
+                                )}
                                 </Col>
                                 <Col xs={5}>
                                     <Row style={{ height: '75%'}}>
