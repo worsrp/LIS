@@ -30,11 +30,12 @@ const Editpost = () =>{
     }
 
     let urlString = window.location.href; 
-    var post_id;
+    let post_id;
     let paramString = urlString.split('?')[1];
     let queryString = new URLSearchParams(paramString);
         for(let pair of queryString.entries()) {
             post_id = pair[0];
+            
         }
     parseInt(post_id);
 
