@@ -35,7 +35,6 @@ const Editpost = () =>{
     let queryString = new URLSearchParams(paramString);
         for(let pair of queryString.entries()) {
             post_id = pair[0];
-            
         }
     parseInt(post_id);
 

@@ -21,7 +21,6 @@ function CreatePost(props) {
         filepreview:null,
     });
     const [post_id,setId] = useState('')
-    const [insertobject,setinsertobject] = useState([])
     const { currentUser } = useContext(AuthContext);
 
     const submitPost = () => {
@@ -42,12 +41,12 @@ function CreatePost(props) {
             category: category
         }).then((response) =>{
             setId(response.data.insertId);
-            alert(post_id);
-            // console.log(response.data);
-            console.log(response.data.insertId);
-            window.location.href = `/createpostimage?${response.data.insertId}`;
+            // window.location.href = `/createpostimage?${response.data.insertId}`;
             Axios.get(`http://localhost:8000/createpost/${response.data.insertId}`)
-            console.log(response.data.insertId);
+            .then(()=>{
+                alert(response.data.insertId);
+                window.location.href = `/createpostimage?${response.data.insertId}`;
+            })
         });
     };
     

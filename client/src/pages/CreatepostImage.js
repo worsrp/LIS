@@ -1,6 +1,5 @@
 import React,{useEffect, useState, useContext} from "react";
 import Axios from 'axios'
-import { Link, Route } from 'react-router-dom';
 import { AuthContext } from "../Auth";
 
 
@@ -12,21 +11,14 @@ const SaveImage = () =>{
        })
 
     const { currentUser } = useContext(AuthContext);
- 
-    const handleInputChange = (event) => {
-        setuserInfo({
-            ...userInfo,
-            file:event.target.files[0],
-            filepreview:URL.createObjectURL(event.target.files[0]),
-        });
-    }
-
+    
     let urlString = window.location.href; 
     let post_id;
     let paramString = urlString.split('?')[1];
     let queryString = new URLSearchParams(paramString);
         for(let pair of queryString.entries()) {
             post_id = pair[0];
+
         }
     parseInt(post_id);
 
@@ -36,15 +28,31 @@ const SaveImage = () =>{
         });
     }, []);
 
-            
-    const saveimage = (post_id) => {
+    const handleInputChange = (event) => {
+        setuserInfo({
+            ...userInfo,
+            file:event.target.files[0],
+            filepreview:URL.createObjectURL(event.target.files[0]),
+        });
+    }
+
+    const saveimage = () => {
 
         const formdata = new FormData(); 
         formdata.append('avatar', userInfo.file);
 
         Axios.post(`http://localhost:8000/createpost/${post_id}`,formdata,{   
             headers: { "Content-Type": "multipart/form-data" } 
+        }).then(()=>{
+            window.location.href = `/mypost`;
         })
+    };
+
+    const cancelPost = () => {
+        if(window.confirm("Do you want to cancel this post ")){
+            Axios.delete(`http://localhost:8000/createpost/${post_id}`)
+            window.location.href = `/feed`;
+        }
     };
 
     return (
@@ -73,7 +81,7 @@ const SaveImage = () =>{
                             </form>
 
                             <button onClick={() => {saveimage(val.post_id)}}> SAVE </button>
-                            <button > <Link  to="/mypost">Cancel</Link> </button>
+                            <button onClick={() => {cancelPost(val.post_id)}}> CANCEL </button>
                             
                             {userInfo.filepreview !== null ? 
                             <img className="previewimg"  src={userInfo.filepreview} alt="UploadImage" />

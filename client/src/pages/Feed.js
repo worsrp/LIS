@@ -73,7 +73,12 @@ const Feed = () =>{
                     {feedPost.slice(start,end).map((val)=> {
                         return(
                                     <Card className="card-feed">
-                                        <Card.Img variant="top" src="holder.js/100px180" />
+                                        {val.image.length>10?(
+                                        <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />):(
+                                            <div>
+
+                                            </div>
+                                        )}
                                         <Card.Body>
                                             <Card.Title>{val.post_name}</Card.Title>
                                             <Card.Text style={{ height: '100px'}}>{val.description}</Card.Text>
