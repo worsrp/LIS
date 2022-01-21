@@ -34,7 +34,7 @@ function Login (){
     const { currentUser } = useContext(AuthContext);
 
     if (currentUser !== null){
-        return <Redirect to="feed" />;
+        window.location.href = `/`;
     }
         
     return (

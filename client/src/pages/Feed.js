@@ -46,7 +46,7 @@ const Feed = () =>{
     };
 
     return (
-        <Container>
+        <Container style={{ marginTop: '-50px' }}>
             <Form onChange={()=>{searchPost()}}>
                 <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
                     <Form.Label column sm="1">
@@ -60,39 +60,51 @@ const Feed = () =>{
                 </Form.Group>
             </Form>
             <Row className="justify-content-md-center">
-                <Col md="auto" >
-                    <FiArrowLeft className="icon-arrow" style={{ height: '65vh', marginRight: '10px' }} 
+            <Col md="auto" >
+                {feedPost.length > 3 && start !== 0 ? (
+                    <FiArrowLeft className="icon-arrow" style={{ height: '65vh' }} 
                     onClick={ () => { 
                         if(start !== 0){
                             setStart(start-1); setEnd(end-1); 
                         }
                     }}/>
+                ):( <FiArrowLeft className="icon-arrow" style={{ height: '65vh', color: 'white' }} />)}
                 </Col>
                 <Col xs lg="10" >
                     <CardGroup style={{ width: '100%' }}>
                     {feedPost.slice(start,end).map((val)=> {
                         return(
                                     <Card className="card-feed">
-                                        {val.image.length>10?(
+                                        {val.image.length>1 ? (
                                         <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />):(
-                                            <div>
-
-                                            </div>
+                                        <Card.Img variant="top" src={require("../nopic.jpg")} />
                                         )}
                                         <Card.Body>
                                             <Card.Title>{val.post_name}</Card.Title>
-                                            <Card.Text style={{ height: '100px'}}>{val.description}</Card.Text>
+                                            <Card.Text style={{ height: '12vh'}}>{val.description}</Card.Text>
                                             <Card.Footer style={{ backgroundColor: 'white', border: 'none' }}>
                                                             <Row>
-                                                                <Col style={{ marginTop: '20px', marginLeft: '-10px'}}>
-                                                                    <GrLocation className="icon-sim" /> : {val.location}
+                                                                <Col style={{ marginTop: '20px', marginLeft: '-10px'}} xs={9}>
+                                                                    <Row>
+                                                                    <Col xs={1}>
+                                                                    <GrLocation className="icon-sim" /> 
+                                                                    </Col>
+                                                                    <Col xs={1}>
+                                                                        : 
+                                                                    </Col>
+                                                                    <Col xs={8}>
+                                                                        {val.location}
+                                                                    </Col>
+                                                                    </Row> 
                                                                 </Col>  
                                                                 <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
-                                                                    <Button className="btn-fav"
-                                                                    onClick = {() => {addFav(val.post_id)}} >
-                                                                    <AiOutlineHeart className="icon-sim" />
-                                                                        <span className="fav-sty">favorite</span>
-                                                                    </Button>
+                                                                    <Row>
+                                                                            <Button className="btn-fav"
+                                                                            onClick = {() => {addFav(val.post_id)}} >
+                                                                            <AiOutlineHeart className="icon-sim" />
+                                                                                <span className="fav-sty">fav</span>
+                                                                            </Button>
+                                                                    </Row>                                                                
                                                                 </Col>
                                                             </Row>
                                             </Card.Footer>
@@ -103,12 +115,14 @@ const Feed = () =>{
                     </CardGroup>
                 </Col>
                 <Col md="auto">
-                    <FiArrowRight className="icon-arrow" style={{ height: '65vh', marginLeft: '10px' }} 
-                    onClick={ () => {
-                        if(end !== feedPost.length){
-                            setStart(start+1); setEnd(end+1); 
-                        }
-                    }}/>
+                    {feedPost.length > 3 && end !== feedPost.length ? (
+                        <FiArrowRight className="icon-arrow" style={{ height: '65vh' }} 
+                        onClick={ () => {
+                            if(end !== feedPost.length){
+                                setStart(start+1); setEnd(end+1); 
+                            }
+                        }}/>
+                    ):( <FiArrowRight className="icon-arrow" style={{ height: '65vh', color: 'white' }}/> )}
                 </Col>
             </Row>            
         </Container>

@@ -73,7 +73,7 @@ const Editprofile = () =>{
     }
   
     return (
-      <div className="container mr-60">
+      <>
           <Container>
             <Form>
                             <Row style={{ marginRight: '20px'}} >
@@ -169,25 +169,23 @@ const Editprofile = () =>{
                             </Col>
                             </Row>
               </Form>
-            </Container>
-  
-        <div className="formdesign">
-        {isSucces !== null ? <h4> {isSucces} </h4> :null }
-          <div className="form-row">
-            <input type="file" className="form-control" name="upload_file"  onChange={handleInputChange} />
-          </div>
-              <div className="form-row">
-                <table>
-                  <td>
-                    <button class="btn btn-success" onClick={submit}> Save </button></td>
-                    <td>
-                      <Link to={"/profile"}><button class="btn btn-success"> Back </button></Link>
-                      </td>
-                      </table>         
+              <div className="formdesign">
+              {isSucces !== null ? <h4> {isSucces} </h4> :null }
+                <div className="form-row">
+                  <input type="file" className="form-control" name="upload_file"  onChange={handleInputChange} />
+                </div>
+                    <div className="form-row">
+                      <table>
+                        <td>
+                          <button class="btn btn-success" onClick={submit}> Save </button></td>
+                          <td>
+                            <Link to={"/profile"}><button class="btn btn-success"> Back </button></Link>
+                            </td>
+                            </table>         
+                    </div>
               </div>
-        </div>
-  
-      </div>
+            </Container>
+      </>
     );
   }
   
