@@ -39,7 +39,7 @@ const Editpost = () =>{
     parseInt(post_id);
 
     useEffect (() => {
-        Axios.get(`http://localhost:8000/editpost/${post_id}`).then((response) => {
+        Axios.get(`http://localhost:8000/editpost/${currentUser.uid}/${post_id}`).then((response) => {
             seteditPost(response.data);
             setName(response.data.post_name);
             setCategory(response.data.category);
@@ -62,17 +62,18 @@ const Editpost = () =>{
 
         
         if(window.confirm("Are you sure to change this post detail?")){
-            Axios.post(`http://localhost:8000/editpost/${post_id}`,formdata,{   
+            Axios.post(`http://localhost:8000/editpost/${currentUser.uid}/${post_id}`,formdata,{   
             headers: { "Content-Type": "multipart/form-data" } 
             })
 
-            Axios.post(`http://localhost:8000/editpost/${post_id}`, { 
+            Axios.post(`http://localhost:8000/editpost/${currentUser.uid}/${post_id}`, { 
                 post_name: Name,   
                 category: Category,
                 edit_date: edittoday,  
                 location: Location,  
                 description: Description,
                 image: formdata,
+                uid: currentUser.uid
             }).then(() => {
                 window.location.href = `/mypost`;
             })

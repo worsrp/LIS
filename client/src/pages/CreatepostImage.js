@@ -23,7 +23,7 @@ const SaveImage = () =>{
     parseInt(post_id);
 
     useEffect (() => {
-        Axios.get(`http://localhost:8000/createpost/${post_id}`).then((response) => {
+        Axios.get(`http://localhost:8000/createpost/${currentUser.uid}/${post_id}`).then((response) => {
             setimage(response.data);
         });
     }, []);
@@ -41,8 +41,9 @@ const SaveImage = () =>{
         const formdata = new FormData(); 
         formdata.append('avatar', userInfo.file);
 
-        Axios.post(`http://localhost:8000/createpost/${post_id}`,formdata,{   
-            headers: { "Content-Type": "multipart/form-data" } 
+        Axios.post(`http://localhost:8000/createpost/${currentUser.uid}/${post_id}`,formdata,{   
+            headers: { "Content-Type": "multipart/form-data" },
+            uid: currentUser.uid
         }).then(()=>{
             window.location.href = `/mypost`;
         })
@@ -50,7 +51,7 @@ const SaveImage = () =>{
 
     const cancelPost = () => {
         if(window.confirm("Do you want to cancel this post ")){
-            Axios.delete(`http://localhost:8000/createpost/${post_id}`)
+            Axios.delete(`http://localhost:8000/createpost/${currentUser.uid}/${post_id}`)
             window.location.href = `/feed`;
         }
     };
