@@ -9,11 +9,11 @@ const db = mysql.createPool({
     database: "LISDatabase",
 });
 
-router.get('/', (req, res)=> {
-    const user_id = req.body.id;
+router.get('/:uid', (req, res)=> {
+    const user_id = req.params.uid;
 
     // show post of user
-    const sqlSelect = "SELECT * FROM POST WHERE POST.user_id = ? ORDER BY post_id DESC";
+    const sqlSelect = "SELECT * FROM POST WHERE user_id LIKE ? ORDER BY post_id DESC";
     db.query(sqlSelect, [user_id], (err, result) => {
         res.send(result);
     })

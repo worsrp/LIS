@@ -38,11 +38,11 @@ function CreatePost(props) {
             post_date: post_date,  
             location: location,   
             description: description,
-            category: category
+            category: category,
+            uid : currentUser.uid
         }).then((response) =>{
             setId(response.data.insertId);
-            // window.location.href = `/createpostimage?${response.data.insertId}`;
-            Axios.get(`http://localhost:8000/createpost/${response.data.insertId}`)
+            Axios.get(`http://localhost:8000/createpost/${currentUser.uid}/${response.data.insertId}`)
             .then(()=>{
                 alert(response.data.insertId);
                 window.location.href = `/createpostimage?${response.data.insertId}`;
