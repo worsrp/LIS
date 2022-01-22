@@ -11,6 +11,7 @@ import { BsImage } from "react-icons/bs";
 
 
 const Editprofile = () =>{
+    const [profile, setProfile] = useState([]);
     const [IsError, setIsError] = useState("");       
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
@@ -28,14 +29,15 @@ const Editprofile = () =>{
     const { currentUser } = useContext(AuthContext);
 
     useEffect(() =>{
-      if(password !== confirmPassword){
-          setIsError("Password does not match!");
-          setAlertShow(true);
-      }else{
-          setIsError("");
-          setAlertShow(false);
-      }
-    }, [check]);
+      Axios.get(`http://localhost:8000/editprofile/${currentUser.uid}`).then((response) => {
+        setProfile(response.data);
+        setFirstname(response.data[0].firstname);
+        setLastname(response.data[0].lastname);
+        setMobile(response.data[0].mobile);
+        setAddress(response.data[0].address);
+        setuserInfo(response.data[0].image);
+      });
+    }, []);
 
     const hiddenFileInput = React.useRef(null);
 
@@ -58,7 +60,7 @@ const Editprofile = () =>{
     const submit = () =>{
       const formdata = new FormData(); 
       formdata.append('avatar', userInfo.file);
-      if(firstname==""||lastname==""||mobile==""||address==""||userInfo.filepreview==null){
+      if(firstname==""||lastname==""||mobile==""||address==""){
         alert("Please input your information !");
       }
       // else{ 
@@ -86,6 +88,9 @@ const Editprofile = () =>{
   
     return (
       <>
+      {profile.map((val) => {
+          return(
+            <>
           <Container>
             <Form>
                             <Row style={{ marginRight: '20px'}} >
@@ -93,10 +98,10 @@ const Editprofile = () =>{
                             </Row>
                             <Row> 
                             <Col xs={4}>
-                              {userInfo.filepreview !== null ? 
-                                <Image src={userInfo.filepreview}
-                                roundedCircle className="profile-pic" />
-                              : <Image src={require(`../nopic.jpg`)}
+                              {val.image !== null && userInfo.filepreview == null ? 
+                              <Image src={require(`../../../public_html/uploads/${val.image}`)}
+                              roundedCircle className="profile-pic" />
+                              : <Image src={userInfo.filepreview}
                               roundedCircle className="profile-pic" />} 
                               <Button className="pos-picimg btn-trans" onClick={handleClick}>
                                 <BsImage className="icon-neg" style={{ marginTop: '-2px'}} />
@@ -113,7 +118,7 @@ const Editprofile = () =>{
                                             </Col>
                                             <Col>
                                               <Form.Control type="text" placeholder="first name" style={{ width: '200px' }}
-                                              onChange={(e) => { setFirstname(e.target.value) }} />
+                                              onChange={(e) => { setFirstname(e.target.value) }} placeholder={val.firstname} />
                                             </Col>
                                           </Row>
                                           <Row style={{ marginTop: '10px' }}>
@@ -122,7 +127,7 @@ const Editprofile = () =>{
                                             </Col>
                                             <Col>
                                               <Form.Control type="text" placeholder="last name" style={{ width: '200px' }}
-                                              onChange={(e) => { setLastname(e.target.value) }} />
+                                              onChange={(e) => { setLastname(e.target.value) }} placeholder={val.lastname}/>
                                             </Col>
                                           </Row>
                                           <Row style={{ marginTop: '10px' }}>
@@ -131,7 +136,7 @@ const Editprofile = () =>{
                                             </Col>
                                             <Col>
                                               <Form.Control type="text" placeholder="Mobile" style={{ width: '200px' }}
-                                              onChange={(e) => { setMobile(e.target.value) }} />
+                                              onChange={(e) => { setMobile(e.target.value) }} placeholder={val.mobile}/>
                                             </Col>
                                           </Row>
                                           <Row style={{ marginTop: '10px' }}>
@@ -140,7 +145,7 @@ const Editprofile = () =>{
                                             </Col>
                                             <Col>
                                               <Form.Control type="text" placeholder="New address" style={{ width: '200px' }}
-                                              onChange={(e) => { setAddress(e.target.value) }} />
+                                              onChange={(e) => { setAddress(e.target.value) }} placeholder={val.address}/>
                                             </Col>
                                           </Row>
                                           {/* <Row style={{ marginTop: '10px' }}>
@@ -196,7 +201,11 @@ const Editprofile = () =>{
                 </Row>     
               </div>
             </Container>
+            
       </>
+      )
+    })}
+    </>
     );
   }
   
