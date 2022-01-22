@@ -79,10 +79,9 @@ const Editpost = () =>{
         }
     };
 
-    const saveAlert = () => {
-        alert("save! @:");
-    }
-
+    // if(userInfo.file !== null){
+    //     alert(userInfo.file.length);
+    // }
 
     return (
         <div className="myPost" style={{ marginTop: '30px' }}>
@@ -95,12 +94,11 @@ const Editpost = () =>{
                             <Row>
                             <Col xs={3}>
                                 <Row>
-                                    {val.image.length>10?(
-                                        <Image src={require(`../../../public_html/uploads/${val.image}`)} 
-                                            style={{ width: '210px', height: '210px', margin: '10px'}}/>):(
-                                            <div>
-                                            </div>
-                                    )}
+                                    {val.image.length>1?
+                                        <Image src={require(`../../../public_html/uploads/${val.image}`)} rounded />
+                                    :[
+                                        <Image src={userInfo.filepreview} rounded />
+                                    ]}
                                 </Row>
                                 </Col>
                             <Col>

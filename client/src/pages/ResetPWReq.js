@@ -1,33 +1,25 @@
 import React,{useState} from "react";
-import Axios from 'axios'
 import { useHistory } from "react-router-dom";
+import firebaseConfig from "../config";
 
 //import style
 import '../custom.scss';
 import { Row, Col, Container, Card, Button, InputGroup, FormControl } from 'react-bootstrap';
 import { FaUserAlt } from "react-icons/fa";
 
-const Sendotp = () => {
+const ResetPWReq = () => {
 
     const [email, setEmail] = useState("");
-    const [sendOtpStatus, setsendOtpStatus] = useState("")
 
     const sendotp = () => {
-        Axios.post('http://localhost:8000/sendotp',{
-        email: email,   
-        }).then((response) => {
-            if(response.data.message=="Please Check your Email !") {
-                setsendOtpStatus(response.data.message);
-                alert(response.data.message);
-                window.location.href = `/vertify?${email}`;
-            }else if(response.data.message=="Please Try again in 1 minute"){
-                alert(response.data.message);
-                window.location.href = '/login';
-            }else{
-                alert("Invalid Email");
-                window.location.href = '/login';
-            }
-        })
+        try{
+            firebaseConfig.auth().sendPasswordResetEmail(email)
+            .then(() => {
+                alert("reset link has been sent to your email!")
+            });
+        }catch(error){
+            alert(error)
+        }
     };   
 
     const history = useHistory();
@@ -63,10 +55,10 @@ const Sendotp = () => {
                             </InputGroup>
                             </Row>
                             <Row style={{ textAlign: 'center' }}>
-                                {/* <Col style={{ textAlign: 'end', marginTop: '8%' }}>
+                                <Col style={{ textAlign: 'end', marginTop: '8%' }}>
                                 <Button className="btn-delete"
                                 onClick={ back } >Cancel</Button>
-                                </Col> */}
+                                </Col>
                                 <Col style={{ textAlign: 'end', marginTop: '8%' }}>
                                 <Button className="btn-login"
                                 onClick={ sendotp } >Reset</Button>
@@ -84,4 +76,4 @@ const Sendotp = () => {
     );
 }
 
-export default Sendotp;
+export default ResetPWReq;

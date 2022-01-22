@@ -3,7 +3,7 @@ import Axios from 'axios'
 
 //import style
 import '../custom.scss';
-import { Card, Button, Form, Row, Col, Container, Carousel, CardGroup } from 'react-bootstrap';
+import { Card, Button, Form, Row, Col, Container, Image, CardGroup } from 'react-bootstrap';
 import { GrSearch, GrLocation } from "react-icons/gr";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
@@ -78,10 +78,10 @@ const Feed = () =>{
                         return(
                                     <Card className="card-feed">
                                         <div className="pic-feed">
-                                        {val.image.length>1 ? (
-                                        <img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} 
-                                        />):(
-                                        <img variant="top" src={require("../nopic.jpg")} />
+                                        {val.image.length > 1 ? (
+                                        <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />
+                                        ):(
+                                        <Card.Img variant="top" src={require("../nopic.jpg")} />
                                         )}
                                         </div>
                                         <Card.Body>

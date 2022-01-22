@@ -12,8 +12,8 @@ import Editprofile from './pages/Editprofile';
 import CreatePost from './pages/Createpost';
 import Register from './pages/registerFB';
 import Login from './pages/loginFB';  
-import Sendotp from './pages/Sendotp';  
-import ResetPass from './pages/Resetpass';     
+import Sendotp from './pages/ResetPWReq';  
+import ResetPass from './pages/ResetPW';     
 import Editpost from './pages/Editpost';
 import MyPost from "./pages/Mypost";
 import Vertify from "./pages/Vertify";
@@ -162,9 +162,8 @@ function App() {
                       </Link>
                   </li>
                   <li class="nav-item">
-                    <Link to="/favlist">
-                      <AiOutlineHeart className="icon-nav" />
-                    </Link>
+                      <AiOutlineHeart className="icon-nav"
+                      onClick={() => {window.location.href = `/favlist`}}/>
                   </li>
                   <li class="nav-item">
                   <Link to="/">
