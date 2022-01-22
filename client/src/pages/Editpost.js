@@ -41,11 +41,11 @@ const Editpost = () =>{
     useEffect (() => {
         Axios.get(`http://localhost:8000/editpost/${currentUser.uid}/${post_id}`).then((response) => {
             seteditPost(response.data);
-            setName(response.data.post_name);
-            setCategory(response.data.category);
-            setDescription(response.data.description);
-            setLocation(response.data.location);
-            setuserInfo(response.data.image);
+            setName(response.data[0].post_name);
+            setCategory(response.data[0].category);
+            setDescription(response.data[0].description);
+            setLocation(response.data[0].location);
+            setuserInfo(response.data[0].image);
         });
     }, []);
         
