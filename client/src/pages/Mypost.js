@@ -24,10 +24,9 @@ const MyPost = () =>{
     //delete post
     const deletePost = (post_id) => {
         if(window.confirm("Do you want to delete this post ?")){
-            Axios.delete(`http://localhost:8000/mypost/${post_id}`,{
-                uid : currentUser.uid 
+            Axios.delete(`http://localhost:8000/mypost/${post_id}`).then(() => {
+                window.location.reload();
             });
-            window.location.reload();
         }
     };
 

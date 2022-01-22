@@ -19,18 +19,16 @@ router.get('/:uid', (req, res)=> {
     })
 });
 
-router.delete('/:id', (req,res)=> {
-    const user_id = req.body.id;
-    const post_id = req.params.id;
-
+router.delete('/:pid', (req,res)=> {
+    const post_id = req.params.pid
+    console.log(post_id)
     //delete post
-    const sqlDelete = "DELETE FROM POST WHERE user_id = ? AND post_id = ?";
-    db.query(sqlDelete, [user_id, post_id], (err, result) => {
-        console.log(err);
+    const sqlDelete = "DELETE FROM POST WHERE post_id = ?";
+    db.query(sqlDelete, [post_id], (err, result) => {
+        // console.log(err);
     })
 });
 
 
 
- 
 export default router;

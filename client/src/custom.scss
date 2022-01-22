@@ -142,6 +142,12 @@ body {
     right: 30px;
 }
 
+.pos-picimg{
+    position: absolute;
+    left: 412px;
+    top: 280px;
+}
+
 .modal-content  {
     -webkit-border-radius: 0px !important;
     -moz-border-radius: 0px !important;
@@ -246,6 +252,13 @@ textarea:focus, input:focus{
     border: none;
 }
 
+.btn-save{
+    width: 102px;
+    height: 48px;
+    background-color: rgb(0, 136, 57) !important;
+    border: none;
+}
+
 .btn-delete{
     width: 102px;
     height: 48px;
@@ -300,12 +313,35 @@ textarea:focus, input:focus{
     width: 220px;
     height: 200px;
 }
+
+.pic-feed {
+    position: relative;
+    width: 100%; /* The size you want */
+}
+.pic-feed:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */
+}
+
+.pic-feed img {
+    position: absolute; /* Take your picture out of the flow */
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; /* Make the picture taking the size of it's parent */
+    width: 100%; /* This if for the object-fit */
+    height: 100%; /* This if for the object-fit */
+    object-fit: cover; /* Equivalent of the background-size: cover; of a background-image */
+    object-position: center;
+}
+
 .profile-pic{
     width: 220px;
     height: 220px;
     position: absolute;
     border: 7px solid white;
-    top: 200px;
+    top: 190px;
     left: 380px;
 }
 

@@ -104,6 +104,19 @@ function App() {
       );
   }
 
+  const reProfile = () => {
+    window.location.href = `/profile`;
+  }
+
+  const logOut = () =>{
+    firebaseConfig.auth().signOut()
+    .then(() =>{
+      alert("logout successfully!")
+      window.location.href = `/login`;
+    });
+    
+  }
+
   const sideBar = () => {
     if (window.location.pathname === '/profile' 
         || window.location.pathname === '/mypost'
@@ -160,15 +173,14 @@ function App() {
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu style={{ margin: '10px', border: 'white' }}>
-                        <Dropdown.Item eventKey="1" 
-                        style={{ textAlign: 'right', margin: '5px', outline: 'none', boxShadow: 'none' }}>
-                            <Link to="/profile" className="link-nodec">
+                        <Dropdown.Item eventKey="1"
+                        style={{ textAlign: 'right', margin: '5px', outline: 'none', boxShadow: 'none' }}
+                        onClick={ reProfile }>
                               Profile
-                            </Link>
                           </Dropdown.Item>
                         <Dropdown.Item eventKey="2" 
                         style={{ textAlign: 'right', margin: '5px', outline: 'none', boxShadow: 'none' }}
-                        onClick={() => firebaseConfig.auth().signOut()} >
+                        onClick={ logOut } >
                           Logout</Dropdown.Item>                    
                       </Dropdown.Menu>
                     </Dropdown>
@@ -198,7 +210,11 @@ function App() {
               </Col>
             </Row>
       </header>
-      {/* <Redirect to="/feed" /> */}
+      {window.location.pathname === '/' ? (
+          <Redirect to="/feed" />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

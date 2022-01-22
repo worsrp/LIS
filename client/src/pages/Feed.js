@@ -75,10 +75,13 @@ const Feed = () =>{
                     {feedPost.slice(start,end).map((val)=> {
                         return(
                                     <Card className="card-feed">
+                                        <div className="pic-feed">
                                         {val.image.length>1 ? (
-                                        <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />):(
-                                        <Card.Img variant="top" src={require("../nopic.jpg")} />
+                                        <img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} 
+                                        />):(
+                                        <img variant="top" src={require("../nopic.jpg")} />
                                         )}
+                                        </div>
                                         <Card.Body>
                                             <Card.Title>{val.post_name}</Card.Title>
                                             <Card.Text style={{ height: '12vh'}}>{val.description}</Card.Text>
