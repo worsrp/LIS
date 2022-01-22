@@ -81,6 +81,10 @@ body {
     text-align: end;
 }
 
+.text-drop:hover{
+    text-decoration: none;
+}
+
 .text-header{
     font-size: 20px;
     font-weight: 700;
@@ -152,6 +156,14 @@ body {
     position: absolute;
     left: 90px;
     top: 100px;
+}
+
+.form-pic{
+    position: absolute;
+    left: 30px;
+    top: -10px;
+    height: 220px !important;
+    width: 300px !important;
 }
 
 .modal-content  {

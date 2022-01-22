@@ -39,7 +39,7 @@ function Register (){
                 .then((response) => {
                     userConnected(response)
                 }).then(() => {
-                    return <Redirect to="/feed" />;
+                    window.location.href = `/`;
                 });
     
     

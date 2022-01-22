@@ -2,6 +2,7 @@ import React,{ useState, useEffect } from "react";
 import Axios from 'axios'
 import firebaseConfig from "../config";
 import { useHistory } from "react-router-dom";
+import { AuthContext } from "../Auth";
 
 //import style
 import '../custom.scss';
@@ -15,7 +16,9 @@ const ResetPass = () => {
     const [confirmPassword, setConfirmPass] = useState("");
     const [check, setCheck] = useState(false);
     const [alertShow, setAlertShow] = useState(false);
-    const [IsError, setIsError] = useState("");         
+    const [IsError, setIsError] = useState("");     
+
+    //const { currentUser } = useContext(AuthContext);
 
     let urlString = window.location.href; 
     var email;
