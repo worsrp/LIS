@@ -3,10 +3,9 @@ import Axios from 'axios'
 import { Link } from 'react-router-dom';
 import { AuthContext } from "../Auth";
 
-
 //import style
 import '../custom.scss';
-import { Button, Form, Row, Col, Container, Modal, Image } from 'react-bootstrap';
+import { Button, Form, Row, Col, Container, Modal, Image, Overlay } from 'react-bootstrap';
 import { GrLocation, GrClose } from "react-icons/gr";
 import { BiCategory } from "react-icons/bi";
 import { BsImage } from "react-icons/bs";
@@ -22,6 +21,9 @@ function CreatePost(props) {
     });
     const [post_id,setId] = useState('')
     const { currentUser } = useContext(AuthContext);
+
+    const [show, setShow] = useState(false);
+    const target = React.useRef(null);
 
     const submitPost = () => {
         var post_date = new Date();
@@ -63,6 +65,8 @@ function CreatePost(props) {
         });
     }
 
+
+    
     return (
     <Container>
         <Modal
@@ -90,10 +94,10 @@ function CreatePost(props) {
                         <Image src={require(`../nopic.jpg`)}
                         rounded className="pic-create" />
                     )} 
-                    <Button className="btn-trans feed-picimg" onClick={handleClick}>
+                    {/* <Button className="btn-trans feed-picimg" onClick={handleClick}>
                                 <BsImage className="icon-neg" style={{ marginTop: '-2px'}} />
                                 <span style={{ color: 'white', marginLeft: '5px' }}>change image</span>
-                    </Button>
+                    </Button> */}
                     </Col>
                     <Col xs={7}>
                         <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -221,13 +225,10 @@ function CreatePost(props) {
                             </Col>
                         </Form.Group>
                     </Col>
-                </Row>   
+                </Row>             
                 <Row>
-                    <Form.Group controlId="formFile" className="mb-3">
-                        <Form.Control type="file" ref={hiddenFileInput} onChange={handleInputChange} />
-                        {/* // style={{display: 'none'}} /> */}
-                    </Form.Group>
-                </Row>                 
+                <Form.Control size="lg" type="file" ref={hiddenFileInput} onChange={handleInputChange} /> 
+                </Row>
             </Form>
             </Modal.Body>
             <Modal.Footer style={{ border : 'white' }}>
