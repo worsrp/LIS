@@ -116,9 +116,14 @@ const Editpost = () =>{
                                     <Col xs={5}>
                                         <Form.Select name="category" placeholder={val.category}
                                         onChange={ (e) => { setCategory(e.target.value) }}>
-                                            <option value="Clothes">Clothes</option>
-                                            <option value="Gadjets">Gadgets</option>
-                                            <option value="Hand tools">Hand tools</option>
+                                            <option value="Fashion">Fashion</option>
+                                            <option value="Health and Beauty">Health and Beauty</option>
+                                            <option value="Electronics">Electronics</option>
+                                            <option value="Mommy and baby">Mommy and baby</option>
+                                            <option value="Home and living">Home and living</option>
+                                            <option value="lifestyle">lifestyle</option>
+                                            <option value="Kpop">Kpop</option>
+                                            <option value="Hand craft">Hand craft</option>
                                         </Form.Select>
                                     </Col>
                                 </Row>
