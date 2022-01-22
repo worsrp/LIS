@@ -48,8 +48,8 @@ const Editpost = () =>{
             setuserInfo(response.data.image);
         });
     }, []);
-            
-    const savePost = () => {
+        
+    const savePost = (post_id) => {
         var edittoday = new Date();
         var dd = String(edittoday.getDate()).padStart(2, '0');
         var mm = String(edittoday.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -59,7 +59,6 @@ const Editpost = () =>{
 
         const formdata = new FormData(); 
         formdata.append('avatar', userInfo.file);
-
         
         if(window.confirm("Are you sure to change this post detail?")){
             Axios.post(`http://localhost:8000/editpost/${currentUser.uid}/${post_id}`,formdata,{   
@@ -78,8 +77,11 @@ const Editpost = () =>{
                 window.location.href = `/mypost`;
             })
         }
-    
     };
+
+    const saveAlert = () => {
+        alert("save! @:");
+    }
 
 
     return (
@@ -106,7 +108,7 @@ const Editpost = () =>{
                                     <Col xs={3} style={{ textAlign: 'end', marginTop: '3px'}}>Post Name :</Col>
                                     <Col xs={5}>
                                         <Form.Control type="text" name="post_name" placeholder={val.post_name} 
-                                        onChange={(e)=>{ setName(e.target.value) }} required />
+                                        onChange={(e)=>{ setName(e.target.value) }}/>
                                     </Col>
                                 </Row>
                                 <Row style={{ marginTop: '10px' }}>
@@ -216,7 +218,7 @@ const Editpost = () =>{
                                     <Col xs={3} style={{ textAlign: 'end', marginTop: '3px'}}>Description : </Col>
                                     <Col xs={5}>
                                         <Form.Control as="textarea" rows={3} style={{ resize: 'none', height: '150px' }} name="Description" placeholder={val.description}
-                                        onChange={(e)=>{ setDescription(e.target.value) }} required />
+                                        onChange={(e)=>{ setDescription(e.target.value) }} />
                                     </Col>
                                 </Row>
                             </Col>
@@ -226,7 +228,7 @@ const Editpost = () =>{
                                 <Col>
                                 <Row>
                                     <Col style={{ textAlign: 'end' }}>
-                                        <Button className="btn-edit" onClick={() => {savePost(val.post_id)}}> Save </Button>
+                                        <Button className="btn-save" onClick={() => {savePost(val.post_id)}}> Save </Button>
                                     </Col>
                                     <Col>
                                         <Link  to="/mypost">

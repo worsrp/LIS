@@ -6,10 +6,10 @@ import { AuthContext } from "../Auth";
 
 //import style
 import '../custom.scss';
-import { Button, Form, Row, Col, Container, Modal } from 'react-bootstrap';
+import { Button, Form, Row, Col, Container, Modal, Image } from 'react-bootstrap';
 import { GrLocation, GrClose } from "react-icons/gr";
 import { BiCategory } from "react-icons/bi";
-//เหลือใส่รูป
+import { BsImage } from "react-icons/bs";
 
 function CreatePost(props) {
     const [post_name,setName] = useState('')
@@ -41,15 +41,27 @@ function CreatePost(props) {
             category: category,
             uid : currentUser.uid
         }).then((response) =>{
-            setId(response.data.insertId);
-            Axios.get(`http://localhost:8000/createpost/${currentUser.uid}/${response.data.insertId}`)
-            .then(()=>{
-                alert(response.data.insertId);
-                window.location.href = `/createpostimage?${response.data.insertId}`;
-            })
-        });
+                Axios.post(`http://localhost:8000/createpost/${currentUser.uid}/${response.data.insertId}`,formdata,{   
+                    headers: { "Content-Type": "multipart/form-data" }
+                }).then(() => {
+                    alert('your post has been created!');
+                })
+        })
     };
-    
+
+    const hiddenFileInput = React.useRef(null);
+
+    const handleClick = event => {
+        hiddenFileInput.current.click();
+    };
+
+    const handleInputChange = (event) => {
+        setuserInfo({
+            ...userInfo,
+            file:event.target.files[0],
+            filepreview:URL.createObjectURL(event.target.files[0]),
+        });
+    }
 
     return (
     <Container>
@@ -60,7 +72,7 @@ function CreatePost(props) {
             centered >
             <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter" 
-                className="text-header" style={{ paddingLeft : '250px' }}>
+                className="text-header" style={{ paddingLeft : '300px' }}>
                         Create new post
                 </Modal.Title>
                 <Link to="/feed" onClick={props.onHide}>
@@ -70,7 +82,19 @@ function CreatePost(props) {
             <Modal.Body>
             <Form>
                 <Row>
-                    <Col></Col>
+                    <Col style={{ textAlign: 'center' }}>
+                    {userInfo.filepreview !== null ? (
+                        <Image src={userInfo.filepreview}
+                        rounded className="pic-create" />
+                    ) : ( 
+                        <Image src={require(`../nopic.jpg`)}
+                        rounded className="pic-create" />
+                    )} 
+                    <Button className="btn-trans feed-picimg" onClick={handleClick}>
+                                <BsImage className="icon-neg" style={{ marginTop: '-2px'}} />
+                                <span style={{ color: 'white', marginLeft: '5px' }}>change image</span>
+                    </Button>
+                    </Col>
                     <Col xs={7}>
                         <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
                             <Col sm="11">
@@ -197,7 +221,13 @@ function CreatePost(props) {
                             </Col>
                         </Form.Group>
                     </Col>
-                </Row>                    
+                </Row>   
+                <Row>
+                    <Form.Group controlId="formFile" className="mb-3">
+                        <Form.Control type="file" ref={hiddenFileInput} onChange={handleInputChange} />
+                        {/* // style={{display: 'none'}} /> */}
+                    </Form.Group>
+                </Row>                 
             </Form>
             </Modal.Body>
             <Modal.Footer style={{ border : 'white' }}>

@@ -14,7 +14,7 @@ const Editprofile = () =>{
     const [IsError, setIsError] = useState("");       
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
-    const [moblie, setMoblie] = useState("");
+    const [mobile, setMobile] = useState("");
     const [address, setAddress] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -24,7 +24,9 @@ const Editprofile = () =>{
       file:[],
       filepreview:null,
     });
+
     const { currentUser } = useContext(AuthContext);
+
     useEffect(() =>{
       if(password !== confirmPassword){
           setIsError("Password does not match!");
@@ -35,26 +37,35 @@ const Editprofile = () =>{
       }
     }, [check]);
 
+    const hiddenFileInput = React.useRef(null);
+
+    const handleClick = event => {
+      hiddenFileInput.current.click();
+    };
+
     const handleInputChange = (event) => {
       setuserInfo({
         ...userInfo,
         file:event.target.files[0],
         filepreview:URL.createObjectURL(event.target.files[0]),
       });
-  
     }
+
+    
   
     const [isSucces, setSuccess] = useState(null);
   
     const submit = () =>{
       const formdata = new FormData(); 
       formdata.append('avatar', userInfo.file);
-      if(firstname==""||lastname==""||moblie==""||address==""||password==""||confirmPassword==""||userInfo.filepreview==null){
+      if(firstname==""||lastname==""||mobile==""||address==""||userInfo.filepreview==null){
         alert("Please input your information !");
-      }else{ 
-      if(password !== confirmPassword){
-        alert("Confirm Password is not match with password !");
-      }else{
+      }
+      // else{ 
+      // if(password !== confirmPassword){
+      //   alert("Confirm Password is not match with password !");
+      // }
+      else{
       Axios.post(`http://localhost:8000/editprofile/${currentUser.uid}`, formdata,{   
             headers: { "Content-Type": "multipart/form-data" } 
       })
@@ -62,15 +73,16 @@ const Editprofile = () =>{
         image:formdata,
         firstname: firstname, 
         lastname: lastname, 
-        password: password,
-        moblie: moblie, 
+        // password: password,
+        mobile: mobile, 
         address: address,
       }).then(() => {
-            alert("successfully");
+            alert("edit profile successfully!");
+            window.location.href = `/profile`;
         })
       }
     }
-    }
+    // }
   
     return (
       <>
@@ -86,11 +98,10 @@ const Editprofile = () =>{
                                 roundedCircle className="profile-pic" />
                               : <Image src={require(`../nopic.jpg`)}
                               roundedCircle className="profile-pic" />} 
-                              <Button type="file" className="pos-picimg btn-trans" onChange={handleInputChange}>
-                                <BsImage className="icon-neg" />
-                                <span style={{ color: 'white' }}>change image</span>
+                              <Button className="pos-picimg btn-trans" onClick={handleClick}>
+                                <BsImage className="icon-neg" style={{ marginTop: '-2px'}} />
+                                <span style={{ color: 'white', marginLeft: '5px' }}>change image</span>
                               </Button>
-                              
                             </Col>
                             <Col>
                             <Row>
@@ -120,7 +131,7 @@ const Editprofile = () =>{
                                             </Col>
                                             <Col>
                                               <Form.Control type="text" placeholder="Mobile" style={{ width: '200px' }}
-                                              onChange={(e) => { setMoblie(e.target.value) }} />
+                                              onChange={(e) => { setMobile(e.target.value) }} />
                                             </Col>
                                           </Row>
                                           <Row style={{ marginTop: '10px' }}>
@@ -132,7 +143,7 @@ const Editprofile = () =>{
                                               onChange={(e) => { setAddress(e.target.value) }} />
                                             </Col>
                                           </Row>
-                                          <Row style={{ marginTop: '10px' }}>
+                                          {/* <Row style={{ marginTop: '10px' }}>
                                             <Col xs={4} style={{ textAlign: 'end' , paddingTop: '5px' }}>
                                               <h5>New password :</h5>
                                             </Col>
@@ -152,7 +163,7 @@ const Editprofile = () =>{
                                                 setCheck(!check); 
                                               }} />
                                             </Col>
-                                          </Row>     
+                                          </Row>      */}
                                           <Row style={{ marginTop: '1%' }}>
                                               <Col className="text-error" style={{ paddingLeft: '250px' }}>
                                                   {alertShow === false ? (
@@ -172,17 +183,17 @@ const Editprofile = () =>{
               <div className="formdesign">
               {isSucces !== null ? <h4> {isSucces} </h4> :null }
                 <div className="form-row">
-                  <input type="file" className="form-control" name="upload_file"  onChange={handleInputChange} />
+                  <input type="file" className="form-control" name="upload_file"  
+                  ref={hiddenFileInput} onChange={handleInputChange} style={{display: 'none'}} />
                 </div>
-                    <div className="form-row">
-                      <table>
-                        <td>
-                          <button class="btn btn-success" onClick={submit}> Save </button></td>
-                          <td>
-                            <Link to={"/profile"}><button class="btn btn-success"> Back </button></Link>
-                            </td>
-                            </table>         
-                    </div>
+                <Row style={{ marginLeft: '530px', marginTop: '20px' }}>
+                  <Col xs={2}>
+                    <Link to={"/profile"}><Button className="btn-edit"> Back </Button></Link>
+                  </Col>
+                  <Col style={{ marginLeft: '20px' }}>
+                    <Button className="btn-save" onClick={submit}> Save </Button>
+                  </Col> 
+                </Row>     
               </div>
             </Container>
       </>

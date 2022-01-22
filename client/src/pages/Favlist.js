@@ -55,10 +55,12 @@ const Favlist = () =>{
                     {favPost.slice(start,end).map((val)=> {
                         return(
                                     <Card className="card-feed">
+                                        <div className="pic-feed">
                                         {val.image.length>1?(
-                                        <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />):(
-                                        <Card.Img variant="top" src={require("../nopic.jpg")} />
+                                        <img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />):(
+                                        <img variant="top" src={require("../nopic.jpg")} />
                                         )}
+                                        </div>
                                         <Card.Body>
                                             <Card.Title>{val.post_name}</Card.Title>
                                             <Card.Text style={{ height: '12vh'}}>{val.description}</Card.Text>
@@ -78,13 +80,11 @@ const Favlist = () =>{
                                                                     </Row> 
                                                                 </Col>  
                                                                 <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
-                                                                    <Row>
-                                                                    <Button className="btn-remove" style={{ marginLeft: '-30px'}}
-                                                                    onClick={() => {deleteFav(val.post_id)}} >
-                                                                    <IoCloseCircle className="icon-sim" />
-                                                                        remove
-                                                                    </Button>
-                                                                    </Row>
+                                                                        <Button className="btn-remove" style={{ marginLeft: '-45px'}}
+                                                                        onClick={() => {deleteFav(val.post_id)}} >
+                                                                        <IoCloseCircle className="icon-sim" />
+                                                                            remove
+                                                                        </Button>
                                                                 </Col>
                                                             </Row>
                                             </Card.Footer>
