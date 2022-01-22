@@ -44,10 +44,11 @@ router.post('/', (req, res) => {
     }) 
 });
 
-router.get('/:uid/:id', (req, res)=> {
+router.get('/:uid/:pid', (req, res)=> {
     const user_id = req.params.uid;
-    const post_id = req.params.id;
-
+    const post_id = req.params.pid;
+    console.log(user_id)
+    console.log(post_id)
     const sqlSelect = "SELECT * FROM POST WHERE user_id =? AND post_id =?";
     db.query(sqlSelect, [user_id ,post_id],  (err, result) => {
         res.send(result);
@@ -55,11 +56,13 @@ router.get('/:uid/:id', (req, res)=> {
     })
 });
 
-router.post('/:uid/:id', (req, res) => {
+router.post('/:uid/:pid', (req, res) => {
 
     // //test
     const user_id = req.params.uid;
-    const post_id = req.params.id;
+    const post_id = req.params.pid;
+    console.log(user_id)
+    console.log(post_id)
         let upload = multer({ storage: storage}).single('avatar');
             upload(req, res, function(err) {
                 // req.file contains information of uploaded file
@@ -85,9 +88,9 @@ router.post('/:uid/:id', (req, res) => {
             });
 });
 
-router.delete('/:uid/:id', (req,res)=> {
+router.delete('/:uid/:pid', (req,res)=> {
     const user_id = req.params.uid;
-    const post_id = req.params.id;
+    const post_id = req.params.pid;
 
     //delete post
     const sqlDelete = "DELETE FROM POST WHERE user_id = ? AND post_id = ?";

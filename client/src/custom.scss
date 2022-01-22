@@ -148,6 +148,12 @@ body {
     top: 280px;
 }
 
+.feed-picimg{
+    position: absolute;
+    left: 90px;
+    top: 100px;
+}
+
 .modal-content  {
     -webkit-border-radius: 0px !important;
     -moz-border-radius: 0px !important;
@@ -314,10 +320,16 @@ textarea:focus, input:focus{
     height: 200px;
 }
 
+.pic-create{
+    width: 200px;
+    height: 200px;
+}
+
 .pic-feed {
     position: relative;
     width: 100%; /* The size you want */
 }
+
 .pic-feed:after {
     content: "";
     display: block;
