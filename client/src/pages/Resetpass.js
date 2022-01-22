@@ -18,8 +18,6 @@ const ResetPass = () => {
     const [alertShow, setAlertShow] = useState(false);
     const [IsError, setIsError] = useState("");     
 
-    //const { currentUser } = useContext(AuthContext);
-
     let urlString = window.location.href; 
     var email;
     let paramString = urlString.split('?')[1];
