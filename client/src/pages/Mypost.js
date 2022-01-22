@@ -16,9 +16,7 @@ const MyPost = () =>{
 
     //get post
     useEffect (() => {
-        Axios.get("http://localhost:8000/mypost",{
-            uid : currentUser.uid 
-        }).then((response) => {
+        Axios.get(`http://localhost:8000/mypost/${currentUser.uid}`).then((response) => {
             setMyPost(response.data);
         });
     }, []);
@@ -34,9 +32,8 @@ const MyPost = () =>{
     };
 
     const editPost = (post_id) => {
-        Axios.get(`http://localhost:8000/editpost/${post_id}`,{
-        })
-        .then (()=>{
+        Axios.get(`http://localhost:8000/editpost/${currentUser.uid}/${post_id}`,{
+        }).then (()=>{
             window.location.href = `/editpost?${post_id}`;
         });
     };

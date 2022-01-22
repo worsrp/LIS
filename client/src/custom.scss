@@ -86,6 +86,11 @@ body {
     font-weight: 700;
 }
 
+.text-mid-header{
+    font-size: 24px;
+    font-weight: 700;
+}
+
 .text-sub-header{
     font-size: 18px;
     font-weight: 700;
@@ -192,6 +197,11 @@ textarea:focus, input:focus{
     box-shadow: 4px 4px 4px rgba(0,0,0,0.20);
 }
 
+.card-trans{
+    margin: 40px;
+    border: none;
+}
+
 .card-footer {
     align-self: flex-end;
     flex: 1 1 auto;
@@ -259,6 +269,7 @@ textarea:focus, input:focus{
 
 .btn-fav{
     border-radius: 20px;
+    width: 80px !important;
     background-color: white !important;
     border-color: #CC444A;
     color: #CC444A ;
@@ -278,6 +289,7 @@ textarea:focus, input:focus{
 
 .fav-sty{
     color: black;
+
 }
 
 .fav-sty:hover{

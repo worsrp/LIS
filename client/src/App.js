@@ -181,23 +181,24 @@ function App() {
               { sideBar() }
               <Col>
                 <Switch> 
-                  <Route path="/createpost"><CreatePost/></Route>
+                  <Route path="/createpost"><CreatePost /></Route>
                   <Route path="/feed"><Feed /></Route>
                   <Route path="/favlist"><Favlist /></Route>
                   <Route path="/mypost"><MyPost /></Route>
                   <Route path="/profile"><Profile /></Route>  
                   <Route path="/editprofile"><Editprofile /></Route> 
-                  <Route path="/login">< Login /></Route>
-                  <Route path="/register">< Register /></Route>
-                  <Route path="/sendotp">< Sendotp /></Route>  
-                  <Route path="/resetpass">< ResetPass /></Route>
-                  <Route path="/vertify">< Vertify /></Route>  
-                  <Route path="/editpost">< Editpost /></Route>
+                  <Route path="/login"><Login /></Route>
+                  <Route path="/register"><Register /></Route>
+                  <Route path="/sendotp"><Sendotp /></Route>  
+                  <Route path="/resetpass"><ResetPass /></Route>
+                  <Route path="/vertify"><Vertify /></Route>  
+                  <Route path="/editpost"><Editpost /></Route>
                   <Route path="/createpostimage"> <CreatepostImage/></Route>
                 </Switch>
               </Col>
             </Row>
       </header>
+      {/* <Redirect to="/feed" /> */}
     </div>
   );
 }

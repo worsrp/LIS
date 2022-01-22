@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
 router.post('/', (req, res) => {
 
     // //test
-    const USER_ID = 1234;
+    const user_id = req.body.uid;
     const STATUS = 'Available';
     
     // const user_id = req.body.user_id
@@ -39,13 +39,13 @@ router.post('/', (req, res) => {
     const imagest = ''
             
     const sqlInsert = "INSERT INTO POST (post_name,user_id,description,category,post_date,edit_date,post_status,location,image) VALUES (?,?,?,?,?,?,?,?,?);"
-    db.query(sqlInsert, [post_name,USER_ID,description,category,post_date,edit_date,STATUS,location,imagest], (err,result)=>{
+    db.query(sqlInsert, [post_name,user_id,description,category,post_date,edit_date,STATUS,location,imagest], (err,result)=>{
         res.send(result);
     }) 
 });
 
-router.get('/:id', (req, res)=> {
-    const user_id = 1234;
+router.get('/:uid/:id', (req, res)=> {
+    const user_id = req.params.uid;
     const post_id = req.params.id;
 
     const sqlSelect = "SELECT * FROM POST WHERE user_id =? AND post_id =?";
@@ -55,10 +55,10 @@ router.get('/:id', (req, res)=> {
     })
 });
 
-router.post('/:id', (req, res) => {
+router.post('/:uid/:id', (req, res) => {
 
     // //test
-    const user_id = 1234;
+    const user_id = req.params.uid;
     const post_id = req.params.id;
         let upload = multer({ storage: storage}).single('avatar');
             upload(req, res, function(err) {
@@ -85,8 +85,8 @@ router.post('/:id', (req, res) => {
             });
 });
 
-router.delete('/:id', (req,res)=> {
-    const user_id = 1234;
+router.delete('/:uid/:id', (req,res)=> {
+    const user_id = req.params.uid;
     const post_id = req.params.id;
 
     //delete post

@@ -24,22 +24,22 @@ const storage = multer.diskStorage({
 })
 
 // show mypost to edit
-router.get('/:id', (req, res)=> {
-    const user_id = 1234;
-    const postid = req.params.id;
+router.get('/:uid/:id', (req, res)=> {
+    const user_id = req.params.uid;
+    const post_id = req.params.id;
 
-    const sqlSelect = "SELECT * FROM POST WHERE user_id =? AND post_id =?";
-    db.query(sqlSelect, [user_id ,postid],  (err, result) => {
+    const sqlSelect = "SELECT * FROM POST WHERE user_id LIKE ? AND post_id =?";
+    db.query(sqlSelect, [user_id ,post_id],  (err, result) => {
         res.send(result);
     })
-    console.log(postid);
+    console.log(post_id);
 });
 
 
 //save post
-router.post('/:id', (req,res)=> {
+router.post('/:uid/:id', (req,res)=> {
     try{
-        const user_id = 1234;
+        const user_id = req.params.uid;
         const post_id = req.params.id;
 
         const post_name     = req.body.post_name
@@ -74,8 +74,8 @@ router.post('/:id', (req,res)=> {
                     });  
             });
 
-        const sqlupdate = "UPDATE POST SET post_name =? ,description =?,category =? ,edit_date =? ,location =? WHERE post_id =?";
-        db.query(sqlupdate, [post_name ,description ,category ,edit_date ,location ,post_id ], (err, result) => {
+        const sqlupdate = "UPDATE POST SET post_name =? ,description =?,category =? ,edit_date =? ,location =? WHERE user_id LIKE ? AND post_id = ?";
+        db.query(sqlupdate, [post_name ,description ,category ,edit_date ,location ,user_id,post_id ], (err, result) => {
             console.log(err);
             console.log(result);
             console.log(user_id);

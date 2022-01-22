@@ -38,6 +38,8 @@ function Register (){
                 firebaseConfig.auth().createUserWithEmailAndPassword(email, password)
                 .then((response) => {
                     userConnected(response)
+                }).then(() => {
+                    return <Redirect to="/feed" />;
                 });
     
     

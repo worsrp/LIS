@@ -34,7 +34,7 @@ const Profile = () =>{
                                     </Row>
                                     <Row> 
                                     <Col xs={4}>
-                                        { val.image !== null ?
+                                        { val.image.length > 1 ?
                                         <Image src={require(`../../../public_html/uploads/${val.image}`)}
                                         roundedCircle className="profile-pic" />
                                         : <Image src={require(`../nopic.jpg`)}
@@ -46,7 +46,7 @@ const Profile = () =>{
                                             <div>
                                                 <h1> {val.firstname}     {val.lastname}</h1> 
                                                 <h5 style={{ marginTop: '10px'}}> Email : {val.email}</h5>  
-                                                <h5 style={{ marginTop: '10px'}}> Mobile : {val.moblie}</h5>  
+                                                <h5 style={{ marginTop: '10px'}}> Mobile : {val.mobile}</h5>  
                                                 <h5 style={{ marginTop: '10px'}}> Address : {val.address}</h5>         
                                             </div>
                                         </Col>
