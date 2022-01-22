@@ -36,8 +36,8 @@ function App() {
 
   const { currentUser } = useContext(AuthContext);
 
-    // if(currentUser === null){
-    //       return <Redirect to="/login" />;
+     //if(currentUser===null){
+    //     return <Redirect to="/login" />;
     // }
 
 

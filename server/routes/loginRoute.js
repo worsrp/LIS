@@ -11,7 +11,6 @@ const db = mysql.createConnection({
 });
 router.get('/', (req, res) => {
             if (req.session.user) {
-                console.log("3")
             res.send({ loggedIn: true, user : req.session.user});
             } else {
             res.send({ loggedIn: false });

@@ -12,8 +12,8 @@ import { BsImage } from "react-icons/bs";
 
 function CreatePost(props) {
     const [post_name,setName] = useState('')
-    const [category,setCategory] = useState('Fashion')
-    const [location,setLocation] = useState('Chiang Mai')
+    const [category,setCategory] = useState('')
+    const [location,setLocation] = useState('')
     const [description,setDescription] = useState('')
     const [userInfo, setuserInfo] = useState({
         file:[],
@@ -127,9 +127,15 @@ function CreatePost(props) {
                                 <Form.Select aria-label="Default select example" 
                                 onChange={ (e) => { setCategory(e.target.value) }}>
                                     <option>select category</option>
-                                    <option value="Clothes">Clothes</option>
-                                    <option value="Gadjets">Gadgets</option>
-                                    <option value="Hand tools">Hand tools</option>
+                                    <option value="Fashion">Fashion</option>
+                                    <option value="Health and Beauty">Health and Beauty</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Mommy and baby">Mommy and baby</option>
+                                    <option value="Home and living">Home and living</option>
+                                    <option value="lifestyle">lifestyle</option>
+                                    <option value="Kpop">Kpop</option>
+                                    <option value="Hand craft">Hand craft</option>
+
                                 </Form.Select>
                             </Col>
                         </Form.Group>                    

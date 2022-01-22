@@ -47,7 +47,9 @@ const Feed = () =>{
 
     return (
         <Container style={{ marginTop: '-50px' }}>
-            <Form onChange={()=>{searchPost()}}>
+            <Form onSubmit={(e) => {
+                e.preventDefault();
+                searchPost();}}>
                 <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
                     <Form.Label column sm="1">
                         <GrSearch className="icon-large search-icon-pos" style={{ marginLeft: '70px' }} />

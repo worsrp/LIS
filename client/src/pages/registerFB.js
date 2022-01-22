@@ -25,6 +25,9 @@ function Register (){
     const [newUser, setNewUser] = useState(null);
 
     const register = () => {
+        if(email === null){
+            return <Redirect to="/login"></Redirect>
+        }
 
         if(password !== confirmPassword){
             alert("Confirm Password is not match with password !");
