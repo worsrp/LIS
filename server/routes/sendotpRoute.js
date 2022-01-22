@@ -60,13 +60,13 @@ router.post('/', (req,res) => {
                 (err, result) =>{
                     console.log(err);
                 })
-                // transporter.sendMail(mailOption, function(error,info){
-                //     if(error){
-                //         console.log(error);
-                //     }else{
-                //         console.log('Email sent: '+ info.response);
-                //     }
-                // })
+                transporter.sendMail(mailOption, function(error,info){
+                    if(error){
+                        console.log(error);
+                    }else{
+                        console.log('Email sent: '+ info.response);
+                    }
+                })
                 res.send({message: "Please Check your Email !"});
             }
         }else{

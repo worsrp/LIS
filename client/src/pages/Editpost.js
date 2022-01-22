@@ -41,6 +41,11 @@ const Editpost = () =>{
     useEffect (() => {
         Axios.get(`http://localhost:8000/editpost/${post_id}`).then((response) => {
             seteditPost(response.data);
+            setName(response.data.post_name);
+            setCategory(response.data.category);
+            setDescription(response.data.description);
+            setLocation(response.data.location);
+            setuserInfo(response.data.image);
         });
     }, []);
             
@@ -87,12 +92,12 @@ const Editpost = () =>{
                             <Row>
                             <Col xs={3}>
                                 <Row>
-                                    {/* {userInfo.filepreview !== "1" ? (
-                                        <Image roundedCircle className="profile-pic"  src={userInfo.filepreview} alt="UploadImage" />
-                                    ) : ( */}
-                                        <Image src={require("../nopic.jpg")} 
-                                        className="pic-sim" alt="UploadImage" />
-                                    {/* )} */}
+                                    {val.image.length>10?(
+                                        <Image src={require(`../../../public_html/uploads/${val.image}`)} 
+                                            style={{ width: '210px', height: '210px', margin: '10px'}}/>):(
+                                            <div>
+                                            </div>
+                                    )}
                                 </Row>
                                 </Col>
                             <Col>
