@@ -60,14 +60,15 @@ const Editprofile = () =>{
     const submit = () =>{
       const formdata = new FormData(); 
       formdata.append('avatar', userInfo.file);
-      if(firstname==""||lastname==""||mobile==""||address==""){
-        alert("Please input your information !");
-      }
+    
+
       // else{ 
       // if(password !== confirmPassword){
       //   alert("Confirm Password is not match with password !");
       // }
-      else{
+      
+      if(window.confirm("Are you sure to change this profile detail?"))
+      {
       Axios.post(`http://localhost:8000/editprofile/${currentUser.uid}`, formdata,{   
             headers: { "Content-Type": "multipart/form-data" } 
       })
@@ -98,11 +99,15 @@ const Editprofile = () =>{
                             </Row>
                             <Row> 
                             <Col xs={4}>
-                              {val.image !== null && userInfo.filepreview == null ? 
-                              <Image src={require(`../../../public_html/uploads/${val.image}`)}
-                              roundedCircle className="profile-pic" />
-                              : <Image src={userInfo.filepreview}
-                              roundedCircle className="profile-pic" />} 
+
+                            {val.image.length <=1 && userInfo.filepreview == null ? <Image src={require(`../nopic.jpg`)}   
+                                roundedCircle className="profile-pic" />:
+                                val.image.length > 1 && userInfo.filepreview == null ?                                
+                            <Image src={require(`../../../public_html/uploads/${val.image}`)}                               
+                            roundedCircle className="profile-pic" /> :
+                                <Image src={userInfo.filepreview}                               
+                                roundedCircle className="profile-pic" />}      
+
                               <Button className="pos-picimg btn-trans" onClick={handleClick}>
                                 <BsImage className="icon-neg" style={{ marginTop: '-2px'}} />
                                 <span style={{ color: 'white', marginLeft: '5px' }}>change image</span>
