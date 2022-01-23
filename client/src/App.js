@@ -185,17 +185,18 @@ function App() {
                   <li class="nav-item">
                   <Link to="/">
                     <Dropdown style={{ outline: 'none !important', boxShadow: 'none !important' }}
-                    onClick={ showInfo}>
-                      <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" style={{ outline: 'none !important', boxShadow: 'none !important' }}>
+                    onClick={ showInfo } className="btn-click">
+                      <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" 
+                      className="btn-click" style={{ outline: 'none !important', boxShadow: 'none !important' }}>
                       </Dropdown.Toggle>
 
-                      <Dropdown.Menu style={{ margin: '10px', border: 'white' }}>
-                        <Dropdown.Item eventKey="1"
+                      <Dropdown.Menu className="btn-click" style={{ margin: '10px', border: 'white' }}>
+                        <Dropdown.Item eventKey="1" className="btn-click"
                         style={{ textAlign: 'right', margin: '5px', outline: 'none', boxShadow: 'none' }}
                         onClick={ reProfile }>
                               Profile
                           </Dropdown.Item>
-                        <Dropdown.Item eventKey="2" 
+                        <Dropdown.Item eventKey="2" className="btn-click"
                         style={{ textAlign: 'right', margin: '5px', outline: 'none', boxShadow: 'none' }}
                         onClick={ logOut } >
                           Logout</Dropdown.Item>                    

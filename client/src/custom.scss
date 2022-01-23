@@ -262,6 +262,16 @@ textarea:focus, input:focus{
     border-bottom: 2px dashed lightgray;
 }
 
+.btn-click{
+    text-decoration:none !important;
+}
+
+.btn-click:active{
+    text-decoration:none !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
 .btn-login{
     width: 102px;
     height: 48px;
