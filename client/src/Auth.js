@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import firebaseConfig from "./config";
 
+//import style
+import './custom.scss';
+import { Spinner } from 'react-bootstrap';
+
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -15,7 +19,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     if (loading) {
-        return <p>Loading...</p>;
+        return   <Spinner animation="border" className="spinner" />
     }
 
     return (

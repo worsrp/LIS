@@ -95,7 +95,7 @@ const Editpost = () =>{
                             <Col xs={3}>
                                 <Row>
                                     {val.image.length>1?
-                                        <Image src={require(`../../../public_html/uploads/${val.image}`)} rounded />
+                                        <Image className="pic-sim" rounded src={require(`../../../public_html/uploads/${val.image}`)} />
                                     :[
                                         <Image src={userInfo.filepreview} rounded />
                                     ]}

@@ -145,11 +145,11 @@ const Editprofile = () =>{
                                             </Col>
                                           </Row>
                                           <Row style={{ marginTop: '10px' }}>
-                                            <Col xs={4} style={{ textAlign: 'end' , paddingTop: '5px' }}>
+                                            <Col xs={2} style={{ textAlign: 'end' , paddingTop: '5px', marginLeft: '-17px' }}>
                                               <h5>Address :</h5>
                                             </Col>
-                                            <Col>
-                                              <Form.Control type="text" placeholder="New address" style={{ width: '200px' }}
+                                            <Col xs={5}>
+                                              <Form.Control as="textarea" rows={3} placeholder="New address" style={{ width: '350px', marginLeft: '-10px' }}
                                               onChange={(e) => { setAddress(e.target.value) }} placeholder={val.address}/>
                                             </Col>
                                           </Row>
