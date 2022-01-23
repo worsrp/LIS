@@ -75,6 +75,17 @@ router.post('/:uid', (req, res) => {
     }catch (err) {console.log(err)}
 })
 
-
+router.get('/:uid', (req, res)=> {
+    const uid = req.params.uid;
+    const sqlSelect = "SELECT * FROM USER WHERE uid=?"
+    db.query(sqlSelect, [uid], (err, result) => {
+        if(err){
+            console.log(err);
+        }else{
+            res.send(result);  
+            console.log(result);
+        }
+    })
+});
 
 export default router;
