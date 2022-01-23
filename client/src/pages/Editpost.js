@@ -148,7 +148,7 @@ const Editpost = () =>{
                                     <Col xs={5}>
                                         <Form.Select name="location" placeholder={val.location} 
                                         onChange={(e)=>{ setLocation(e.target.value) }}>
-                                        <option>select category</option>
+                                        <option>select location</option>
                                         <option value="Bangkok">Bangkok</option>
                                         <option value="Krabi">Krabi</option>
                                         <option value="Kanchanaburi">Kanchanaburi</option>
