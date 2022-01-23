@@ -18,10 +18,17 @@ const Feed = () =>{
 
     //show all post
     useEffect (() => {
-        Axios.get(`http://localhost:8000/feed/${currentUser.uid}`, {
-        }).then((response) => {
-            setFeedPost(response.data);
-        });
+        if(currentUser === null){
+            Axios.get(`http://localhost:8000/feed/`, {
+            }).then((response) => {
+                setFeedPost(response.data);
+            });
+        }else{
+            Axios.get(`http://localhost:8000/feed/${currentUser.uid}`, {
+            }).then((response) => {
+                setFeedPost(response.data);
+            });
+        }
     }, []);
 
     //search 

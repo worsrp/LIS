@@ -12,12 +12,10 @@ import Editprofile from './pages/Editprofile';
 import CreatePost from './pages/Createpost';
 import Register from './pages/registerFB';
 import Login from './pages/loginFB';  
-import Sendotp from './pages/ResetPWReq';  
-import ResetPass from './pages/ResetPW';     
+import ForgotPassword from './pages/ForgotPW';  
+import ResetPassword from './pages/ResetPW';     
 import Editpost from './pages/Editpost';
 import MyPost from "./pages/Mypost";
-import Vertify from "./pages/Vertify";
-import CreatepostImage from "./pages/CreatepostImage";
 
 //import style
 import './custom.scss';
@@ -67,9 +65,9 @@ function App() {
 
     if (window.location.pathname === '/register' 
         || window.location.pathname === '/login'
-        || window.location.pathname === '/sendotp'
+        || window.location.pathname === '/forgotpassword'
         || window.location.pathname === '/vertify'
-        || window.location.pathname === '/resetpass') return (      
+        || window.location.pathname === '/resetpassword') return (      
       <Switch>
             <Route path="/createpost"><CreatePost/></Route>
             <Route path="/feed"><Feed /></Route>
@@ -79,11 +77,9 @@ function App() {
             <Route path="/editprofile"><Editprofile /></Route> 
             <Route path="/login"><Login /></Route>
             <Route path="/register">< Register /></Route>
-            <Route path="/sendotp">< Sendotp /></Route>  
-            <Route path="/resetpass">< ResetPass /></Route>
-            <Route path="/vertify">< Vertify /></Route>  
+            <Route path="/forgotpassword"><ForgotPassword /></Route>  
+            <Route path="/resetpassword">< ResetPassword /></Route>
             <Route path="/editpost">< Editpost /></Route> 
-            <Route path="/createpostimage"> <CreatepostImage/></Route>
       </Switch>
     );
 
@@ -112,9 +108,8 @@ function App() {
     firebaseConfig.auth().signOut()
     .then(() =>{
       alert("logout successfully!")
-      window.location.href = `/login`;
+      window.location.reload();
     });
-    
   }
 
   const sideBar = () => {
@@ -137,7 +132,31 @@ function App() {
         </Link>
       </Col>
     );
-}
+  }
+
+  const addPost = () => {
+        if(currentUser === null){
+          window.location.href = `/login`;
+        }else{
+          setModalShow(true).then(() => {
+            return <Link to="/createpost" />;
+          })
+        }
+  }
+
+  const showFav = () => {
+    if(currentUser === null){
+      window.location.href = `/login`;
+    }else{
+      window.location.href = `/favlist`;
+    }
+  }
+
+  const showInfo = () => {
+    if(currentUser === null){
+      window.location.href = `/login`;
+    }
+  }
 
   return (
     <div className="App">
@@ -152,22 +171,21 @@ function App() {
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto icon-pos">
                   <li class="nav-item">
-                    <Link to="/createpost">
                       <AiOutlinePlus variant="primary" className="icon-nav"
-                      onClick={() => setModalShow(true)} />
+                      onClick={ addPost } />
                         <CreatePost
                           show={modalShow}
                           onHide={() => setModalShow(false)}
                         />
-                      </Link>
                   </li>
                   <li class="nav-item">
                       <AiOutlineHeart className="icon-nav"
-                      onClick={() => {window.location.href = `/favlist`}}/>
+                      onClick={ showFav }/>
                   </li>
                   <li class="nav-item">
                   <Link to="/">
-                    <Dropdown style={{ outline: 'none !important', boxShadow: 'none !important' }}>
+                    <Dropdown style={{ outline: 'none !important', boxShadow: 'none !important' }}
+                    onClick={ showInfo}>
                       <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" style={{ outline: 'none !important', boxShadow: 'none !important' }}>
                       </Dropdown.Toggle>
 
@@ -200,11 +218,9 @@ function App() {
                   <Route path="/editprofile"><Editprofile /></Route> 
                   <Route path="/login"><Login /></Route>
                   <Route path="/register"><Register /></Route>
-                  <Route path="/sendotp"><Sendotp /></Route>  
-                  <Route path="/resetpass"><ResetPass /></Route>
-                  <Route path="/vertify"><Vertify /></Route>  
+                  <Route path="/forgotpassword"><ForgotPassword /></Route>  
+                  <Route path="/resetpassword"><ResetPassword /></Route>
                   <Route path="/editpost"><Editpost /></Route>
-                  <Route path="/createpostimage"> <CreatepostImage/></Route>
                 </Switch>
               </Col>
             </Row>
