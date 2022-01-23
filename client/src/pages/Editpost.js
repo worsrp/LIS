@@ -63,9 +63,8 @@ const Editpost = () =>{
         if(window.confirm("Are you sure to change this post detail?")){
             Axios.post(`http://localhost:8000/editpost/${currentUser.uid}/${post_id}`,formdata,{   
             headers: { "Content-Type": "multipart/form-data" } 
-            })
-
-            Axios.post(`http://localhost:8000/editpost/${currentUser.uid}/${post_id}`, { 
+            }).then(() =>{
+                  Axios.post(`http://localhost:8000/editpost/${currentUser.uid}/${post_id}`, { 
                 post_name: Name,   
                 category: Category,
                 edit_date: edittoday,  
@@ -76,6 +75,9 @@ const Editpost = () =>{
             }).then(() => {
                 window.location.href = `/mypost`;
             })
+            })
+
+          
         }
     };
 
@@ -94,11 +96,14 @@ const Editpost = () =>{
                             <Row>
                             <Col xs={3}>
                                 <Row>
-                                    {val.image.length>1?
-                                        <Image src={require(`../../../public_html/uploads/${val.image}`)} rounded />
-                                    :[
-                                        <Image src={userInfo.filepreview} rounded />
-                                    ]}
+                                {val.image.length <=1 && userInfo.filepreview == null ? <Image src={require(`../nopic.jpg`)}   
+                                roundedCircle className="profile-pic" />:
+                                val.image.length > 1 && userInfo.filepreview == null ?                                
+                            <Image src={require(`../../../public_html/uploads/${val.image}`)}                               
+                            roundedCircle className="profile-pic" /> :
+                                <Image src={userInfo.filepreview}                               
+                                roundedCircle className="profile-pic" />}      
+
                                 </Row>
                                 </Col>
                             <Col>
@@ -114,6 +119,7 @@ const Editpost = () =>{
                                     <Col xs={5}>
                                         <Form.Select name="category" placeholder={val.category}
                                         onChange={ (e) => { setCategory(e.target.value) }}>
+                                            <option>select category</option>
                                             <option value="Fashion">Fashion</option>
                                             <option value="Health and Beauty">Health and Beauty</option>
                                             <option value="Electronics">Electronics</option>
@@ -137,6 +143,7 @@ const Editpost = () =>{
                                     <Col xs={5}>
                                         <Form.Select name="location" placeholder={val.location} 
                                         onChange={(e)=>{ setLocation(e.target.value) }}>
+                                        <option>select category</option>
                                         <option value="Bangkok">Bangkok</option>
                                         <option value="Krabi">Krabi</option>
                                         <option value="Kanchanaburi">Kanchanaburi</option>
