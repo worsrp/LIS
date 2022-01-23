@@ -1,10 +1,11 @@
 import React,{useState, useEffect, useContext } from "react";
 import Axios from 'axios'
-import { Link, Route } from 'react-router-dom';
+import CreatePost from '../pages/Createpost';
+import { Link } from 'react-router-dom';
 
 //import style
 import '../custom.scss';
-import { Card, Button, Row, Col, Container, Image } from 'react-bootstrap';
+import { Card, Button, Row, Col, Container } from 'react-bootstrap';
 import { GrLocation } from "react-icons/gr";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
@@ -12,6 +13,7 @@ import { AuthContext } from "../Auth";
 
 const MyPost = () =>{
     const [myPost, setMyPost] = useState([]);
+    const [modalShow, setModalShow] = useState(false);
     const { currentUser } = useContext(AuthContext);
 
     //get post
@@ -37,11 +39,35 @@ const MyPost = () =>{
         });
     };
 
+    const addPost = () => {
+        if(currentUser === null){
+          window.location.href = `/login`;
+        }else{
+          setModalShow(true).then(() => {
+            return <Link to="/createpost" />
+          })
+        }
+  }
+
     return (
         <div className="myPost" style={{ marginTop: '30px' }}>
             <h2 className="text-huge-header" style={{ textAlign: 'center' }}>My Post</h2>
-
-            <Container className="justify-content-md-center">
+            {myPost.length === 0 ? (
+                <>
+                <div style={{ textAlign: 'center', marginTop: '190px' }}>
+                    <h3>You don't have any post yet</h3>
+                    <h5 style={{ marginTop: '20px', color: 'navy' }}
+                    onClick={ addPost }>
+                        want to create new post?
+                    </h5>
+                    <CreatePost
+                        show={modalShow}
+                        onHide={() => setModalShow(false)}
+                    />
+                </div>
+                </>
+            ) : (
+                <Container className="justify-content-md-center">
                 {myPost.map((val)=> {
                     return (
 
@@ -94,6 +120,7 @@ const MyPost = () =>{
                 })}
                 <div style={{ marginTop: '100px' }}></div>
             </Container>
+            )}
         </div>
     );
 };

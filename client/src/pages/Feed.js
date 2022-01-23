@@ -3,7 +3,7 @@ import Axios from 'axios'
 
 //import style
 import '../custom.scss';
-import { Card, Button, Form, Row, Col, Container, Image, CardGroup } from 'react-bootstrap';
+import { Card, Button, Form, Row, Col, Container, Spinner, CardGroup } from 'react-bootstrap';
 import { GrSearch, GrLocation } from "react-icons/gr";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
@@ -14,19 +14,32 @@ const Feed = () =>{
     const [feedPost, setFeedPost] = useState([]);
     const [start, setStart] = useState(0);
     const [end, setEnd] = useState(3);
+    const [check, setCheck] = useState(false);
     const { currentUser } = useContext(AuthContext);
 
     //show all post
     useEffect (() => {
-        Axios.get(`http://localhost:8000/feed/${currentUser.uid}`, {
-        }).then((response) => {
-            setFeedPost(response.data);
-        });
+        if(currentUser === null){
+            Axios.get(`http://localhost:8000/feed/`, {
+            }).then((response) => {
+                setFeedPost(response.data);
+            });
+        }else{
+            Axios.get(`http://localhost:8000/feed/${currentUser.uid}`, {
+            }).then((response) => {
+                setFeedPost(response.data);
+            });
+        }
     }, []);
 
-    //search 
-    const searchPost = () => {
-        if(search !== ''){
+    //search
+    useEffect (() => {
+        if(search === ''){
+            Axios.get(`http://localhost:8000/feed/`, {
+            }).then((response) => {
+                setFeedPost(response.data);
+            });
+        }else{
             Axios.post("http://localhost:8000/feed", { 
                 item: search,
                 uid: currentUser.uid
@@ -34,7 +47,7 @@ const Feed = () =>{
                 setFeedPost(response.data);
             })
         }
-    };
+    }, [check]);
 
     //add post to favlist
     const addFav = (id) =>{
@@ -47,9 +60,7 @@ const Feed = () =>{
 
     return (
         <Container style={{ marginTop: '-50px' }}>
-            <Form onSubmit={(e) => {
-                e.preventDefault();
-                searchPost();}}>
+            <Form>
                 <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
                     <Form.Label column sm="1">
                         <GrSearch className="icon-large search-icon-pos" style={{ marginLeft: '70px' }} />
@@ -57,7 +68,10 @@ const Feed = () =>{
                     <Col sm="3">
                     <Form.Control type="text" placeholder="What are you looking for?"
                     className="search-bar search-bar-pos"
-                    onChange={ (e) => { setSearch(e.target.value) }}/>
+                    onChange={ (e) => { 
+                        setSearch(e.target.value);
+                        setCheck(!check); 
+                    }}/>
                     </Col>
                 </Form.Group>
             </Form>
@@ -117,6 +131,17 @@ const Feed = () =>{
                                     </Card>
                         )
                             })}
+                            {feedPost.length === 1 ? (
+                                <>
+                                    <Card className="card-trans"></Card>
+                                    <Card className="card-trans"></Card>
+                                </>
+                            ) : (<span></span>)}
+                            {feedPost.length === 2 ? (
+                                <>
+                                    <Card className="card-trans"></Card>
+                                </>
+                            ) : (<span></span>)}
                     </CardGroup>
                 </Col>
                 <Col md="auto">

@@ -1,6 +1,5 @@
 import React, {useState, useContext } from "react";
-import Axios from "axios";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../Auth";
 import firebaseConfig from "../config";
 
@@ -26,8 +25,8 @@ function Login (){
     };
 
     const history = useHistory();
-    const sendotp = () =>{ 
-        history.push("/sendotp");
+    const forgotPassword = () =>{ 
+        history.push("/forgotpassword");
     };
 
 
@@ -77,7 +76,7 @@ function Login (){
                             <div className="dash-bottom" style={{ paddingTop: '1%' }}></div>
                             <Row style={{ marginTop: '5%' }}>
                                 <Col xs={7} style={{ marginTop: '4%'}}>
-                                    <Link to='/sendotp' className="link-nodec">
+                                    <Link to='/forgotpassword' className="link-nodec">
                                     <div className="text-offer">Forgot your password?</div>
                                     </Link>
                                 </Col>

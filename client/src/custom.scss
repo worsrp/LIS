@@ -110,6 +110,12 @@ body {
     color: #000;
 }
 
+
+.text-main-body{
+    font-size: 18px;
+    color: #000;
+}
+
 .text-banner{
     font-size: 80px;
     font-weight: 700;
@@ -328,8 +334,8 @@ textarea:focus, input:focus{
 }
 
 .pic-sim{
-    width: 220px;
-    height: 200px;
+    width: 250px !important;
+    height: 220px !important;
 }
 
 .pic-create{
@@ -395,4 +401,13 @@ label:focus,
 .no-border:focus {
     border-color:lightgray;
     box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+}
+
+.spinner{
+    color:rgb(189, 189, 189);
+    position: absolute;
+    left: 47%;
+    top: 45%;
+    width: 80px;
+    height: 80px;
 }

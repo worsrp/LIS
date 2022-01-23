@@ -9,6 +9,16 @@ const db = mysql.createPool({
     database: "LISDatabase",
 });
 
+router.get('/', (req, res)=> {
+
+    //show all feed
+    const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' ORDER BY post_id DESC"
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+        
+    })
+});
+
 router.get('/:uid', (req, res)=> {
     let uid = req.params.uid;
     console.log(uid);
@@ -20,7 +30,8 @@ router.get('/:uid', (req, res)=> {
         
     })
 });
- 
+
+
 router.post('/', (req,res)=> {
     let searchItem = req.body.item;
     let uid = req.body.uid;

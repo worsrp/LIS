@@ -38,7 +38,8 @@ const ResetPWReq = () => {
                     <Card className="reset-card">
                         <div class="card-content">
                         <Row style={{ textAlign: 'center' }}>
-                            <div class="text-huge-header dash-bottom">Reset password</div>  
+                            <div className="text-mid-header">Forgot your password?</div>  
+                            <div className="dash-bottom" style={{ marginTop: '10px' }}></div>
                             <div style={{ marginTop: '10%', textAlign: 'center' }}>Enter your email to reset password</div>                            
                             <InputGroup className="mb-3" style={{ marginTop: '10px' }} >
                                 <InputGroup.Text id="basic-addon1"

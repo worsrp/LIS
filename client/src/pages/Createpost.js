@@ -1,6 +1,6 @@
 import React,{useState, useEffect, useContext } from "react";
 import Axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { AuthContext } from "../Auth";
 
 //import style
@@ -47,8 +47,9 @@ function CreatePost(props) {
                     headers: { "Content-Type": "multipart/form-data" }
                 }).then(() => {
                     alert('your post has been created!');
+                    window.location.href = `/mypost`;
                 })
-        })
+            })
     };
 
     const hiddenFileInput = React.useRef(null);
@@ -79,9 +80,9 @@ function CreatePost(props) {
                 className="text-header" style={{ paddingLeft : '300px' }}>
                         Create new post
                 </Modal.Title>
-                <Link to="/feed" onClick={props.onHide}>
-                    <GrClose className="icon-large" />
-                </Link>
+                {/* <Link to="/feed" onClick={props.onHide}> */}
+                    <GrClose className="icon-large" onClick={ props.onHide } />
+                {/* </Link> */}
             </Modal.Header>
             <Modal.Body>
             <Form>

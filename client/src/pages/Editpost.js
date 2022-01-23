@@ -104,6 +104,11 @@ const Editpost = () =>{
                                 <Image src={userInfo.filepreview}                               
                                 roundedCircle className="profile-pic" />}      
 
+                                    {val.image.length>1?
+                                        <Image className="pic-sim" rounded src={require(`../../../public_html/uploads/${val.image}`)} />
+                                    :[
+                                        <Image src={userInfo.filepreview} rounded />
+                                    ]}
                                 </Row>
                                 </Col>
                             <Col>
