@@ -13,16 +13,25 @@ function Login (){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const login = () => {
+    const login = (e) => {
 
-        try{
-
-            firebaseConfig.auth().signInWithEmailAndPassword(email, password);
-
-        }catch(error){
-            alert(error);
-        }
+        e.preventDefault();
+    
+            firebaseConfig.auth().signInWithEmailAndPassword(email, password).then(() => {             
+               }).catch(function(error) {
+                  var errorCode = error.code;
+                  var errorMessage = error.message;
+                  if (errorCode === 'auth/wrong-password'|| errorCode === 'auth/internal-error') {
+                    alert('invalid password!!!');
+                  } else if(errorCode === 'auth/user-not-found' || errorCode==='auth/invalid-email'){
+                      alert('invalid email !!!');                            
+                  }else if(errorCode ==='auth/too-many-requests'){
+                        alert("try again later or reset password");
+                  }
+                  console.log(error);
+                });
     };
+
 
     const history = useHistory();
     const forgotPassword = () =>{ 
