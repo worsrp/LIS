@@ -3,6 +3,7 @@ import Axios from "axios";
 import { Link, Redirect } from 'react-router-dom';
 import { AuthContext } from "../Auth";
 import firebaseConfig from "../config";
+// import validation from "../validation";
 
 //import style
 import '../custom.scss';
@@ -16,7 +17,7 @@ function Register (){
     const [email, setemail] = useState("");
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
-    const [moblie, setMoblie] = useState("");
+    const [mobile, setMobile] = useState("");
     const [address, setAddress] = useState("");
     const [password, setpassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -24,12 +25,33 @@ function Register (){
     const [alertShow, setAlertShow] = useState(false);
     const [newUser, setNewUser] = useState(null);
 
-    const register = () => {
+    const [errors, setErrors] = useState({});
+
+    //validateion---------------------------------------
+  /*  const handleChange = (e) =>{
+        setemail({
+            ...email,
+            [e.target.email]: e.target.email,
+        })
+    }
+*/
+    const register = (e) => {    
         if(email === null){
             return <Redirect to="/login"></Redirect>
         }
 
-        if(password !== confirmPassword){
+        // validation----------------------------------------
+        e.preventDefault();
+
+        //handleChange(e);
+        
+        if(firstname == "" || lastname =="" || mobile=="" || address=="" || password ==""){
+
+        //setErrors(validation([firstname,lastname,mobile,address,password]));
+        alert("please input the information !!!");
+
+
+        }else if(password !== confirmPassword){
             alert("Confirm Password is not match with password !");
         }else{ 
 
@@ -57,7 +79,7 @@ function Register (){
                         firstname: firstname, 
                         lastname: lastname, 
                         password: password,
-                        moblie: moblie, 
+                        mobile: mobile, 
                         address: address,
                         uid: connectID.uid
         })
@@ -79,6 +101,7 @@ function Register (){
     if (currentUser !== null || newUser !== null){
         return <Redirect to="/feed" />;
     }
+
 
     
     return (
@@ -108,10 +131,12 @@ function Register (){
                             <Col>
                                 <Form.Control type="text" placeholder="First name" 
                                 onChange={(e) => { setFirstname(e.target.value) }}/>
+                                    {errors.firstname && <p className="error">{errors.firstname}</p>}
                             </Col>
                             <Col>
                                 <Form.Control type="text" placeholder="Last name" 
                                 onChange={(e) => { setLastname(e.target.value) }}/>
+                                    {errors.lastname && <p className="error">{errors.lastname}</p>}
                             </Col>
                         </Row>
                         <Row style={{ marginTop: '4%' }}>
@@ -122,10 +147,12 @@ function Register (){
                             <Col>
                                 <Form.Control type="email" placeholder="email address" 
                                 onChange={(e) => { setemail(e.target.value) }} />
+                                    {errors.email && <p className="error">{errors.email}</p>}
                             </Col>
                             <Col>
                                 <Form.Control type="text" placeholder="Mobile number"
-                                onChange={(e) => { setMoblie(e.target.value) }}  />
+                                onChange={(e) => { setMobile(e.target.value) }}  />
+                                    {errors.mobile && <p className="error">{errors.mobile}</p>}                            
                             </Col>
                         </Row>
                         <Row style={{ marginTop: '4%' }}>
@@ -135,6 +162,7 @@ function Register (){
                             <Col>
                                 <Form.Control as="textarea" rows={2} style={{ resize: 'none' }} placeholder="Address" 
                                 onChange={(e) => { setAddress(e.target.value) }} />
+                                    {errors.address && <p className="error">{errors.address}</p>}                            
                             </Col>
                         </Row>
                     </Row>
@@ -147,6 +175,7 @@ function Register (){
                             <Col>
                                 <Form.Control type="password" placeholder="Password" 
                                 onChange={(e) => { setpassword(e.target.value) }} />
+                                    {errors.password && <p className="error">{errors.password}</p>}                            
                             </Col>
                             <Col>
                                 <Form.Control type="password" placeholder="Confirm your password" 

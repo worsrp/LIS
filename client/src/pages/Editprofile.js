@@ -67,12 +67,11 @@ const Editprofile = () =>{
       //   alert("Confirm Password is not match with password !");
       // }
       
-      if(window.confirm("Are you sure to change this profile detail?"))
-      {
+      
       Axios.post(`http://localhost:8000/editprofile/${currentUser.uid}`, formdata,{   
             headers: { "Content-Type": "multipart/form-data" } 
-      })
-      Axios.post(`http://localhost:8000/editprofile/${currentUser.uid}`,{
+      }).then(() => {
+         Axios.post(`http://localhost:8000/editprofile/${currentUser.uid}`,{
         image:formdata,
         firstname: firstname, 
         lastname: lastname, 
@@ -83,7 +82,9 @@ const Editprofile = () =>{
             alert("edit profile successfully!");
             window.location.href = `/profile`;
         })
-      }
+      })
+     
+      
     }
     // }
   
