@@ -1,6 +1,6 @@
 import React,{useState, useEffect, useContext } from "react";
 import Axios from 'axios'
-import CreatePost from '../pages/Createpost';
+import CreatePost from '../pages/CrePost';
 import { Link } from 'react-router-dom';
 
 //import style
@@ -47,26 +47,12 @@ const MyPost = () =>{
             return <Link to="/createpost" />
           })
         }
-  }
+    }
 
     return (
         <div className="myPost" style={{ marginTop: '30px' }}>
             <h2 className="text-huge-header" style={{ textAlign: 'center' }}>My Post</h2>
-            {myPost.length === 0 ? (
-                <>
-                <div style={{ textAlign: 'center', marginTop: '190px' }}>
-                    <h3>You don't have any post yet</h3>
-                    <h5 style={{ marginTop: '20px', color: 'navy' }}
-                    onClick={ addPost }>
-                        want to create new post?
-                    </h5>
-                    <CreatePost
-                        show={modalShow}
-                        onHide={() => setModalShow(false)}
-                    />
-                </div>
-                </>
-            ) : (
+            {myPost.length > 0 ? (
                 <Container className="justify-content-md-center">
                 {myPost.map((val)=> {
                     return (
@@ -120,6 +106,20 @@ const MyPost = () =>{
                 })}
                 <div style={{ marginTop: '100px' }}></div>
             </Container>
+            ) : (
+                <>
+                <div style={{ textAlign: 'center', marginTop: '190px' }}>
+                    <h3>You don't have any post yet</h3>
+                    <h5 style={{ marginTop: '20px', color: 'navy' }}
+                    onClick={ addPost }>
+                        want to create new post?
+                    </h5>
+                    <CreatePost
+                        show={modalShow}
+                        onHide={() => setModalShow(false)}
+                    />
+                </div>
+                </>
             )}
         </div>
     );

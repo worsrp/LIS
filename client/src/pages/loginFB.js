@@ -7,20 +7,30 @@ import firebaseConfig from "../config";
 import '../custom.scss';
 import { Row, Col, Container, Card, Button, InputGroup, FormControl } from 'react-bootstrap';
 import { FaUserAlt, FaKey } from "react-icons/fa";
+import { RiEye2Line } from 'react-icons/ri';
 
 function Login (){
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const login = () => {
+    const login = async () => {
 
         try{
 
-            firebaseConfig.auth().signInWithEmailAndPassword(email, password);
+            await firebaseConfig.auth().signInWithEmailAndPassword(email, password);
 
         }catch(error){
-            alert(error);
+            let message = 'An error has occured!';
+
+            if (error.code === 'auth/invalid-email') {
+                message = 'Invalid email address!';
+            } else if (error.code === 'auth/user-not-found') {
+                message = 'No account with such credentials!';
+            } else if (error.code === 'auth/wrong-password') {
+                message = 'Incorrect password! Try again.';
+            }
+            alert(message);
         }
     };
 
@@ -36,17 +46,27 @@ function Login (){
         window.location.href = `/`;
     }
         
+    function mouseoverPass() {
+        var obj = document.getElementById('myPassword');
+        obj.type = "text";
+    }
+
+    function mouseoutPass() {
+        var obj = document.getElementById('myPassword');
+        obj.type = "password";
+    }
+
     return (
         <Container className="login-bg">
             <Row>
                 <Col style={{ paddingTop: '25vh', paddingLeft: '10%' }}>
-                    <div class="login-banner">Love</div>
-                    <div class="login-banner">is Sharing.</div>
+                    <div className="login-banner">Love</div>
+                    <div className="login-banner">is Sharing.</div>
                 </Col>
                 <Col>
                     <Card className="login-card">
-                        <div class="card-content">
-                            <div class="text-sub-banner dash-bottom">Hello</div>                            
+                        <div className="card-content">
+                            <div className="text-sub-banner dash-bottom">Hello</div>                            
                             <InputGroup className="mb-3" style={{ marginTop: '5%' }} >
                                 <InputGroup.Text id="basic-addon1"
                                 style={{ backgroundColor: 'transparent', borderRight:'none', height: '50px', borderRadius: '20px 0px 0px 20px' }}>
@@ -66,12 +86,17 @@ function Login (){
                                     <FaKey style={{ marginLeft: '10px' }} />
                                 </InputGroup.Text>
                                 <FormControl className="form-control no-border"
-                                style={{  borderLeft:'none', borderRadius: '0px 20px 20px 0px' }}
+                                style={{  borderLeft:'none', borderRight:'none'}}
                                 placeholder="Password"
                                 type="password"
                                 aria-describedby="basic-addon1"
+                                id="myPassword"
                                 onChange={(e) => { setPassword(e.target.value) }}
                                 />
+                                <InputGroup.Text id="basic-addon1"
+                                style={{ backgroundColor: 'transparent', borderLeft:'none', height: '50px', borderRadius: '0px 20px 20px 0px' }}>
+                                    <RiEye2Line style={{ marginLeft: '10px' }} onMouseOver={mouseoverPass} onMouseOut={mouseoutPass} />
+                                </InputGroup.Text>
                             </InputGroup>
                             <div className="dash-bottom" style={{ paddingTop: '1%' }}></div>
                             <Row style={{ marginTop: '5%' }}>

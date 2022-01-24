@@ -3,13 +3,16 @@ import Axios from "axios";
 import { Link, Redirect } from 'react-router-dom';
 import { AuthContext } from "../Auth";
 import firebaseConfig from "../config";
-// import validation from "../validation";
+import validator from 'validator';
 
 //import style
 import '../custom.scss';
-import { Row, Col, Container, Image, Form, Button } from 'react-bootstrap';
+import { Row, Col, Container, Image, Form, Alert, 
+        Button, InputGroup, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { HiUser } from "react-icons/hi";
 import { MdError } from "react-icons/md";
+import { RiEye2Line } from 'react-icons/ri';
+import { FiAlertCircle } from 'react-icons/fi';
 
 
 function Register (){
@@ -28,7 +31,7 @@ function Register (){
     const [errors, setErrors] = useState({});
 
     //validateion---------------------------------------
-  /*  const handleChange = (e) =>{
+/*  const handleChange = (e) =>{
         setemail({
             ...email,
             [e.target.email]: e.target.email,
@@ -48,11 +51,15 @@ function Register (){
         if(firstname == "" || lastname =="" || mobile=="" || address=="" || password ==""){
 
         //setErrors(validation([firstname,lastname,mobile,address,password]));
-        alert("please input the information !!!");
-
-
+        alert("Please input the information !!!");
         }else if(password !== confirmPassword){
             alert("Confirm Password is not match with password !");
+        }else if(password.length < 6){
+            alert("Password must be more than 6 characters");
+        }else if(!validator.isEmail(email)){
+            alert("Email is invalid!");
+        }else if(!validator.isMobilePhone(mobile)){
+            alert("Mobile number is invalid!");
         }else{ 
 
             try{
@@ -102,15 +109,54 @@ function Register (){
         return <Redirect to="/feed" />;
     }
 
+    function mouseoverPass() {
+        var obj = document.getElementById('myPassword');
+        obj.type = "text";
+    }
 
-    
+    function mouseoutPass() {
+        var obj = document.getElementById('myPassword');
+        obj.type = "password";
+    }
+
+    function mouseoverConfPass() {
+        var obj = document.getElementById('myConfirmPassword');
+        obj.type = "text";
+    }
+
+    function mouseoutConfPass() {
+        var obj = document.getElementById('myConfirmPassword');
+        obj.type = "password";
+    }
+
+    const renderTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Password must be more than 6 characters
+        </Tooltip>
+    );
+
+    const renderEmailVal = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Enter a valid email address
+            example: abc@email.com
+        </Tooltip>
+    );
+
+    const renderMobileVal = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Enter a mobile number without country code
+            example: 081111111
+        </Tooltip>
+    );
+
+
     return (
-        <body class="bg-color">
+        <div className="bg-color">
         <Container >
             <Row style={{ marginTop: '4%', marginLeft: '1%' }}>
                 <Col>
-                    <div class="text-banner">Love</div>
-                    <div class="text-banner">is Sharing.</div>
+                    <div className="text-banner">Love</div>
+                    <div className="text-banner">is Sharing.</div>
                     <Image src={ require('../register.png') } 
                     style={{ width: '500px', marginTop: '20%' }}/>
                 </Col>
@@ -140,8 +186,32 @@ function Register (){
                             </Col>
                         </Row>
                         <Row style={{ marginTop: '4%' }}>
-                            <Col>Email</Col>
-                            <Col>Mobile</Col>
+                            <Col>
+                            Email
+                            <OverlayTrigger
+                                placement="top"
+                                delay={{ show: 250, hide: 400 }}
+                                overlay={renderEmailVal}
+                            >
+                                <Button variant="success" className="btn-trans">
+                                    <FiAlertCircle 
+                                    style={{ color: 'gray', marginBottom: '2px', marginLeft: '-5px'}}/>
+                                </Button>
+                            </OverlayTrigger>
+                            </Col>
+                            <Col>
+                            Mobile
+                            <OverlayTrigger
+                                placement="top"
+                                delay={{ show: 250, hide: 400 }}
+                                overlay={renderMobileVal}
+                            >
+                                <Button variant="success" className="btn-trans">
+                                    <FiAlertCircle 
+                                    style={{ color: 'gray', marginBottom: '2px', marginLeft: '-5px'}}/>
+                                </Button>
+                            </OverlayTrigger>
+                            </Col>
                         </Row>
                         <Row style={{ marginTop: '1%' }}>
                             <Col>
@@ -167,22 +237,51 @@ function Register (){
                         </Row>
                     </Row>
                     <Row style={{ marginTop: '5%', borderBottom: '2px dashed lightgray', paddingBottom: '7%' }}>
-                        <Row style={{ marginTop: '1%' }}>
-                            <Col>Password</Col>
-                            <Col>Confirm password</Col>
+                        <Row>
+                            <Col>
+                            Password
+                            <OverlayTrigger
+                                placement="top"
+                                delay={{ show: 250, hide: 400 }}
+                                overlay={renderTooltip}
+                            >
+                                <Button variant="success" className="btn-trans">
+                                    <FiAlertCircle 
+                                    style={{ color: 'gray', marginBottom: '2px', marginLeft: '-5px'}}/>
+                                </Button>
+                            </OverlayTrigger>
+                            </Col>
+                            <Col style={{ marginTop: '5px' }}>
+                            Confirm password
+                            </Col>
                         </Row>
                         <Row style={{ marginTop: '1%' }}>
                             <Col>
-                                <Form.Control type="password" placeholder="Password" 
+                            <InputGroup className="mb-3" >
+                                <Form.Control type="password" placeholder="Password" id="myPassword"
+                                style={{ borderRight: 'none' }}
                                 onChange={(e) => { setpassword(e.target.value) }} />
-                                    {errors.password && <p className="error">{errors.password}</p>}                            
+                                    {errors.password && <p className="error">{errors.password}</p>} 
+                                <InputGroup.Text id="basic-addon1"
+                                style={{ backgroundColor: 'transparent', borderLeft:'none', borderRadius: '0px 5px 5px 0px' }}>
+                                    <RiEye2Line style={{ marginLeft: '10px' }} onMouseOver={mouseoverPass} onMouseOut={mouseoutPass} />
+                                </InputGroup.Text>
+                            </InputGroup>                           
                             </Col>
                             <Col>
-                                <Form.Control type="password" placeholder="Confirm your password" 
+                            <InputGroup className="mb-3" >
+                            <Form.Control type="password" placeholder="Confirm your password" id="myConfirmPassword"
+                                style={{ borderRight: 'none' }}
                                 onChange={(e) => { 
                                     setConfirmPassword(e.target.value);
                                     setCheck(!check);
                                 }} />
+                                    {errors.password && <p className="error">{errors.password}</p>} 
+                                <InputGroup.Text id="basic-addon1"
+                                style={{ backgroundColor: 'transparent', borderLeft:'none', borderRadius: '0px 5px 5px 0px' }}>
+                                    <RiEye2Line style={{ marginLeft: '10px' }} onMouseOver={mouseoverConfPass} onMouseOut={mouseoutConfPass} />
+                                </InputGroup.Text>
+                            </InputGroup>                           
                             </Col>
                         </Row>
                         <Row style={{ marginTop: '1%' }}>
@@ -206,7 +305,9 @@ function Register (){
                 </Col>
             </Row>
         </Container>
-        </body>
+        <div style={{ height: '50px'}}></div>
+        <div className="text-credit" style={{ height: '50px', textAlign: 'center'}}>powered by Saoluck 2022</div>
+        </div>
     );
 }
 

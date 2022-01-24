@@ -9,6 +9,7 @@ import '../custom.scss';
 import { Row, Col, Container, Card, Button, InputGroup, FormControl } from 'react-bootstrap';
 import { MdError } from "react-icons/md";
 import { FaKey } from "react-icons/fa";
+import { RiEye2Line } from 'react-icons/ri';
 
 function useQuery(){
     const location = useLocation()
@@ -57,6 +58,26 @@ const ResetPass = () => {
         }
     }, [check]);
 
+    function mouseoverPass() {
+        var obj = document.getElementById('myPassword');
+        obj.type = "text";
+    }
+
+    function mouseoutPass() {
+        var obj = document.getElementById('myPassword');
+        obj.type = "password";
+    }
+
+    function mouseoverConfPass() {
+        var obj = document.getElementById('myConfirmPassword');
+        obj.type = "text";
+    }
+
+    function mouseoutConfPass() {
+        var obj = document.getElementById('myConfirmPassword');
+        obj.type = "password";
+    }
+
     return (
         <>
         <Container className="login-bg">
@@ -76,26 +97,34 @@ const ResetPass = () => {
                                 style={{ backgroundColor: 'transparent', borderRight:'none', height: '50px', borderRadius: '20px 0px 0px 20px' }}>
                                     <FaKey style={{ marginLeft: '10px' }} />
                                 </InputGroup.Text>
-                                <FormControl className="form-control no-border"
-                                style={{  borderLeft:'none', borderRadius: '0px 20px 20px 0px' }}
+                                <FormControl className="form-control no-border" id="myPassword"
+                                style={{ borderLeft:'none', borderRight:'none' }}
                                 placeholder="new password"
                                 type="password"
                                 aria-describedby="basic-addon1"
                                 onChange={(e) => { setNewPassword(e.target.value) }}
                                 />
+                                <InputGroup.Text id="basic-addon1"
+                                style={{ backgroundColor: 'transparent', borderLeft:'none', height: '50px', borderRadius: '0px 20px 20px 0px' }}>
+                                    <RiEye2Line style={{ marginLeft: '10px' }} onMouseOver={mouseoverPass} onMouseOut={mouseoutPass} />
+                                </InputGroup.Text>
                             </InputGroup>
                             <InputGroup className="mb-3" style={{ marginTop: '10px' }} >
                                 <InputGroup.Text id="basic-addon1"
                                 style={{ backgroundColor: 'transparent', borderRight:'none', height: '50px', borderRadius: '20px 0px 0px 20px' }}>
                                     <FaKey style={{ marginLeft: '10px' }} />
                                 </InputGroup.Text>
-                                <FormControl className="form-control no-border"
-                                style={{  borderLeft:'none', borderRadius: '0px 20px 20px 0px' }}
+                                <FormControl className="form-control no-border" id="myConfirmPassword"
+                                style={{ borderLeft:'none', borderRight:'none' }}
                                 placeholder="confirm new password"
                                 type="password"
                                 aria-describedby="basic-addon1"
                                 onChange={(e) => { setConfirmPass(e.target.value); setCheck(!check); }}
                                 />
+                                <InputGroup.Text id="basic-addon1"
+                                style={{ backgroundColor: 'transparent', borderLeft:'none', height: '50px', borderRadius: '0px 20px 20px 0px' }}>
+                                    <RiEye2Line style={{ marginLeft: '10px' }} onMouseOver={mouseoverConfPass} onMouseOut={mouseoutConfPass} />
+                                </InputGroup.Text>
                             </InputGroup>
                             </Row>
                             <Row style={{ marginLeft: '1%'}}>

@@ -12,9 +12,7 @@ import profileRoute from './routes/profileRoute.js'
 import mypostRoute from './routes/mypostRoute.js'
 import loginRoute from './routes/loginRoute.js'
 import registerRoute from './routes/registerRoute.js'
-import sendotpRoute from './routes/sendotpRoute.js'
-import resetpassRoute from './routes/resetpassRoute.js'
-import vertifyRoute from './routes/vertifyRoute.js'
+
 
 import editprofileRoute from './routes/editprofileRoute.js'
 import editpostRoute from './routes/editpostRoute.js';
@@ -65,12 +63,6 @@ app.use("/login", loginRoute);
 app.use("/editpost", editpostRoute);
 
 app.use("/editprofile", editprofileRoute);
-
-app.use("/sendotp", sendotpRoute);
-
-app.use("/vertify", vertifyRoute);
-
-app.use("/resetpass", resetpassRoute);
 
 app.listen(8000, () =>{
     console.log("Running on port 8000");

@@ -10,7 +10,7 @@ const db = mysql.createConnection({
     user: "root",
     host: "localhost",
     password: "",
-    database: "lisdatabase"
+    database: "LISDatabase"
 })
 
 
@@ -18,11 +18,11 @@ router.post('/', (req,res) => {
     const email     = req.body.email
     const firstname = req.body.firstname
     const lastname  = req.body.lastname
-    const mobile    = req.body.moblie
+    const mobile    = req.body.mobile
     const address   = req.body.address
     const password  = req.body.password
     const uid = req.body.uid
-    const IMAGE =''
+    const IMAGE = ''
 
     bcrypt.hash(password, saltRounds, (err, hash) => {
         if (err) {

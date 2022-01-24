@@ -1,6 +1,6 @@
 import React,{useState, useEffect, useContext } from "react";
 import Axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { AuthContext } from "../Auth";
 
 //import style
@@ -60,12 +60,12 @@ const Profile = () =>{
                                             </Row>
                                         </Col>
                                         <Col xs={3} style={{ marginTop: '10px', marginLeft: '40px'}}>
-                                            <Link  to="/editprofile">
-                                                <Button className="btn-login" > 
+                                                <Button className="btn-login" onClick={() => {
+                                                      window.location.href = `/editprofile`;
+                                                }}> 
                                                     <AiFillEdit className="icon-sim" style={{ marginRight: '8px' }} />
                                                     Edit 
                                                 </Button>
-                                            </Link>
                                         </Col>
                                     </Row>
                                     </Col>

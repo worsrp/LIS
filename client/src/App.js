@@ -9,7 +9,7 @@ import Feed from './pages/Feed';
 import Favlist from './pages/Favlist';
 import Profile from './pages/Profile';
 import Editprofile from './pages/Editprofile';
-import CreatePost from './pages/Createpost';
+import CreatePost from './pages/CrePost';
 import Register from './pages/registerFB';
 import Login from './pages/loginFB';  
 import ForgotPassword from './pages/ForgotPW';  
@@ -31,23 +31,13 @@ function App() {
   const [search, setSearch] = useState('');
   const [feedPost, setFeedPost] = useState([]);
   const [feed, setFeed] = useState(false);
+  const [show, setShow] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
 
-     //if(currentUser===null){
-    //     return <Redirect to="/login" />;
-    // }
-
-
-  const searchPost = () => {
-    if(search !== ''){
-        Axios.post("http://localhost:8000/feed", { 
-            item: search
-        }).then((response) => {
-            setFeedPost(response.data);
-        })
-    }
-  };
+  useEffect(() => {
+    document.title = "Love is Shaing"
+  }, [])
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
@@ -66,7 +56,6 @@ function App() {
     if (window.location.pathname === '/register' 
         || window.location.pathname === '/login'
         || window.location.pathname === '/forgotpassword'
-        || window.location.pathname === '/vertify'
         || window.location.pathname === '/resetpassword') return (      
       <Switch>
             <Route path="/createpost"><CreatePost/></Route>
@@ -83,23 +72,6 @@ function App() {
       </Switch>
     );
 
-
-  const isFeed = () => {
-      if (window.location.pathname === '/feed') return (
-        <div>
-              <Form.Label column sm="1">
-                  <GrSearch className="icon-large search-icon-pos" style={{ marginLeft: '70px' }} />
-              </Form.Label>
-              <Col sm="3">
-                  <Form.Control type="text" placeholder="What are you looking for?"
-                      className="search-bar search-bar-pos"
-                      onChange={ (e) => {setSearch(e.target.value)}} 
-                      onSubmit={ searchPost } required />
-              </Col>
-        </div>
-      );
-  }
-
   const reProfile = () => {
     window.location.href = `/profile`;
   }
@@ -108,7 +80,7 @@ function App() {
     firebaseConfig.auth().signOut()
     .then(() =>{
       alert("logout successfully!")
-      window.location.reload();
+      window.location.href = `/feed`;
     });
   }
 
@@ -138,7 +110,7 @@ function App() {
         if(currentUser === null){
           window.location.href = `/login`;
         }else{
-          setModalShow(true).then(() => {
+          setShow(true).then(() => {
             return <Link to="/createpost" />;
           })
         }
@@ -158,24 +130,22 @@ function App() {
     }
   }
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <div className="App">
       <header className="App-header">
         <nav class="navbar navbar-expand-lg navbar-light bg-#FFF">
               <a class="navbar-brand" href="/"><b class="comname">Love is Sharing.</b></a>
-              <Form>
-                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                        <isFeed />
-                    </Form.Group>
-                </Form>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto icon-pos">
                   <li class="nav-item">
                       <AiOutlinePlus variant="primary" className="icon-nav"
                       onClick={ addPost } />
                         <CreatePost
-                          show={modalShow}
-                          onHide={() => setModalShow(false)}
+                          show={show}
+                          onHide={() => setShow(false)}
                         />
                   </li>
                   <li class="nav-item">

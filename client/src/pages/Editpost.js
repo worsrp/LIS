@@ -6,8 +6,7 @@ import { AuthContext } from "../Auth";
 //import style
 import '../custom.scss';
 import { Button, Form, Row, Col, Image } from 'react-bootstrap';
-import { GrLocation, GrClose } from "react-icons/gr";
-import { BiCategory } from "react-icons/bi";
+import { BsImage } from "react-icons/bs";
 
 const Editpost = () =>{
     const [editPost, seteditPost] = useState([]);
@@ -20,6 +19,12 @@ const Editpost = () =>{
         filepreview:null, 
     })
     const { currentUser } = useContext(AuthContext);
+
+    const hiddenFileInput = React.useRef(null);
+
+    const handleClick = event => {
+        hiddenFileInput.current.click();
+    };
 
     const handleFormChange = (event) => {
         setuserInfo({
@@ -64,20 +69,18 @@ const Editpost = () =>{
             Axios.post(`http://localhost:8000/editpost/${currentUser.uid}/${post_id}`,formdata,{   
             headers: { "Content-Type": "multipart/form-data" } 
             }).then(() =>{
-                  Axios.post(`http://localhost:8000/editpost/${currentUser.uid}/${post_id}`, { 
-                post_name: Name,   
-                category: Category,
-                edit_date: edittoday,  
-                location: Location,  
-                description: Description,
-                image: formdata,
-                uid: currentUser.uid
+                Axios.post(`http://localhost:8000/editpost/${currentUser.uid}/${post_id}`, { 
+                    post_name: Name,   
+                    category: Category,
+                    edit_date: edittoday,  
+                    location: Location,  
+                    description: Description,
+                    image: formdata,
+                    uid: currentUser.uid
             }).then(() => {
                 window.location.href = `/mypost`;
             })
             })
-
-          
         }
     };
 
@@ -96,21 +99,20 @@ const Editpost = () =>{
                             <Row>
                             <Col xs={3}>
                                 <Row>
-                                {val.image.length <=1 && userInfo.filepreview == null ? <Image src={require(`../nopic.jpg`)}   
-                                roundedCircle className="profile-pic" />:
+                                {val.image.length <=1 && userInfo.filepreview == null ? 
+                                <Image src={require(`../nopic.jpg`)}   
+                                rounded className="pic-sim" /> :
                                 val.image.length > 1 && userInfo.filepreview == null ?                                
-                            <Image src={require(`../../../public_html/uploads/${val.image}`)}                               
-                            roundedCircle className="profile-pic" /> :
+                                <Image src={require(`../../../public_html/uploads/${val.image}`)}                               
+                                rounded className="pic-sim" /> :
                                 <Image src={userInfo.filepreview}                               
-                                roundedCircle className="profile-pic" />}      
-
-                                    {val.image.length>1?
-                                        <Image className="pic-sim" rounded src={require(`../../../public_html/uploads/${val.image}`)} />
-                                    :[
-                                        <Image src={userInfo.filepreview} rounded />
-                                    ]}
+                                rounded className="pic-sim" />}      
                                 </Row>
-                                </Col>
+                                <Button className="pos-editimg btn-trans" onClick={handleClick}>
+                                <BsImage className="icon-neg" style={{ marginTop: '-2px'}} />
+                                <span style={{ color: 'white', marginLeft: '5px' }}>change image</span>
+                                </Button>
+                            </Col>
                             <Col>
                                 <Row>
                                     <Col xs={3} style={{ textAlign: 'end', marginTop: '3px'}}>Post Name :</Col>
@@ -134,13 +136,6 @@ const Editpost = () =>{
                                             <option value="Kpop">Kpop</option>
                                             <option value="Hand craft">Hand craft</option>
                                         </Form.Select>
-                                    </Col>
-                                </Row>
-                                <Row style={{ marginTop: '10px' }}>
-                                    <Col xs={3} style={{ textAlign: 'end', marginTop: '3px'}}>Select Image :</Col>
-                                    <Col xs={5}>
-                                        <Form.Control type="file" className="form-control" name="upload_file"  
-                                        onChange={handleFormChange} />
                                     </Col>
                                 </Row>
                                 <Row style={{ marginTop: '10px' }}>
@@ -253,6 +248,13 @@ const Editpost = () =>{
                                 </Row>
                                 </Col>
                         </Row>   
+                        <Row style={{ marginTop: '10px' }}>
+                                    <Col xs={5}>
+                                        <Form.Control type="file" className="form-control" name="upload_file"  
+                                        style={{ display: 'none'}}
+                                        ref={hiddenFileInput} onChange={handleFormChange} />
+                                    </Col>
+                        </Row>
                         </form>
                     </div>
                     ); 

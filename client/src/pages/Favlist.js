@@ -1,5 +1,6 @@
 import React,{useState, useEffect, useContext } from "react";
 import Axios from 'axios'
+import { Link } from 'react-router-dom';
 
 //import style
 import '../custom.scss';
@@ -38,7 +39,19 @@ const Favlist = () =>{
                     <h2 className="text-mid-header">My favorite post</h2>
                 </Col>
             </Row>
-        <Container className="favList" style={{ marginTop: '-10px'}}>
+        {favPost.length === 0 ? (
+            <>
+            <div style={{ textAlign: 'center', marginTop: '190px' }}>
+                <h3>You don't have any favorite post</h3>
+                <h5 style={{ marginTop: '20px' }}>
+                    <Link to="/feed" style={{ textDecoration: 'none', color: 'navy' }}>
+                    want to addSome?
+                    </Link>
+                </h5>
+            </div>
+            </>
+        ) : (
+            <Container className="favList" style={{ marginTop: '-10px'}}>
             <Row className="justify-content-md-center">
             <Col md="auto" >
                 {favPost.length > 3 && start !== 0 ? (
@@ -56,9 +69,9 @@ const Favlist = () =>{
                         return(
                                     <Card className="card-feed">
                                         <div className="pic-feed">
-                                        {val.image.length>1?(
-                                        <img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />):(
-                                        <img variant="top" src={require("../nopic.jpg")} />
+                                        {val.image !== null ?(
+                                        <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />):(
+                                        <Card.Img variant="top" src={require("../nopic.jpg")} />
                                         )}
                                         </div>
                                         <Card.Body>
@@ -69,12 +82,12 @@ const Favlist = () =>{
                                                                 <Col style={{ marginTop: '20px', marginLeft: '-10px'}} xs={9}>
                                                                     <Row>
                                                                     <Col xs={1}>
-                                                                    <GrLocation className="icon-sim" /> 
+                                                                    <GrLocation className="icon-sim" style={{ marginTop: '-3px' }} /> 
                                                                     </Col>
                                                                     <Col xs={1}>
                                                                         : 
                                                                     </Col>
-                                                                    <Col xs={8}>
+                                                                    <Col xs={8} style={{ marginLeft: '-15px' }}>
                                                                         {val.location}
                                                                     </Col>
                                                                     </Row> 
@@ -117,6 +130,7 @@ const Favlist = () =>{
                 </Col>
             </Row>
         </Container>
+        )}
         </>
     );
 };

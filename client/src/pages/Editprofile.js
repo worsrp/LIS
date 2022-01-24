@@ -101,12 +101,13 @@ const Editprofile = () =>{
                             <Row> 
                             <Col xs={4}>
 
-                            {val.image.length <=1 && userInfo.filepreview == null ? <Image src={require(`../nopic.jpg`)}   
+                            {val.image.length <=1 && userInfo.filepreview == null ? 
+                              <Image src={require(`../nopic.jpg`)}   
                                 roundedCircle className="profile-pic" />:
-                                val.image.length > 1 && userInfo.filepreview == null ?                                
-                            <Image src={require(`../../../public_html/uploads/${val.image}`)}                               
-                            roundedCircle className="profile-pic" /> :
-                                <Image src={userInfo.filepreview}                               
+                            val.image.length > 1 && userInfo.filepreview == null ?                                
+                              <Image src={require(`../../../public_html/uploads/${val.image}`)}                               
+                                roundedCircle className="profile-pic" /> :
+                              <Image src={userInfo.filepreview}                               
                                 roundedCircle className="profile-pic" />}      
 
                               <Button className="pos-picimg btn-trans" onClick={handleClick}>

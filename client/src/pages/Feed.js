@@ -3,7 +3,7 @@ import Axios from 'axios'
 
 //import style
 import '../custom.scss';
-import { Card, Button, Form, Row, Col, Container, Spinner, CardGroup } from 'react-bootstrap';
+import { Card, Button, Form, Row, Col, Container, Image, CardGroup } from 'react-bootstrap';
 import { GrSearch, GrLocation } from "react-icons/gr";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
@@ -52,10 +52,14 @@ const Feed = () =>{
     //add post to favlist
     const addFav = (id) =>{
         // alert("added to favorite list");
+        if(currentUser === null){
+            window.location.href = `/login`;
+        }else{
         Axios.post("http://localhost:8000/fav", { 
             post_id: id,
             uid: currentUser.uid
-        })
+        })}
+        
     };
 
     return (
@@ -92,12 +96,13 @@ const Feed = () =>{
                         return(
                                     <Card className="card-feed">
                                         <div className="pic-feed">
-                                        {val.image.length > 1 ? (
-                                        <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />
+                                        {val.image !== null ? (
+                                            <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />
                                         ):(
-                                        <Card.Img variant="top" src={require("../nopic.jpg")} />
+                                            <Card.Img variant="top" src={require("../nopic.jpg")} />
                                         )}
-                                        </div>
+                                            </div>
+
                                         <Card.Body>
                                             <Card.Title>{val.post_name}</Card.Title>
                                             <Card.Text style={{ height: '12vh'}}>{val.description}</Card.Text>
@@ -106,22 +111,22 @@ const Feed = () =>{
                                                                 <Col style={{ marginTop: '20px', marginLeft: '-10px'}} xs={9}>
                                                                     <Row>
                                                                     <Col xs={1}>
-                                                                    <GrLocation className="icon-sim" /> 
+                                                                    <GrLocation className="icon-sim" style={{ marginTop: '-3px' }} />
                                                                     </Col>
                                                                     <Col xs={1}>
                                                                         : 
                                                                     </Col>
-                                                                    <Col xs={8}>
+                                                                    <Col xs={8} style={{ marginLeft: '-15px' }}>
                                                                         {val.location}
                                                                     </Col>
                                                                     </Row> 
                                                                 </Col>  
                                                                 <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
                                                                     <Row>
-                                                                            <Button className="btn-fav"
+                                                                            <Button className="btn-fav" variant="outline-warning"
                                                                             onClick = {() => {addFav(val.post_id)}} >
                                                                             <AiOutlineHeart className="icon-sim" />
-                                                                                <span className="fav-sty">fav</span>
+                                                                            <span className="fav-sty">fav</span>
                                                                             </Button>
                                                                     </Row>                                                                
                                                                 </Col>

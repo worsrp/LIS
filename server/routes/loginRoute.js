@@ -7,7 +7,7 @@ const db = mysql.createConnection({
     user: "root",
     host: "localhost",
     password: "",
-    database: "lisdatabase"
+    database: "LISDatabase"
 });
 router.get('/', (req, res) => {
             if (req.session.user) {

@@ -5,7 +5,7 @@ import { AuthContext } from "../Auth";
 
 //import style
 import '../custom.scss';
-import { Button, Form, Row, Col, Container, Modal, Image, Overlay } from 'react-bootstrap';
+import { Button, Form, Row, Col, Container, Modal, Image, Overlay, Offcanvas } from 'react-bootstrap';
 import { GrLocation, GrClose } from "react-icons/gr";
 import { BiCategory } from "react-icons/bi";
 import { BsImage } from "react-icons/bs";
@@ -22,7 +22,6 @@ function CreatePost(props) {
     const [post_id,setId] = useState('')
     const { currentUser } = useContext(AuthContext);
 
-    const [show, setShow] = useState(false);
     const target = React.useRef(null);
 
     const submitPost = () => {
@@ -70,22 +69,15 @@ function CreatePost(props) {
     
     return (
     <Container>
-        <Modal
-            {...props}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered >
-            <Modal.Header>
-                <Modal.Title id="contained-modal-title-vcenter" 
-                className="text-header" style={{ paddingLeft : '300px' }}>
-                        Create new post
-                </Modal.Title>
-                {/* <Link to="/feed" onClick={props.onHide}> */}
-                    <GrClose className="icon-large" onClick={ props.onHide } />
-                {/* </Link> */}
-            </Modal.Header>
-            <Modal.Body>
-            <Form>
+      <Offcanvas {...props} 
+      placement="top">
+        <Offcanvas.Header closeButton>
+            <Offcanvas.Title className="text-header" style={{ paddingLeft : '300px' }}>
+                Create new post
+            </Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+        <Form>
                 <Row>
                     <Col style={{ textAlign: 'center' }}>
                     {userInfo.filepreview !== null ? (
@@ -95,10 +87,11 @@ function CreatePost(props) {
                         <Image src={require(`../nopic.jpg`)}
                         rounded className="pic-create" />
                     )} 
-                    {/* <Button className="btn-trans feed-picimg" onClick={handleClick}>
+                    <Button className="btn-trans feed-picimg" 
+                    style={{ marginTop: '60px' }} onClick={handleClick}>
                                 <BsImage className="icon-neg" style={{ marginTop: '-2px'}} />
-                                <span style={{ color: 'white', marginLeft: '5px' }}>change image</span>
-                    </Button> */}
+                                <span style={{ color: 'white', marginLeft: '5px' }}>choose image</span>
+                    </Button>
                     </Col>
                     <Col xs={7}>
                         <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -233,21 +226,22 @@ function CreatePost(props) {
                 </Row>             
                 <Row>
                 <Col>
-                    <Form.Control  type="file" ref={hiddenFileInput} onChange={handleInputChange} /> 
+                    <Form.Control  type="file" ref={hiddenFileInput} onChange={handleInputChange} 
+                    style={{ display: 'none' }}/> 
                 </Col>
                 </Row>
             </Form>
-            </Modal.Body>
-            <Modal.Footer style={{ border : 'white' }}>
+            <Row>
             <Link to="/" style = {{ width: '80%'}}>
                 <Button onClick={() => {
                     submitPost();
                     props.onHide();
                 }}variant="outline-info" size="lg"
-                className="pos-center" style = {{ width: '80%'}}>Post</Button>
+                className="pos-center" style = {{ width: '80%', marginLeft: '145px'}}>Post</Button>
             </Link>
-            </Modal.Footer>
-        </Modal>
+            </Row>
+        </Offcanvas.Body>
+    </Offcanvas>
     </Container>
     );
 };
