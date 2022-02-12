@@ -35,17 +35,34 @@ router.get('/:uid', (req, res)=> {
 router.post('/', (req,res)=> {
     let searchItem = req.body.item;
     let uid = req.body.uid;
+    let category = req.body.category;
     searchItem = "%"+searchItem+"%";
 
+    console.log(searchItem);
+    console.log(category);
+
+    if(searchItem === "%%"){
+        const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' AND user_id NOT LIKE ? AND category LIKE ?"
+        db.query(sqlSelect, [ uid, category], (err, result) => {
+            console.log(result)
+            if(err){
+                console.log(err);
+            }else{
+            res.send(result); 
+            }
+        })
+    }else{
+        const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' AND user_id NOT LIKE ? AND category LIKE ? AND (post_name Like ? OR description Like ?)"
+        db.query(sqlSelect, [uid, category, searchItem, searchItem], (err, result) => {
+            console.log(result)
+            if(err){
+                console.log(err);
+            }else{
+            res.send(result); 
+            }
+        })  
+    }
     //search post
-    const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' AND post_name Like ? OR description Like ? AND user_id NOT LIKE ?"
-    db.query(sqlSelect, [searchItem, searchItem, uid], (err, result) => {
-        if(err){
-            console.log(err);
-        }else{
-          res.send(result); 
-        }
-    })
 });
 
 export default router;

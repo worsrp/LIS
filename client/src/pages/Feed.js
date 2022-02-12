@@ -15,6 +15,7 @@ const Feed = () =>{
     const [start, setStart] = useState(0);
     const [end, setEnd] = useState(3);
     const [check, setCheck] = useState(false);
+    const [category, setCategory] = useState('');
     const { currentUser } = useContext(AuthContext);
 
     //show all post
@@ -35,19 +36,47 @@ const Feed = () =>{
     //search
     useEffect (() => {
         if(search === ''){
-            Axios.get(`http://localhost:8000/feed/`, {
-            }).then((response) => {
-                setFeedPost(response.data);
-            });
+            if(category === ''){
+                Axios.get(`http://localhost:8000/feed/`, {
+                }).then((response) => {
+                    setFeedPost(response.data);
+                });
+            }else{
+                Axios.post("http://localhost:8000/feed/", { 
+                    item: search,
+                    category: category,
+                    uid: currentUser.uid
+                }).then((response) => {
+                    setFeedPost(response.data);
+                })                
+            } 
         }else{
-            Axios.post("http://localhost:8000/feed", { 
+            Axios.post("http://localhost:8000/feed/", { 
                 item: search,
+                category: category,
                 uid: currentUser.uid
             }).then((response) => {
                 setFeedPost(response.data);
             })
         }
     }, [check]);
+
+    useEffect (() => {
+        if(category === ''){
+            Axios.get(`http://localhost:8000/feed/`, {
+            }).then((response) => {
+                setFeedPost(response.data);
+            });
+        }else{
+            Axios.post("http://localhost:8000/feed/", { 
+                item: search,
+                category: category,
+                uid: currentUser.uid
+            }).then((response) => {
+                setFeedPost(response.data);
+            })                
+        }
+    });
 
     //add post to favlist
     const addFav = (id) =>{
@@ -66,17 +95,36 @@ const Feed = () =>{
         <Container style={{ marginTop: '-50px' }}>
             <Form>
                 <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                    <Form.Group as={Col}>
                     <Form.Label column sm="1">
                         <GrSearch className="icon-large search-icon-pos" style={{ marginLeft: '70px' }} />
                     </Form.Label>
                     <Col sm="3">
-                    <Form.Control type="text" placeholder="What are you looking for?"
+                    <Form.Control column type="text" placeholder="What are you looking for?"
                     className="search-bar search-bar-pos"
                     onChange={ (e) => { 
                         setSearch(e.target.value);
                         setCheck(!check); 
                     }}/>
-                    </Col>
+                    </Col>   
+                    </Form.Group>
+                </Form.Group>
+
+                <Form.Group as={Row}>
+                <Col sm="5">
+                <Form.Select aria-label="Default select example" 
+                    onChange={ (e) => { setCategory(e.target.value) }}>
+                        <option value=''>All category</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Health and Beauty">Health and Beauty</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Mommy and baby">Mommy and baby</option>
+                        <option value="Home and living">Home and living</option>
+                        <option value="lifestyle">lifestyle</option>
+                        <option value="Kpop">Kpop</option>
+                        <option value="Hand craft">Hand craft</option>
+                </Form.Select>
+                </Col>      
                 </Form.Group>
             </Form>
             <Row className="justify-content-md-center">
