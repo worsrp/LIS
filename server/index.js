@@ -64,6 +64,8 @@ app.use("/editpost", editpostRoute);
 
 app.use("/editprofile", editprofileRoute);
 
+app.use("/history", historyRoute);
+
 app.listen(8000, () =>{
     console.log("Running on port 8000");
 

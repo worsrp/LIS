@@ -16,6 +16,7 @@ import ForgotPassword from './pages/ForgotPW';
 import ResetPassword from './pages/ResetPW';     
 import Editpost from './pages/Editpost';
 import MyPost from "./pages/Mypost";
+import History from "./pages/History";
 
 //import style
 import './custom.scss';
@@ -69,6 +70,7 @@ function App() {
             <Route path="/forgotpassword"><ForgotPassword /></Route>  
             <Route path="/resetpassword">< ResetPassword /></Route>
             <Route path="/editpost">< Editpost /></Route> 
+            <Route path="/history"><History /></Route>
       </Switch>
     );
 
@@ -192,6 +194,7 @@ function App() {
                   <Route path="/forgotpassword"><ForgotPassword /></Route>  
                   <Route path="/resetpassword"><ResetPassword /></Route>
                   <Route path="/editpost"><Editpost /></Route>
+                  <Route path="/history"><History /></Route>
                 </Switch>
               </Col>
             </Row>
