@@ -17,6 +17,7 @@ import ResetPassword from './pages/ResetPW';
 import Editpost from './pages/Editpost';
 import MyPost from "./pages/Mypost";
 import History from "./pages/History";
+import Chat from "./pages/Chat";
 
 //import style
 import './custom.scss';
@@ -71,6 +72,7 @@ function App() {
             <Route path="/resetpassword">< ResetPassword /></Route>
             <Route path="/editpost">< Editpost /></Route> 
             <Route path="/history"><History /></Route>
+            <Route path="/chat"><Chat /></Route>
       </Switch>
     );
 
@@ -195,6 +197,7 @@ function App() {
                   <Route path="/resetpassword"><ResetPassword /></Route>
                   <Route path="/editpost"><Editpost /></Route>
                   <Route path="/history"><History /></Route>
+                  <Route path="/chat"><Chat /></Route>
                 </Switch>
               </Col>
             </Row>

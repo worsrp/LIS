@@ -91,6 +91,17 @@ const Feed = () =>{
         
     };
 
+    const chat = (id) =>{
+        // alert("added to favorite list");
+        if(currentUser === null){
+            window.location.href = `/login`;
+        }else{
+            
+            window.location.href = `/chat?${id}`;
+        }
+        
+    };
+
     return (
         <Container style={{ marginTop: '-50px' }}>
             <Form>
@@ -175,6 +186,14 @@ const Feed = () =>{
                                                                             onClick = {() => {addFav(val.post_id)}} >
                                                                             <AiOutlineHeart className="icon-sim" />
                                                                             <span className="fav-sty">fav</span>
+                                                                            </Button>
+                                                                    </Row>                                                                
+                                                                </Col>
+                                                                <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
+                                                                    <Row>
+                                                                            <Button className="btn-fav" variant="outline-warning"
+                                                                            onClick = {() => {chat(val.post_id)}} >
+                                                                            <span className="fav-sty">chat</span>
                                                                             </Button>
                                                                     </Row>                                                                
                                                                 </Col>

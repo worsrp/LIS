@@ -21,7 +21,6 @@ router.get('/', (req, res)=> {
 
 router.get('/:uid', (req, res)=> {
     let uid = req.params.uid;
-    console.log(uid);
 
     //on feed show all post but not currentUser's post
     const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' AND user_id NOT LIKE ? ORDER BY post_id DESC"
