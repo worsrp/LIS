@@ -37,7 +37,7 @@ const Feed = () =>{
     useEffect (() => {
         if(search === ''){
             if(category === ''){
-                Axios.get(`http://localhost:8000/feed/`, {
+                Axios.get(`http://localhost:8000/feed/${currentUser.uid}`, {
                 }).then((response) => {
                     setFeedPost(response.data);
                 });
@@ -63,7 +63,7 @@ const Feed = () =>{
 
     useEffect (() => {
         if(category === ''){
-            Axios.get(`http://localhost:8000/feed/`, {
+            Axios.get(`http://localhost:8000/feed/${currentUser.uid}`, {
             }).then((response) => {
                 setFeedPost(response.data);
             });
