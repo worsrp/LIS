@@ -96,7 +96,6 @@ const Feed = () =>{
         if(currentUser === null){
             window.location.href = `/login`;
         }else{
-            
             window.location.href = `/chat?${id}`;
         }
         

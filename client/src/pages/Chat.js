@@ -15,12 +15,16 @@ const Chat = () => {
           postId  = pair[0];
         }
     parseInt(postId);
-    const [uidowner,setuidowner] = useState('')
+    const [uidowner,setuidowner] = useState('');
+    const [chat,setchat] = useState('')
     useEffect (() => {
-      Axios.get(`http://localhost:8000/chat/${postId}`).then((response) => {
-          setuidowner(response.data[0].user_id);
+      Axios.get(`http://localhost:8000/chat/${currentUser.uid}/${postId}`).then((response) => {
+          setchat(response.data);
       });
   }, []);
+    Axios.get(`http://localhost:8000/chat/${postId}`).then((response) => {
+            setuidowner(response.data[0].user_id);
+            });
   const { messages, sendMessage } = useChat(postId,currentUser.uid,uidowner);
   const [newMessage, setNewMessage] = useState('');
 
