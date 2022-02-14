@@ -92,7 +92,6 @@ const Feed = () =>{
     };
 
     const chat = (id) =>{
-        // alert("added to favorite list");
         if(currentUser === null){
             window.location.href = `/login`;
         }else{
@@ -100,8 +99,8 @@ const Feed = () =>{
             post_id: id,
             uid: currentUser.uid
         })
+        window.location.href = `/room`;
         }
-        
     };
 
     return (

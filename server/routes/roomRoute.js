@@ -9,12 +9,32 @@ const db = mysql.createPool({
     database: "LISDatabase",
 });
 
+// router.get('/:uid', (req, res)=> {
+//     const userid = req.params.uid;
+//     const sqlSelect = "SELECT * FROM GOCHAT WHERE  uidowner = ? OR uidcustomer = ?";
+//     db.query(sqlSelect, [userid,userid],  (err, result) => {
+//         console.log(result);
+//         res.send(result);
+//     })
+// });
+
 router.get('/:uid', (req, res)=> {
+    
     const userid = req.params.uid;
     const sqlSelect = "SELECT * FROM GOCHAT WHERE  uidowner = ? OR uidcustomer = ?";
     db.query(sqlSelect, [userid,userid],  (err, result) => {
-        console.log(result);
-        res.send(result);
+        let uidown,post,room
+        Object.keys(result).forEach(function(key) {
+        var row = result[key];
+            uidown=row.uidowner
+            post=row.post_id
+            room=row.roomid
+        });
+        const sqlSearch = "SELECT * FROM POST NATURAL JOIN GOCHAT WHERE GOCHAT.uidowner = POST.user_id OR GOCHAT.uidcustomer = ? AND POST.post_id=?"
+        db.query(sqlSearch, [userid,post], (err,result) => {
+            console.log(result)
+            res.send(result)
+        })
     })
 });
 
@@ -25,10 +45,24 @@ router.post('/', (req, res)=> {
     const sqlSelect = "SELECT user_id FROM POST WHERE  post_id =?";
     db.query(sqlSelect, [post_id],  (err, result) => {
         uidowner=result[0].user_id;
-        const sqlInsert = "INSERT INTO GOCHAT  (uidowner,uidcustomer,post_id) VALUE (?,?,?);"
-        db.query(sqlInsert, [uidowner,uidcustomer,post_id], (err, result) => {     
-            console.log(err);   
-        })  
+        const sqlSearch = "SELECT * FROM GOCHAT WHERE uidowner=? AND uidcustomer=? AND post_id=?"
+        db.query(sqlSearch, [uidowner,uidcustomer,post_id],(err,result) => {
+            let uidcus,room
+            Object.keys(result).forEach(function(key) {
+            var row = result[key];
+            uidcus=row.uidcustomer
+            room=row.roomid
+            });
+            if(uidcus==null){
+                const sqlInsert = "INSERT INTO GOCHAT  (uidowner,uidcustomer,post_id) VALUE (?,?,?);"
+                db.query(sqlInsert, [uidowner,uidcustomer,post_id], (err, result) => {     
+                    console.log(err);   
+                })  
+            }else{
+                console.log(result);
+            }
+        })
+        
     })
 });
 
