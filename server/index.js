@@ -15,6 +15,7 @@ import registerRoute from './routes/registerRoute.js'
 import editprofileRoute from './routes/editprofileRoute.js'
 import editpostRoute from './routes/editpostRoute.js';
 import chatRoute from './routes/chatRoute.js';
+import roomRoute from './routes/roomRoute.js';
 import mysql from 'mysql';
 
 const router = express.Router();
@@ -47,8 +48,8 @@ io.on("connection", (socket) => {
   socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
     io.in(postId).emit(NEW_CHAT_MESSAGE_EVENT, data);
     console.log(data);
-    const sqlSelect = "INSERT INTO CHAT  (uidsender,uidreceiver,post_id,msg) VALUE (?,?,?,?);"
-        db.query(sqlSelect, [data.usenderId,data.receiverId,data.postid,data.body], (err, result) => {         
+    const sqlSelect = "INSERT INTO CHAT  (uidsender,uidreceiver,post_id,msg,roomid) VALUE (?,?,?,?);"
+        db.query(sqlSelect, [data.usenderId,data.receiverId,data.postid,data.body,data.roomid], (err, result) => {         
         })  
   });
 
@@ -106,6 +107,7 @@ app.use("/editprofile", editprofileRoute);
 
 app.use("/chat", chatRoute);
 
+app.use("/room", roomRoute);
 
 server.listen(8000, () =>{
     console.log("Running on port 8000");

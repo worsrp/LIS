@@ -4,13 +4,13 @@ import socketIOClient from "socket.io-client";
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const SOCKET_SERVER_URL = "http://localhost:8000";
 
-const useChat = (postId,uidsender,uidowner) => {
+const useChat = (roomId,uidsender,uidreceiver,postId) => {
   const [messages, setMessages] = useState([]);
   const socketRef = useRef();
 
   useEffect(() => {
     socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
-      query: { postId },
+      query: { roomId },
     });
 
     socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
@@ -24,15 +24,16 @@ const useChat = (postId,uidsender,uidowner) => {
     return () => {
       socketRef.current.disconnect();
     };
-  }, [postId]);
+  }, [roomId]);
 
   const sendMessage = (messageBody) => {
     socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
       body: messageBody,
       senderId: socketRef.current.id,
       usenderId: uidsender,
-      receiverId: uidowner,
-      postid:postId
+      receiverId: uidreceiver,
+      roomid:roomId,
+      postid:postId,
     });
   };
 

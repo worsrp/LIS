@@ -96,11 +96,10 @@ const Feed = () =>{
         if(currentUser === null){
             window.location.href = `/login`;
         }else{
-            Axios.post("http://localhost:8000/chat", { 
+            Axios.post("http://localhost:8000/room", { 
             post_id: id,
             uid: currentUser.uid
         })
-            window.location.href = `/chat?${id}`;
         }
         
     };

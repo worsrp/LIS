@@ -8,24 +8,32 @@ import { BsImage } from "react-icons/bs";
 const Chat = () => {
     const { currentUser } = useContext(AuthContext);
     let urlString = window.location.href; 
-    let postId ;
+    let roomId ;
     let paramString = urlString.split('?')[1];
     let queryString = new URLSearchParams(paramString);
         for(let pair of queryString.entries()) {
-          postId  = pair[0];
+          roomId  = pair[0];
         }
-    parseInt(postId);
-    const [uidowner,setuidowner] = useState('');
+    parseInt(roomId);
+    const [uidsender,setuidsender] = useState('');
+    const [uidreceiver,setuidreceiver] = useState('');
+    const [postId,setpostid] = useState('');
     const [chat,setchat] = useState('')
     useEffect (() => {
-      Axios.get(`http://localhost:8000/chat/${currentUser.uid}/${postId}`).then((response) => {
-          setchat(response.data);
+      Axios.get(`http://localhost:8000/chat/${currentUser.uid}/${roomId}`).then((response) => {
+          setchat(response.data[0].msg);
+          if(response.data[0].uidreceiver!=='undefined')
+          setuidreceiver(response.data[0].uidreceiver);
+          else
+          setuidreceiver(response.data[0].uidowner);
+          if(response.data[0].uidsender!=='undefined')
+          setuidsender(response.data[0].uidsender);
+          else
+          setuidsender(response.data[0].uidcustomer);
+          setpostid(response.data[0].post_id)
       });
   }, []);
-    Axios.get(`http://localhost:8000/chat/${postId}`).then((response) => {
-            setuidowner(response.data[0].user_id);
-            });
-  const { messages, sendMessage } = useChat(postId,currentUser.uid,uidowner);
+  const { messages, sendMessage } = useChat(roomId,currentUser.uid,currentUser.uid==uidsender?uidreceiver:uidsender,postId);
   const [newMessage, setNewMessage] = useState('');
 
 
@@ -40,7 +48,7 @@ const Chat = () => {
 
   return (
     <div className="chat-room-container">
-      <h1 className="room-name">Room:{postId}</h1>
+      <h1 className="room-name">Room:{roomId}</h1>
       <div className="messages-container">
         <ol className="messages-list">
           {messages.map((message, i) => (

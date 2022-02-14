@@ -18,6 +18,7 @@ import Editpost from './pages/Editpost';
 import MyPost from "./pages/Mypost";
 import History from "./pages/History";
 import Chat from "./pages/Chat";
+import Room from "./pages/Room";
 
 //import style
 import './custom.scss';
@@ -73,6 +74,7 @@ function App() {
             <Route path="/editpost">< Editpost /></Route> 
             <Route path="/history"><History /></Route>
             <Route path="/chat"><Chat /></Route>
+            <Route path="/room"><Room /></Route>
       </Switch>
     );
 
@@ -198,6 +200,7 @@ function App() {
                   <Route path="/editpost"><Editpost /></Route>
                   <Route path="/history"><History /></Route>
                   <Route path="/chat"><Chat /></Route>
+                  <Route path="/room"><Room /></Route>
                 </Switch>
               </Col>
             </Row>

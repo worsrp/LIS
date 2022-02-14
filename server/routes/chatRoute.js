@@ -12,29 +12,22 @@ const db = mysql.createPool({
     database: "LISDatabase",
 });
 
-
-router.post('/', (req, res)=> {
-    const post_id = req.body.post_id;
-    const uidcustomer = req.body.uid;
-    let uidowner;
-    const sqlSelect = "SELECT user_id FROM POST WHERE  post_id =?";
-    db.query(sqlSelect, [post_id],  (err, result) => {
-        uidowner=result[0].user_id;
-        const sqlInsert = "INSERT INTO GOCHAT  (uidowner,uidcustomer,postid) VALUE (?,?,?);"
-        db.query(sqlInsert, [uidowner,uidcustomer,post_id], (err, result) => {     
-            console.log(err);   
-        })  
-    })
-   
-
-});
-
 router.get('/:uid/:id', (req, res)=> {
     const uidsender = req.params.uid;
-    const post_id = req.params.id;
-    const sqlSelect = "SELECT * FROM GOCHAT WHERE uidsender LIKE ? AND post_id =?";
-    db.query(sqlSelect, [uidsender,post_id],  (err, result) => {
-        res.send(result);
+    const roomid = req.params.id;
+    const sqlSelect = "SELECT * FROM CHAT WHERE uidsender LIKE ? AND roomid =?";
+    db.query(sqlSelect, [uidsender,roomid],  (err, result) => {
+        if(result==='undefined'){
+            const sqlSelect = "SELECT * FROM GOCHAT WHERE uidcustomer LIKE ? OR uidowner LIKE ? AND roomid =?";
+            db.query(sqlSelect, [uidsender,uidsender,roomid],  (err, result) => {
+                console.log('derger',result)
+                res.send(result);
+            })
+        }else{
+            console.log('vdfbsbsr',result)
+            res.send(result);
+        }
+        
     })
 });
 
