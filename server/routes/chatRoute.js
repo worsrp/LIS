@@ -15,16 +15,20 @@ const db = mysql.createPool({
 router.get('/:uid/:id', (req, res)=> {
     const uidsender = req.params.uid;
     const roomid = req.params.id;
+    console.log('kkkk')
     const sqlSelect = "SELECT * FROM CHAT WHERE uidsender LIKE ? AND roomid =?";
     db.query(sqlSelect, [uidsender,roomid],  (err, result) => {
-        if(result==='undefined'){
+        let uidsend
+        Object.keys(result).forEach(function(key) {
+            var row = result[key];
+            uidsend=row.uidsender
+        });
+        if(uidsend==null){
             const sqlSelect = "SELECT * FROM GOCHAT WHERE uidcustomer LIKE ? OR uidowner LIKE ? AND roomid =?";
             db.query(sqlSelect, [uidsender,uidsender,roomid],  (err, result) => {
-                console.log('derger',result)
                 res.send(result);
             })
         }else{
-            console.log('vdfbsbsr',result)
             res.send(result);
         }
         

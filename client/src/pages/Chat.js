@@ -19,18 +19,21 @@ const Chat = () => {
     const [uidreceiver,setuidreceiver] = useState('');
     const [postId,setpostid] = useState('');
     const [chat,setchat] = useState('')
+    const [uidrec,setrec] = useState('')
     useEffect (() => {
       Axios.get(`http://localhost:8000/chat/${currentUser.uid}/${roomId}`).then((response) => {
           setchat(response.data[0].msg);
-          if(response.data[0].uidreceiver!=='undefined')
+          let uidsend=response.data[0].uidreceiver;
+          let uidsend2=response.data[0].uidsender;
+          if(uidsend==='undefined')
           setuidreceiver(response.data[0].uidreceiver);
           else
           setuidreceiver(response.data[0].uidowner);
-          if(response.data[0].uidsender!=='undefined')
+          if(uidsend2=='undefined')
           setuidsender(response.data[0].uidsender);
           else
           setuidsender(response.data[0].uidcustomer);
-          setpostid(response.data[0].post_id)
+          setpostid(response.data[0].post_id);
       });
   }, []);
   const { messages, sendMessage } = useChat(roomId,currentUser.uid,currentUser.uid==uidsender?uidreceiver:uidsender,postId);

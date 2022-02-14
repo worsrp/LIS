@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
   socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
     io.in(postId).emit(NEW_CHAT_MESSAGE_EVENT, data);
     console.log(data);
-    const sqlSelect = "INSERT INTO CHAT  (uidsender,uidreceiver,post_id,msg,roomid) VALUE (?,?,?,?);"
+    const sqlSelect = "INSERT INTO CHAT  (uidsender,uidreceiver,post_id,msg,roomid) VALUE (?,?,?,?,?);"
         db.query(sqlSelect, [data.usenderId,data.receiverId,data.postid,data.body,data.roomid], (err, result) => {         
         })  
   });
