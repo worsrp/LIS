@@ -23,7 +23,7 @@ import Room from "./pages/Room";
 //import style
 import './custom.scss';
 import { Dropdown } from 'react-bootstrap';
-import { AiOutlinePlus, AiOutlineHeart, AiOutlineUser } from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineHeart, AiOutlineUser,AiOutlineWechat } from "react-icons/ai";
 import { FiMenu } from "react-icons/fi";
 import { GrSearch } from "react-icons/gr";
 import { Form, Row, Col } from 'react-bootstrap';
@@ -136,6 +136,14 @@ function App() {
     }
   }
 
+  const showRoom = () => {
+    if(currentUser === null){
+      window.location.href = `/login`;
+    }else{
+      window.location.href = `/room`;
+    }
+  }
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -157,6 +165,10 @@ function App() {
                   <li class="nav-item">
                       <AiOutlineHeart className="icon-nav"
                       onClick={ showFav }/>
+                  </li>
+                  <li class="nav-item">
+                      <AiOutlineWechat className="icon-nav"
+                      onClick={ showRoom }/>
                   </li>
                   <li class="nav-item">
                   <Link to="/">
