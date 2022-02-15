@@ -14,28 +14,14 @@ const db = mysql.createPool({
 
 router.get('/:id', (req, res)=> {
     const roomid = req.params.id;
-    // const sqlSelect = "SELECT msg FROM CHAT WHERE roomid =? order by time ";
-    // db.query(sqlSelect, [roomid],  (err, result) => {
-    //     let room
-    //     Object.keys(result).forEach(function(key) {
-    //     var row = result[key];
-    //         room=row.roomid
-    //     });
-        const sqlSelect = "SELECT * FROM GOCHAT WHERE GOCHAT.roomid = ?"
-        db.query(sqlSelect, [roomid],  (err, result) => {
-            let uidown
-            Object.keys(result).forEach(function(key) {
-            var row = result[key];
-                uidown=row.uidowner
-            });
-            console.log(uidown)
-            const sqlSearch = "SELECT DISTINCT * FROM POST  JOIN USER NATURAL JOIN CHAT WHERE POST.user_id=? AND CHAT.roomid=? AND USER.uid=?"
-            db.query(sqlSearch, [uidown,roomid,uidown],  (err, result) => {
-                console.log(result)
-                res.send(result)
-    })
+    console.log("gogo")
+    const sqlSelect = "SELECT * FROM CHAT JOIN GOCHAT ON CHAT.roomid=GOCHAT.roomid WHERE GOCHAT.roomid = ?"
+    db.query(sqlSelect, [roomid],  (err, result) => {
+        res.send(result)
+        console.log(result)
+    });
+
 });
-})
 
 router.get('/:uid/:id', (req, res)=> {
     const uidsender = req.params.uid;
@@ -58,18 +44,6 @@ router.get('/:uid/:id', (req, res)=> {
         }
         
     })
-});
-
-router.post('/:uid/:id', (req, res)=> {
-    const uid = req.params.uid;
-    const post_id = req.params.id;
-
-    const sqlSelect = "SELECT * FROM CHAT WHERE uidreceiver = ? OR uidsender = ? AND post_id =? ORDER BY post_id DESC";
-    db.query(sqlSelect, [uid, uid ,post_id],  (err, result) => {
-        res.send(result);
-        console.log(result)
-    })
-    console.log(post_id);
 });
 
 

@@ -45,8 +45,8 @@ const Chat = () => {
   useEffect (() => {
     Axios.get(`http://localhost:8000/chat/${roomId}`).then((response) => {
       setAllMes(response.data);
-      setPost(response.data[0].post_name)
-      setOwner(response.data[0].firstname+" "+response.data[0].lastname)
+      // setPost(response.data[0].post_name)
+      // setOwner(response.data[0].firstname+" "+response.data[0].lastname)
   })
   }, []);
   const handleNewMessageChange = (event) => {
@@ -61,8 +61,8 @@ const Chat = () => {
   return (
     <div className="chat-room-container">
       <div className="messages-container">
-        <h1 className="room-name">Room:{post}</h1>
-        <h3 className="owner">Post By :{owner}</h3>
+        {/* <h1 className="room-name">Room:{post}</h1>
+        <h3 className="owner">Post By :{owner}</h3> */}
       <div>
           { allMes.map((val) => {
             return (

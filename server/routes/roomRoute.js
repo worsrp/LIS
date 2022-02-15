@@ -9,32 +9,12 @@ const db = mysql.createPool({
     database: "LISDatabase",
 });
 
-// router.get('/:uid', (req, res)=> {
-//     const userid = req.params.uid;
-//     const sqlSelect = "SELECT * FROM GOCHAT WHERE  uidowner = ? OR uidcustomer = ?";
-//     db.query(sqlSelect, [userid,userid],  (err, result) => {
-//         console.log(result);
-//         res.send(result);
-//     })
-// });
-
 router.get('/:uid', (req, res)=> {
-    
     const userid = req.params.uid;
-    const sqlSelect = "SELECT * FROM GOCHAT WHERE  uidowner = ? OR uidcustomer = ?";
-    db.query(sqlSelect, [userid,userid],  (err, result) => {
-        let uidown,post,room
-        Object.keys(result).forEach(function(key) {
-        var row = result[key];
-            uidown=row.uidowner
-            post=row.post_id
-            room=row.roomid
-        });
-        const sqlSearch = "SELECT * FROM POST NATURAL JOIN GOCHAT WHERE GOCHAT.uidowner = POST.user_id OR GOCHAT.uidcustomer = ? AND POST.post_id=?"
-        db.query(sqlSearch, [userid,post], (err,result) => {
-            console.log(result)
-            res.send(result)
-        })
+    const sqlSearch = "SELECT * FROM POST JOIN GOCHAT ON POST.post_id=GOCHAT.post_id  WHERE GOCHAT.uidowner = ? OR GOCHAT.uidcustomer = ?"
+    db.query(sqlSearch, [userid,userid], (err,result) => {
+        console.log(result)
+        res.send(result)
     })
 });
 
@@ -59,7 +39,7 @@ router.post('/', (req, res)=> {
                     console.log(err);   
                 })  
             }else{
-                console.log(result);
+                //console.log(result);
             }
         })
         
