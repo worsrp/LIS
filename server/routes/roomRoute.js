@@ -25,10 +25,23 @@ router.post('/', (req, res)=> {
     const sqlSelect = "SELECT user_id FROM POST WHERE  post_id =?";
     db.query(sqlSelect, [post_id],  (err, result) => {
         uidowner=result[0].user_id;
-        const sqlInsert = "INSERT INTO GOCHAT  (uidowner,uidcustomer,post_id) VALUE (?,?,?);"
+        const sqlSelect = "SELECT * FROM GOCHAT WHERE uidowner LIKE ? AND uidcustomer LIKE ? AND post_id =?";
+        db.query(sqlSelect, [uidowner,uidcustomer,post_id],  (err, result) => {
+            let uidsend
+        Object.keys(result).forEach(function(key) {
+            var row = result[key];
+            uidsend=row.uidowner
+        });
+        if(uidsend!=null){
+
+        }else{
+            const sqlInsert = "INSERT INTO GOCHAT  (uidowner,uidcustomer,post_id) VALUE (?,?,?);"
         db.query(sqlInsert, [uidowner,uidcustomer,post_id], (err, result) => {     
             console.log(err);   
         })  
+        }
+        })
+        
     })
 });
 

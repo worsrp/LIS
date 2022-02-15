@@ -25,11 +25,11 @@ const Chat = () => {
           setchat(response.data[0].msg);
           let uidsend=response.data[0].uidreceiver;
           let uidsend2=response.data[0].uidsender;
-          if(uidsend==='undefined')
+          if(uidsend!=null)
           setuidreceiver(response.data[0].uidreceiver);
           else
           setuidreceiver(response.data[0].uidowner);
-          if(uidsend2=='undefined')
+          if(uidsend2!=null)
           setuidsender(response.data[0].uidsender);
           else
           setuidsender(response.data[0].uidcustomer);
