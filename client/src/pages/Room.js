@@ -13,7 +13,6 @@ const Room= () =>{
     const [room, setRoom] = useState([]);
     const { currentUser } = useContext(AuthContext);
 
-    //show all post
     useEffect (() => {
         if(currentUser === null){
             Axios.get(`http://localhost:8000/room/`, {
@@ -33,31 +32,35 @@ const Room= () =>{
         if(currentUser === null){
             window.location.href = `/login`;
         }else{
-            window.location.href = `/chat?${id}`;
+            Axios.get(`http://localhost:8000/chat/${id}`, {
+            }).then((response) => {
+                window.location.href = `/chat?${id}`;
+            });
         }
-        
     };
 
     return (
         <Container style={{ marginTop: '-50px' }}>
             <Row className="justify-content-md-center">
-         
-                    {room.map((val)=> {
-                        return(
-                                    <Card className="card-feed">
-
-                                            <Card.Title>{val.roomid}</Card.Title>
-                        
-            
-                                                                <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
-                                                                    <Row>
-                                                                            <Button className="btn-fav" variant="outline-warning"
-                                                                            onClick = {() => {chat(val.roomid)}} >
-                                                                            <span className="fav-sty">chat</span>
-                                                                            </Button>
-                                                                    </Row>                                                                
-                                                                </Col>
-                                                                </Card>
+                {room.map((val)=> {
+                    return(
+                        <Card className="card-feed">
+                        <Card.Title>{val.post_name}</Card.Title>
+                        {val.image !== null ? (
+                                <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />
+                            ):(
+                                <Card.Img variant="top" src={require("../nopic.jpg")} />
+                        )}
+                        <Col>{val.location}</Col>
+                        <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
+                        <Row>
+                            <Button className="btn-fav" variant="outline-warning"
+                            onClick = {() => {chat(val.roomid)}} >
+                            <span className="fav-sty">chat</span>
+                            </Button>
+                        </Row>                                                                
+                        </Col>
+                        </Card>
                     )})};
             </Row>            
         </Container>
