@@ -16,11 +16,18 @@ router.get('/:id', (req, res)=> {
     const roomid = req.params.id;
     let uidown,uidcus
     console.log("gogo")
+<<<<<<< HEAD
     const sqlSelect = "SELECT * FROM CHAT JOIN GOCHAT ON CHAT.roomid=GOCHAT.roomid JOIN POST ON GOCHAT.post_id=POST.post_id JOIN USER ON uid=uidcustomer WHERE GOCHAT.roomid = ? "
     db.query(sqlSelect, [roomid],  (err, result) => {
         res.send(result)
         const sqlSearch = "SELECT * FROM "
         console.log(result)
+=======
+    const sqlSelect = "SELECT * FROM CHAT JOIN GOCHAT ON CHAT.roomid=GOCHAT.roomid JOIN POST ON CHAT.post_id=POST.post_id WHERE GOCHAT.roomid = ? "
+    db.query(sqlSelect, [roomid],  (err, result) => {
+        res.send(result)
+       // console.log(result)
+>>>>>>> b8630da713be1734a4fd8501bf3f454c8164b9e5
     });
 
 });
@@ -49,7 +56,32 @@ router.get('/:uid/:id', (req, res)=> {
         
     })
 });
+//save post
+router.post('/:id', (req,res)=> {
+        const roomid = req.params.id
+        console.log(roomid)
+        console.log("se---------------------------")
+       const sqlSelect = "SELECT * FROM CHAT JOIN POST on CHAT.post_id = POST.post_id WHERE roomid =?";
+      //  const sqlSelect = "SELECT * FROM  POST WHERE postid in (select chat.postid from chat where roomid=?)";
+        db.query(sqlSelect, [roomid],  (err, result) => {
+            console.log(result);
+             console.log("se---------------------------")
+             let postID
+             Object.keys(result).forEach(function(key) {
+                var row = result[key];
+                postID=row.postid  
+        });
+        const post_id = postID
+        const post_status = req.body.post_status
 
-
+        const sqlupdate = "UPDATE POST SET post_status =? WHERE post_id =? ";
+        db.query(sqlupdate, [post_status,post_id], (err, result) => {
+            console.log("------------------------------------------------");
+            console.log(result);
+            
+        })
+    })
+        
+        })
 
 export default router;

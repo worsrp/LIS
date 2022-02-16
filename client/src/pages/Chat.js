@@ -23,7 +23,12 @@ const Chat = () => {
     const [allMes, setAllMes ] = useState([])
     const [post, setPost] = useState([]);
     const [owner, setOwner] = useState([]);
+<<<<<<< HEAD
     const [image, setImage] = useState([]);
+=======
+    const [status, setStatus] = useState('');
+
+>>>>>>> b8630da713be1734a4fd8501bf3f454c8164b9e5
     useEffect (() => {
       Axios.get(`http://localhost:8000/chat/${currentUser.uid}/${roomId}`).then((response) => {
           setchat(response.data[0].msg);
@@ -47,14 +52,23 @@ const Chat = () => {
   useEffect (() => {
     Axios.get(`http://localhost:8000/chat/${roomId}`).then((response) => {
       setAllMes(response.data);
+<<<<<<< HEAD
       setPost(response.data[0].post_name)
       if(response.data[0].uidowner==currentUser.uid){
         setOwner("From : "+response.data[1].firstname+" "+response.data[1].lastname)
         //setImage(response.data[1].image)
         }
       
+=======
+      setStatus(response.data[0].post_status);
+      console.log(response.data[0].post_status);
+      // setPost(response.data[0].post_name)
+      // setOwner(response.data[0].firstname+" "+response.data[0].lastname)
+>>>>>>> b8630da713be1734a4fd8501bf3f454c8164b9e5
   })
   }, []);
+    
+
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
   };
@@ -63,13 +77,40 @@ const Chat = () => {
     sendMessage(newMessage);
     setNewMessage("");
   };
+  const [post_id,setPost_id] = useState([])
+  const [post_status,setPost_statust] = useState('')
+  const statusPost =() =>{
+    Axios.post(`http://localhost:8000/chat/${roomId}`,{
+      post_id:post_id,
+      post_status:post_status
+    }).then(() => {
+          alert("update status");
+      })
+  }
+
 
   return (
     <div className="chat-room-container">
       <div className="messages-container">
+<<<<<<< HEAD
         <h1 className="room-name">Room:{post}</h1>
         <h3 className="owner">{owner}</h3>
+=======
+        {/* <h1 className="room-name">Room:{post}</h1>
+        <h3 className="owner">Post By :{owner}</h3> */}
+    
+      
+>>>>>>> b8630da713be1734a4fd8501bf3f454c8164b9e5
       <div>
+              <div>status :{status} </div>
+          <Form.Select name="status" placeholder={status}
+                                        onChange={ (e) => { setStatus(e.target.value) }}>
+                                            <option>select status</option>
+                                            <option value="Available">Available</option>
+                                            <option value="Unavailable">Unavailable</option>
+                                        </Form.Select>
+          <Button className="btn-save" onClick={()=>{statusPost()}}> save </Button>
+
           { allMes.map((val) => {
             return (
               <div className={`${
