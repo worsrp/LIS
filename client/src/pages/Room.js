@@ -12,7 +12,9 @@ import { AuthContext } from "../Auth";
 const Room= () =>{
     const [room, setRoom] = useState([]);
     const { currentUser } = useContext(AuthContext);
-
+    const [customer, setCustomer] = useState([]);
+    const [owner, setOwner] = useState([]);
+    const [image, setImage] = useState([]);
     useEffect (() => {
         if(currentUser === null){
             Axios.get(`http://localhost:8000/room/`, {
@@ -23,6 +25,11 @@ const Room= () =>{
             Axios.get(`http://localhost:8000/room/${currentUser.uid}`, {
             }).then((response) => {
                 setRoom(response.data);
+                
+                    // setOwner("user 1 : "+response.data[0].firstname+" "+response.data[0].lastname)
+                    // setCustomer("user 2 : "+response.data[1].firstname+" "+response.data[1].lastname)
+                    //setImage(response.data[1].image)
+                
             });
         }
     }, []);
@@ -44,23 +51,28 @@ const Room= () =>{
             <Row className="justify-content-md-center">
                 {room.map((val)=> {
                     return(
-                        <Card className="card-feed">
-                        <Card.Title>{val.post_name}</Card.Title>
-                        {val.image !== null ? (
-                                <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />
-                            ):(
-                                <Card.Img variant="top" src={require("../nopic.jpg")} />
-                        )}
-                        <Col>{val.location}</Col>
-                        <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
-                        <Row>
-                            <Button className="btn-fav" variant="outline-warning"
-                            onClick = {() => {chat(val.roomid)}} >
-                            <span className="fav-sty">chat</span>
-                            </Button>
-                        </Row>                                                                
-                        </Col>
-                        </Card>
+                        <CardGroup style={{ width: '25%' }}>
+                            <Card className="card-feed">
+                            <Card.Title>{val.post_name}</Card.Title>
+                            {/* <Col>{owner}</Col>
+                            <Col>{customer}</Col> */}
+                            {val.image !== null ? (
+                                    <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />
+                                ):(
+                                    <Card.Img variant="top" src={require("../nopic.jpg")} />
+                            )}
+                            <Col>{val.location}</Col>
+                            <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
+                            <Row>
+                                <Button className="btn-fav" variant="outline-warning"
+                                onClick = {() => {chat(val.roomid)}} >
+                                <span className="fav-sty">chat</span>
+                                </Button>
+                            </Row>                                                                
+                            </Col>
+                            </Card>
+                        </CardGroup>
+                        
                     )})};
             </Row>            
         </Container>

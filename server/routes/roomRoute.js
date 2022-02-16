@@ -11,9 +11,13 @@ const db = mysql.createPool({
 
 router.get('/:uid', (req, res)=> {
     const userid = req.params.uid;
-    const sqlSearch = "SELECT * FROM POST JOIN GOCHAT ON POST.post_id=GOCHAT.post_id  WHERE GOCHAT.uidowner = ? OR GOCHAT.uidcustomer = ?"
+    // const sqlSelect = "SELECT DISTINCT firstname,lastname,uid,image FROM USER JOIN GOCHAT ON (uid=GOCHAT.uidowner OR uid=GOCHAT.uidcustomer) WHERE GOCHAT.uidowner = ? OR GOCHAT.uidcustomer = ?"
+    // db.query(sqlSelect, [userid,userid], (err,result) => {
+    //     console.log(result)
+    //     res.send(result)
+    // })
+    const sqlSearch = "SELECT * FROM GOCHAT JOIN POST ON POST.post_id=GOCHAT.post_id  WHERE GOCHAT.uidowner = ? OR GOCHAT.uidcustomer = ? "
     db.query(sqlSearch, [userid,userid], (err,result) => {
-        console.log(result)
         res.send(result)
     })
 });

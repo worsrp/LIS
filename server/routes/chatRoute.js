@@ -14,10 +14,12 @@ const db = mysql.createPool({
 
 router.get('/:id', (req, res)=> {
     const roomid = req.params.id;
+    let uidown,uidcus
     console.log("gogo")
-    const sqlSelect = "SELECT * FROM CHAT JOIN GOCHAT ON CHAT.roomid=GOCHAT.roomid WHERE GOCHAT.roomid = ?"
+    const sqlSelect = "SELECT * FROM CHAT JOIN GOCHAT ON CHAT.roomid=GOCHAT.roomid JOIN POST ON GOCHAT.post_id=POST.post_id JOIN USER ON uid=uidcustomer WHERE GOCHAT.roomid = ? "
     db.query(sqlSelect, [roomid],  (err, result) => {
         res.send(result)
+        const sqlSearch = "SELECT * FROM "
         console.log(result)
     });
 
@@ -35,11 +37,13 @@ router.get('/:uid/:id', (req, res)=> {
             uidsend=row.uidsender
         });
         if(uidsend==null){
-            const sqlSelect = "SELECT * FROM GOCHAT WHERE uidcustomer=? OR uidowner= ? AND roomid =?";
+            const sqlSelect = "SELECT * FROM GOCHAT WHERE (uidcustomer=? OR uidowner= ?) AND roomid =?";
             db.query(sqlSelect, [uidsender,uidsender,roomid],  (err, result) => {
+                console.log(result)
                 res.send(result);
             })
         }else{
+            console.log(result)
             res.send(result);
         }
         

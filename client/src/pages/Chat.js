@@ -23,6 +23,7 @@ const Chat = () => {
     const [allMes, setAllMes ] = useState([])
     const [post, setPost] = useState([]);
     const [owner, setOwner] = useState([]);
+    const [image, setImage] = useState([]);
     useEffect (() => {
       Axios.get(`http://localhost:8000/chat/${currentUser.uid}/${roomId}`).then((response) => {
           setchat(response.data[0].msg);
@@ -37,6 +38,7 @@ const Chat = () => {
           else
           setuidsender(response.data[0].uidcustomer);
           setpostid(response.data[0].post_id);
+          console.log(postId)
       });
   }, []);
   const { messages, sendMessage } = useChat(roomId,currentUser.uid,currentUser.uid==uidsender?uidreceiver:uidsender,postId);
@@ -45,8 +47,12 @@ const Chat = () => {
   useEffect (() => {
     Axios.get(`http://localhost:8000/chat/${roomId}`).then((response) => {
       setAllMes(response.data);
-      // setPost(response.data[0].post_name)
-      // setOwner(response.data[0].firstname+" "+response.data[0].lastname)
+      setPost(response.data[0].post_name)
+      if(response.data[0].uidowner==currentUser.uid){
+        setOwner("From : "+response.data[1].firstname+" "+response.data[1].lastname)
+        //setImage(response.data[1].image)
+        }
+      
   })
   }, []);
   const handleNewMessageChange = (event) => {
@@ -61,14 +67,15 @@ const Chat = () => {
   return (
     <div className="chat-room-container">
       <div className="messages-container">
-        {/* <h1 className="room-name">Room:{post}</h1>
-        <h3 className="owner">Post By :{owner}</h3> */}
+        <h1 className="room-name">Room:{post}</h1>
+        <h3 className="owner">{owner}</h3>
       <div>
           { allMes.map((val) => {
             return (
               <div className={`${
                 val.uidsender==currentUser.uid ? "text-sim" : "text-offer"
               }`}>
+                {val.uidsender}
                 {val.msg}
               </div>)
           }
