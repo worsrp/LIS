@@ -23,9 +23,12 @@ const Chat = () => {
     const [allMes, setAllMes ] = useState([])
     const [post, setPost] = useState([]);
     const [owner, setOwner] = useState([]);
-    const [image, setImage] = useState([]);
+    const [uidcus, setUidcus] = useState([]);
     const [status, setStatus] = useState('');
-
+    const [userInfo, setuserInfo] = useState({
+      file:[],
+      filepreview:null,
+  });
     useEffect (() => {
       Axios.get(`http://localhost:8000/chat/${currentUser.uid}/${roomId}`).then((response) => {
           setchat(response.data[0].msg);
@@ -50,11 +53,8 @@ const Chat = () => {
     Axios.get(`http://localhost:8000/chat/${roomId}`).then((response) => {
       setAllMes(response.data);
       setPost(response.data[0].post_name)
-      if(response.data[0].uidowner==currentUser.uid){
-        setOwner("From : "+response.data[1].firstname+" "+response.data[1].lastname)
-        //setImage(response.data[1].image)
-        }
-      
+      setUidcus(response.data[0].uidcustomer)
+      setOwner(response.data[0].firstname+" "+response.data[0].lastname)
       setStatus(response.data[0].post_status);
       console.log(response.data[0].post_status);
       // setPost(response.data[0].post_name)
@@ -62,53 +62,59 @@ const Chat = () => {
   })
   }, []);
     
+  // const storage = multer.diskStorage({
+  //   destination: path.join(__dirname, '../public_html/', 'uploads'),
+  //   filename: function (req, file, cb) {   
+  //       // null as first argument means no error
+  //       cb(null, Date.now() + '-' + file.originalname )  
+  //   }
+  // })
+  // let image
+  // let upload = multer({ storage: storage}).single('avatar');
+  //   upload(req, res, function(err) {
+  //     image = req.file.filename
+  //   });
 
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
   };
 
+  const hiddenFileInput = React.useRef(null);
+  const formdata = new FormData(); 
   const handleSendMessage = () => {
     sendMessage(newMessage);
     setNewMessage("");
   };
   const [post_id,setPost_id] = useState([])
-  const [post_status,setPost_Status] = useState('')
+  // const [post_status,setPost_Status] = useState('')
+  let post_status="Unavailable"
   const statusPost =() =>{
     if(window.confirm("Are you sure to change status post?")){
       Axios.post(`http://localhost:8000/chat/${roomId}`,{
       post_status:post_status
-    }).then(() => {
-      window.location.reload(true);
-      })
+    })
+      window.location.reload(false);
+
     }
   }
-  
+  let element,hidden
   return (
     <div className="chat-room-container">
       <div className="messages-container">
         <h1 className="room-name">Room:{post}</h1>
-        <h3 className="owner">{owner}</h3>
+        {/* <h3 className="owner">{owner}</h3> */}
+        <h5>{uidcus==currentUser.uid ? "Post by : "+ owner : ""}</h5>
         {/* <h1 className="room-name">Room:{post}</h1>
         <h3 className="owner">Post By :{owner}</h3> */}
       <div>
-        <div>status :{status} </div>
-      <div>
-          <Form.Select name="status" placeholder={status}
-              onChange={ (e) => { setPost_Status(e.target.value) }}>
-              <option>select status</option>
-                  <option value="Available">Available</option>
-                  <option value="Unavailable">Unavailable</option>
-          </Form.Select>
-          <Button className="btn-save" onClick={()=>{statusPost()}}> save </Button>
-      </div>
-          
-
+      <div>status :{status} </div>
+      <Col >{owner==currentUser.uid && status=="Available" ?  <Button id="button" onClick={()=>{statusPost()}}> Share </Button> : ""}</Col>
           { allMes.map((val) => {
             return (
               <div className={`${
                 val.uidsender==currentUser.uid ? "text-sim" : "text-offer"
               }`}>
-                {val.uidsender}
+                {val.time}
                 {val.msg}
               </div>)
           }
@@ -133,6 +139,21 @@ const Chat = () => {
         placeholder="Write message..."
         className="new-message-input-field"
       />
+      <Form>
+        <Col style={{ textAlign: 'center' }}>
+            {userInfo.filepreview !== null ? (
+              <Image src={userInfo.filepreview}
+                rounded className="pic-create" />
+              ) : ( 
+              <Image src={require(`../nopic.jpg`)}
+                rounded className="pic-create" />
+            )} 
+          </Col>
+      </Form>
+      <Col>
+          {newMessage}
+          <Form.Control  type="file" ref={hiddenFileInput} onChange={handleNewMessageChange} /> 
+      </Col>
       <Button className="btn-save" onClick={handleSendMessage}> Send </Button>
     </div>
   );

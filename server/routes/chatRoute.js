@@ -21,7 +21,7 @@ router.get('/:id', (req, res)=> {
     //     res.send(result)
     //     const sqlSearch = "SELECT * FROM "
     //     console.log(result)
-    const sqlSelect = "SELECT * FROM CHAT JOIN GOCHAT ON CHAT.roomid=GOCHAT.roomid JOIN POST ON CHAT.post_id=POST.post_id WHERE GOCHAT.roomid = ? "
+    const sqlSelect = "SELECT * FROM CHAT JOIN GOCHAT ON CHAT.roomid=GOCHAT.roomid JOIN POST ON CHAT.post_id=POST.post_id JOIN USER ON uid=uidowner WHERE GOCHAT.roomid = ? "
     db.query(sqlSelect, [roomid],  (err, result) => {
         res.send(result)
        // console.log(result)
