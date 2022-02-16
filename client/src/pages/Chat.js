@@ -24,6 +24,7 @@ const Chat = () => {
     const [post, setPost] = useState([]);
     const [owner, setOwner] = useState([]);
     const [uidcus, setUidcus] = useState([]);
+    const [uidown, setUidown] = useState([]);
     const [status, setStatus] = useState('');
     const [userInfo, setuserInfo] = useState({
       file:[],
@@ -54,6 +55,7 @@ const Chat = () => {
       setAllMes(response.data);
       setPost(response.data[0].post_name)
       setUidcus(response.data[0].uidcustomer)
+      setUidown(response.data[0].uidowner)
       setOwner(response.data[0].firstname+" "+response.data[0].lastname)
       setStatus(response.data[0].post_status);
       console.log(response.data[0].post_status);
@@ -108,7 +110,7 @@ const Chat = () => {
         <h3 className="owner">Post By :{owner}</h3> */}
       <div>
       <div>status :{status} </div>
-      <Col >{owner==currentUser.uid && status=="Available" ?  <Button id="button" onClick={()=>{statusPost()}}> Share </Button> : ""}</Col>
+      <Col >{uidown==currentUser.uid && status=="Available" ?  <Button id="button" onClick={()=>{statusPost()}}> Share </Button> : ""}</Col>
           { allMes.map((val) => {
             return (
               <div className={`${
