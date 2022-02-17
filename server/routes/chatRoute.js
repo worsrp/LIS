@@ -43,11 +43,9 @@ router.get('/:uid/:id', (req, res)=> {
         if(uidsend==null){
             const sqlSelect = "SELECT * FROM GOCHAT WHERE (uidcustomer=? OR uidowner= ?) AND roomid =?";
             db.query(sqlSelect, [uidsender,uidsender,roomid],  (err, result) => {
-                console.log(result)
                 res.send(result);
             })
         }else{
-            console.log(result)
             res.send(result);
         }
         
@@ -56,18 +54,31 @@ router.get('/:uid/:id', (req, res)=> {
 //save post
 router.post('/:id', (req,res)=> {
     const roomid = req.params.id
-    const post_status = req.body.post_status
-    const sqlSelect = "SELECT post_id FROM GOCHAT WHERE roomid =?";
+    // const post_status = req.body.post_status
+    const status = 'Unavailable'
+    const date = req.body.date
+    const user_id = req.body.uid
+    const sqlSelect = "SELECT post_id , uidcustomer FROM GOCHAT WHERE roomid =?";
     db.query(sqlSelect, [roomid],  (err, result) => {
         let postID
+        let Uidcustomer
         Object.keys(result).forEach(function(key) {
             var row = result[key];
             postID=row.post_id  
+            Uidcustomer = row.uidcustomer
         });
         const sqlupdate = "UPDATE POST SET post_status =? WHERE post_id =? ";
-        db.query(sqlupdate, [post_status,postID], (err, result) => {
+        db.query(sqlupdate, [status,postID], (err, result) => {
         })
+        console.log(result);
+        const sqlInsert = "INSERT INTO HISTORY (user_1,user_2,date,post_id) VALUES (?,?,?,?)";
+        db.query(sqlInsert, [user_id,Uidcustomer,date,postID], (err,result)=>{
+        res.send(result);
+
     })
+    })
+        
 });
+
 
 export default router;

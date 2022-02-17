@@ -89,16 +89,28 @@ const Chat = () => {
   };
   const [post_id,setPost_id] = useState([])
   // const [post_status,setPost_Status] = useState('')
-  let post_status="Unavailable"
+
+  
   const statusPost =() =>{
+    var date = new Date();
+        var dd = String(date.getDate()).padStart(2, '0');
+        var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = date.getFullYear();
+        date = yyyy + '-' + mm + '-' + dd;
     if(window.confirm("Are you sure to change status post?")){
       Axios.post(`http://localhost:8000/chat/${roomId}`,{
-      post_status:post_status
-    })
+        uid: currentUser.uid,
+        date: date
+      // }).then(() =>{
+      //   Axios.post(`http://localhost:8000/chat/`,{
+      //   uid: currentUser.uid,
+      //   date: date
+      //   })
+      })
       window.location.reload(false);
-
     }
   }
+
   let element,hidden
   return (
     <div className="chat-room-container">

@@ -42,6 +42,7 @@ router.post('/', (req, res)=> {
                 const sqlInsert = "INSERT INTO GOCHAT  (uidowner,uidcustomer,post_id) VALUE (?,?,?);"
                 db.query(sqlInsert, [uidowner,uidcustomer,post_id], (err, result) => {     
                     console.log(err);   
+                    console.log(result);
                 })  
             }else{
                 //console.log(result);

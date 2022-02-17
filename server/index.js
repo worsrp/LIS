@@ -16,6 +16,7 @@ import editprofileRoute from './routes/editprofileRoute.js'
 import editpostRoute from './routes/editpostRoute.js';
 import chatRoute from './routes/chatRoute.js';
 import roomRoute from './routes/roomRoute.js';
+import historyRoute from './routes/historyRoute.js';
 import mysql from 'mysql';
 
 const router = express.Router();
@@ -109,8 +110,8 @@ app.use("/chat", chatRoute);
 
 app.use("/room", roomRoute);
 
+app.use("/history", historyRoute);
+
 server.listen(8000, () =>{
     console.log("Running on port 8000");
 })
-
-
