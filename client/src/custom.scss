@@ -41,6 +41,10 @@ body {
     color: #000;
 }
 
+.icon-small {
+    font-size: 15px;
+}
+
 .icon-sim {
     font-size: 20px;
     margin: 2px;
@@ -263,6 +267,13 @@ textarea:focus, input:focus{
     box-shadow: 4px 4px 4px rgba(0,0,0,0.20);
 }
 
+.card-chat{
+    width: 300px !important;
+    margin: 5px !important;
+    border-color: lightgray !important;
+    border-radius: 20px !important;
+}
+
 .card-trans{
     margin: 40px;
     border: none;
@@ -431,6 +442,12 @@ textarea:focus, input:focus{
     height: 100%; /* This if for the object-fit */
     object-fit: cover; /* Equivalent of the background-size: cover; of a background-image */
     object-position: center;
+}
+
+.pic-chat{
+    width: 80px;
+    height: 80px;
+    margin: 10px;
 }
 
 .profile-pic{

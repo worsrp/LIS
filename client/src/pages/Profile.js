@@ -61,7 +61,7 @@ const Profile = () =>{
                                         </Col>
                                         <Col xs={3} style={{ marginTop: '10px', marginLeft: '40px'}}>
                                                 <Button className="btn-login" onClick={() => {
-                                                      window.location.href = `/editprofile`;
+                                                        window.location.href = `/editprofile`;
                                                 }}> 
                                                     <AiFillEdit className="icon-sim" style={{ marginRight: '8px' }} />
                                                     Edit 

@@ -75,7 +75,7 @@ function App() {
             <Route path="/editpost">< Editpost /></Route> 
             <Route path="/history"><History /></Route>
             <Route path="/chat"><Chat /></Route>
-            <Route path="/room"><Room /></Route>
+            <Route path="/chatroom"><Room /></Route>
       </Switch>
     );
 
@@ -95,7 +95,8 @@ function App() {
     if (window.location.pathname === '/profile' 
         || window.location.pathname === '/mypost'
         || window.location.pathname === '/editprofile'
-        || window.location.pathname === '/editpost') return (
+        || window.location.pathname === '/editpost'
+        || window.location.pathname === '/history') return (
       <Col xs={2} style={{ marginLeft: '60px', marginTop: '30px' }}>
         <Link to='/profile' className="link-nodec">
           <Row>
@@ -107,6 +108,12 @@ function App() {
           <Row style={{ marginTop: '15px'}}>
             <Col xs={1}><FiMenu className="icon-sim" style={{ marginTop: '5px'}} /></Col>
             <Col className="text-title" style={{ textAlign: 'start', marginLeft: '5px' }}>My Post</Col>
+          </Row>
+        </Link>
+        <Link to='/history'  className="link-nodec">
+          <Row style={{ marginTop: '15px'}}>
+            <Col xs={1}><FiMenu className="icon-sim" style={{ marginTop: '5px'}} /></Col>
+            <Col className="text-title" style={{ textAlign: 'start', marginLeft: '5px' }}>History</Col>
           </Row>
         </Link>
       </Col>
@@ -141,7 +148,7 @@ function App() {
     if(currentUser === null){
       window.location.href = `/login`;
     }else{
-      window.location.href = `/room`;
+      window.location.href = `/chatroom`;
     }
   }
 
@@ -213,7 +220,7 @@ function App() {
                   <Route path="/editpost"><Editpost /></Route>
                   <Route path="/history"><History /></Route>
                   <Route path="/chat"><Chat /></Route>
-                  <Route path="/room"><Room /></Route>
+                  <Route path="/chatroom"><Room /></Route>
                 </Switch>
               </Col>
             </Row>

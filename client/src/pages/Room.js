@@ -4,10 +4,9 @@ import Axios from 'axios'
 //import style
 import '../custom.scss';
 import { Card, Button, Form, Row, Col, Container, Image, CardGroup } from 'react-bootstrap';
-import { GrSearch, GrLocation } from "react-icons/gr";
-import { AiOutlineHeart } from "react-icons/ai";
-import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
+import { FaUser } from "react-icons/fa";
 import { AuthContext } from "../Auth";
+import { GrLocation } from "react-icons/gr";
 
 const Room= () =>{
     const [room, setRoom] = useState([]);
@@ -52,37 +51,49 @@ const Room= () =>{
     };
     let key
     return (
-        <Container style={{ marginTop: '-50px' }}>
+        <Container>
         <Row className="justify-content-md-center">
             {room.map((val)=> {
-                return(
-                <div>
-                    <CardGroup style={{ width: '25%' }}>
-                    <Card className="card-feed">
-                        <Card.Title>{val.post_name}</Card.Title>
-                        {/* <Col>{owner}</Col> */}
-                        <Col  >{val.uidowner==currentUser.uid ? "from : "+val.firstname+" "+val.lastname : ""}</Col>
-                        {val.image !== null ? (
-                            <Card.Img variant="top" src={require(`../../../public_html/uploads/${val.image}`)} />
-                        ):(
-                            <Card.Img variant="top" src={require("../nopic.jpg")} />
-                        )}
-                        <Col>{val.location}</Col>
-                        <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
-                            <Row>
-                                <Button className="btn-fav" variant="outline-warning"
-                                onClick = {() => {chat(val.roomid)}} >
-                                <span className="fav-sty">chat</span>
-                                </Button>
-                            </Row>                                                                
-                        </Col>
-                        </Card> 
-                        </CardGroup>  
-                            
-                </div>
-                )        
-                    
-                
+                if(val.uid!==currentUser.uid){
+                    return(
+                        <div>
+                            <Card className="card-chat" onClick = {() => {chat(val.roomid)}}>
+                                <Row>
+                                    <Col xs={5}>
+                                        {val.image !== null ? (
+                                            <Image roundedCircle variant="top" className="pic-chat" 
+                                            src={require(`../../../public_html/uploads/${val.image}`)} />
+                                        ):(
+                                            <Image roundedCircle variant="top" className="pic-chat"  
+                                            src={require("../nopic.jpg")} />
+                                        )}
+                                    </Col>
+                                    <Col style={{ marginTop: "10px" }}>
+                                        <Row style={{ fontWeight: "700", fontSize: "18px" }}>
+                                            {val.post_name}
+                                        </Row>
+                                        <Row style={{ marginLeft: "-20px" }}>
+                                            <Col xs={1}>
+                                                <FaUser className="icon-small" style={{ marginTop: "-4px"}}/>
+                                            </Col>
+                                            <Col style={{ marginLeft: "-5px" }}>
+                                                {val.firstname} {val.lastname}
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={1}>
+                                                <GrLocation className="icon-small" style={{ marginLeft: "-8px", marginTop: "-3px"}}/>
+                                            </Col>
+                                            <Col style={{ marginLeft: "-12px"}}>
+                                                {val.location}
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </Card>       
+                        </div>
+                        )    
+                    }    
             })}
         </Row>            
         </Container>

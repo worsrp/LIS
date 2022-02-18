@@ -16,9 +16,9 @@ router.get('/:uid', (req, res)=> {
     //     console.log(result)
     //     res.send(result)
     // })
-    const sqlSearch = "SELECT * FROM GOCHAT JOIN USER ON (uid=GOCHAT.uidcustomer) JOIN POST ON POST.post_id=GOCHAT.post_id WHERE GOCHAT.uidowner = ? OR GOCHAT.uidcustomer = ? "
+    const sqlSearch = "SELECT * FROM GOCHAT JOIN USER ON (USER.uid=GOCHAT.uidcustomer OR USER.uid=GOCHAT.uidowner) JOIN POST ON POST.post_id=GOCHAT.post_id  WHERE GOCHAT.uidowner = ? OR GOCHAT.uidcustomer = ? "
     db.query(sqlSearch, [userid,userid], (err,result) => {
-        //console.log(result)
+        console.log(result)
         res.send(result)
     })
 });

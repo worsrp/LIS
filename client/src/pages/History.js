@@ -1,10 +1,12 @@
 import React,{ useState, useEffect, useContext } from "react";
 import Axios from 'axios'
+import { AuthContext } from "../Auth";
+import dateFormat, { masks } from 'dateformat';
 
 //import style
 import '../custom.scss';
 import { Card, Button, Form, Row, Col, Container, Image, CardGroup } from 'react-bootstrap';
-import { AuthContext } from "../Auth";
+import { BiCategory } from "react-icons/bi";
 
 const History = () =>{
     const [historyPost, setHistoryPost] = useState([]);
@@ -17,11 +19,13 @@ const History = () =>{
         });
     })
 
+    const formatDate = (dt) => dateFormat(dt, "dd mmmm yyyy");
+
     return (
         <div>
             <h2 className="text-huge-header" style={{ textAlign: 'center' }}>History</h2>
             {historyPost.map((val)=> {
-               return(
+            return(
                     <Card className="card-mypost pos-center" style={{ marginTop: '30px' }}>
                             <Row>
                                 <Col xs={4}>
@@ -42,32 +46,26 @@ const History = () =>{
                                     <Row>
                                         <Col>
                                             <Card.Text className="text-sub-header">
-                                                Category : {val.category}</Card.Text>
+                                                <BiCategory className="icon-sim" style={{ marginBottom: '3px'}} />
+                                                {val.category}
+                                            </Card.Text>
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Card.Text className="text-sub-header" >
-                                            Stuff's description : 
-                                        </Card.Text>
                                         <Card.Text>
                                             {val.description}
                                         </Card.Text>
                                     </Row>  
-
-                                    <Row>
-                                            <Col className="text-sub-header" style={{ marginTop: '20px'}}>
+                                    <Row className="text-sub-header" style={{ marginTop: '60px'}}>
                                                 Share with : {val.firstname}
-                                            </Col>
-
-                                            <Col className="text-sub-header" style={{ marginTop: '20px'}}>
-                                                Date : {val.date}
-                                            </Col>      
+                                    </Row>
+                                    <Row className="text-sub-header">
+                                                Date : {formatDate(val.date)}
                                     </Row>
                                 </Col>
-                                
                             </Row>
                         </Card>
-                 )
+            )
             })
             }
         </div>

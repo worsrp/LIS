@@ -108,7 +108,7 @@ const Feed = () =>{
             post_id: id,
             uid: currentUser.uid
         })
-        window.location.href = `/room`;
+        window.location.href = `/chatroom`;
         }
     };
 
