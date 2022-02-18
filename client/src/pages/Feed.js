@@ -1,5 +1,6 @@
 import React,{ useState, useEffect, useContext } from "react";
 import Axios from 'axios'
+import { AuthContext } from "../Auth";
 
 //import style
 import '../custom.scss';
@@ -7,7 +8,7 @@ import { Card, Button, Form, Row, Col, Container, Image, CardGroup } from 'react
 import { GrSearch, GrLocation } from "react-icons/gr";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
-import { AuthContext } from "../Auth";
+import { RiChat1Line } from "react-icons/ri"
 
 const Feed = () =>{
     const [search, setSearch] = useState('');
@@ -35,48 +36,56 @@ const Feed = () =>{
 
     //search
     useEffect (() => {
-        if(search === ''){
-            if(category === ''){
-                Axios.get(`http://localhost:8000/feed/${currentUser.uid}`, {
-                }).then((response) => {
-                    setFeedPost(response.data);
-                });
+        if(currentUser === null){
+            if(search === ''){
+                if(category === ''){
+                    Axios.get(`http://localhost:8000/feed/`, {
+                    }).then((response) => {
+                        setFeedPost(response.data);
+                    });
+                }else{
+                    Axios.post("http://localhost:8000/feed/", { 
+                        item: search,
+                        category: category
+                    }).then((response) => {
+                        setFeedPost(response.data);
+                    })                
+                } 
             }else{
                 Axios.post("http://localhost:8000/feed/", { 
+                    item: search,
+                    category: category
+                }).then((response) => {
+                    setFeedPost(response.data);
+                })
+            }
+        }else{
+            if(search === ''){
+                if(category === ''){
+                    Axios.get(`http://localhost:8000/feed/${currentUser.uid}`, {
+                    }).then((response) => {
+                        setFeedPost(response.data);
+                    });
+                }else{
+                    Axios.post("http://localhost:8000/feed/user", { 
+                        item: search,
+                        category: category,
+                        uid: currentUser.uid
+                    }).then((response) => {
+                        setFeedPost(response.data);
+                    })                
+                } 
+            }else{
+                Axios.post("http://localhost:8000/feed/user", { 
                     item: search,
                     category: category,
                     uid: currentUser.uid
                 }).then((response) => {
                     setFeedPost(response.data);
-                })                
-            } 
-        }else{
-            Axios.post("http://localhost:8000/feed/", { 
-                item: search,
-                category: category,
-                uid: currentUser.uid
-            }).then((response) => {
-                setFeedPost(response.data);
-            })
+                })
+            }
         }
     }, [check]);
-
-    useEffect (() => {
-        if(category === ''){
-            Axios.get(`http://localhost:8000/feed/${currentUser.uid}`, {
-            }).then((response) => {
-                setFeedPost(response.data);
-            });
-        }else{
-            Axios.post("http://localhost:8000/feed/", { 
-                item: search,
-                category: category,
-                uid: currentUser.uid
-            }).then((response) => {
-                setFeedPost(response.data);
-            })                
-        }
-    });
 
     //add post to favlist
     const addFav = (id) =>{
@@ -103,6 +112,14 @@ const Feed = () =>{
         }
     };
 
+    function catOnClick(cat){
+        if(category === cat){
+            setCategory("")
+        }else{
+            setCategory(cat)
+        }
+    } 
+
     return (
         <Container style={{ marginTop: '-50px' }}>
             <Form>
@@ -121,24 +138,43 @@ const Feed = () =>{
                     </Col>   
                     </Form.Group>
                 </Form.Group>
-
-                <Form.Group as={Row}>
-                <Col sm="5">
-                <Form.Select aria-label="Default select example" 
-                    onChange={ (e) => { setCategory(e.target.value) }}>
-                        <option value=''>All category</option>
-                        <option value="Fashion">Fashion</option>
-                        <option value="Health and Beauty">Health and Beauty</option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="Mommy and baby">Mommy and baby</option>
-                        <option value="Home and living">Home and living</option>
-                        <option value="lifestyle">lifestyle</option>
-                        <option value="Kpop">Kpop</option>
-                        <option value="Hand craft">Hand craft</option>
-                </Form.Select>
-                </Col>      
-                </Form.Group>
             </Form>
+            <Row>                
+                <Col style={{ textAlign: "center" }}>
+                    <Button value="Fashion" className="btn-cat"
+                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                        Fashion
+                    </Button>
+                    <Button value="Health and Beauty" className="btn-cat"
+                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                        Health and Beauty
+                    </Button>
+                    <Button value="Electronics" className="btn-cat"
+                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                        Electronics
+                    </Button>
+                    <Button value="Mommy and baby" className="btn-cat"
+                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                        Mommy and baby
+                    </Button>
+                    <Button value="Home and living" className="btn-cat"
+                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                        Home and living
+                    </Button>
+                    <Button value="lifestyle" className="btn-cat"
+                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                        lifestyle
+                    </Button>
+                    <Button value="Kpop" className="btn-cat"
+                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                        Kpop
+                    </Button>
+                    <Button value="Hand craft" className="btn-cat"
+                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                        Hand craft
+                    </Button>
+                </Col>   
+            </Row>
             <Row className="justify-content-md-center">
             <Col md="auto" >
                 {feedPost.length > 3 && start !== 0 ? (
@@ -182,21 +218,12 @@ const Feed = () =>{
                                                                     </Row> 
                                                                 </Col>  
                                                                 <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
-                                                                    <Row>
-                                                                            <Button className="btn-fav" variant="outline-warning"
-                                                                            onClick = {() => {addFav(val.post_id)}} >
-                                                                            <AiOutlineHeart className="icon-sim" />
-                                                                            <span className="fav-sty">fav</span>
-                                                                            </Button>
-                                                                    </Row>                                                                
+                                                                    <AiOutlineHeart className="icon-fav"  style={{ marginTop: '5px' }}
+                                                                    onClick = {() => {addFav(val.post_id)}} />                                                             
                                                                 </Col>
                                                                 <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
-                                                                    <Row>
-                                                                            <Button className="btn-fav" variant="outline-warning"
-                                                                            onClick = {() => {chat(val.post_id)}} >
-                                                                            <span className="fav-sty">chat</span>
-                                                                            </Button>
-                                                                    </Row>                                                                
+                                                                    <RiChat1Line className="icon-chat"  style={{ marginTop: '5px' }}
+                                                                    onClick = {() => {chat(val.post_id)}} />
                                                                 </Col>
                                                             </Row>
                                             </Card.Footer>

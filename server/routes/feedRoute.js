@@ -15,7 +15,6 @@ router.get('/', (req, res)=> {
     const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' ORDER BY post_id DESC"
     db.query(sqlSelect, (err, result) => {
         res.send(result);
-        
     })
 });
 
@@ -33,16 +32,17 @@ router.get('/:uid', (req, res)=> {
 
 router.post('/', (req,res)=> {
     let searchItem = req.body.item;
-    let uid = req.body.uid;
     let category = req.body.category;
     searchItem = "%"+searchItem+"%";
+    category = "%"+category+"%";
 
     console.log(searchItem);
     console.log(category);
 
     if(searchItem === "%%"){
-        const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' AND user_id NOT LIKE ? AND category LIKE ?"
-        db.query(sqlSelect, [ uid, category], (err, result) => {
+        if(category === "%%"){
+            const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available'"
+            db.query(sqlSelect, (err, result) => {
             console.log(result)
             if(err){
                 console.log(err);
@@ -50,6 +50,63 @@ router.post('/', (req,res)=> {
             res.send(result); 
             }
         })
+        }else{
+            const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' AND category LIKE ?"
+            db.query(sqlSelect, [category], (err, result) => {
+                console.log(result)
+                if(err){
+                    console.log(err);
+                }else{
+                res.send(result); 
+                }
+            })
+        }   
+    }else{
+        const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' AND category LIKE ? AND (post_name Like ? OR description Like ?)"
+        db.query(sqlSelect, [category, searchItem, searchItem], (err, result) => {
+            console.log(result)
+            if(err){
+                console.log(err);
+            }else{
+            res.send(result); 
+            }
+        })  
+    }
+    //search post
+});
+
+router.post('/user', (req,res)=> {
+    let searchItem = req.body.item;
+    let uid = req.body.uid;
+    let category = req.body.category;
+    searchItem = "%"+searchItem+"%";
+    category = "%"+category+"%";
+
+    console.log(searchItem);
+    console.log(category);
+
+    if(searchItem === "%%"){
+        if(category === "%%"){
+            const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' AND user_id NOT LIKE ?"
+        db.query(sqlSelect, [ uid ], (err, result) => {
+            console.log(result)
+            if(err){
+                console.log(err);
+            }else{
+            res.send(result); 
+            }
+        })
+        }else{
+            const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' AND user_id NOT LIKE ? AND category LIKE ?"
+            db.query(sqlSelect, [ uid, category], (err, result) => {
+            console.log(result)
+            if(err){
+                console.log(err);
+            }else{
+            res.send(result); 
+            }
+        })
+        }   
     }else{
         const sqlSelect = "SELECT * FROM POST WHERE post_status Like 'Available' AND user_id NOT LIKE ? AND category LIKE ? AND (post_name Like ? OR description Like ?)"
         db.query(sqlSelect, [uid, category, searchItem, searchItem], (err, result) => {

@@ -26,6 +26,7 @@ import { Dropdown } from 'react-bootstrap';
 import { AiOutlinePlus, AiOutlineHeart, AiOutlineUser,AiOutlineWechat } from "react-icons/ai";
 import { FiMenu } from "react-icons/fi";
 import { GrSearch } from "react-icons/gr";
+import { RiChat1Line } from "react-icons/ri"
 import { Form, Row, Col } from 'react-bootstrap';
 
 function App() {
@@ -167,7 +168,7 @@ function App() {
                       onClick={ showFav }/>
                   </li>
                   <li class="nav-item">
-                      <AiOutlineWechat className="icon-nav"
+                      <RiChat1Line className="icon-nav"
                       onClick={ showRoom }/>
                   </li>
                   <li class="nav-item">

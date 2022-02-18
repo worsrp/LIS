@@ -1,6 +1,7 @@
 import React,{useState, useEffect, useContext } from "react";
 import Axios from 'axios'
 import { Link } from 'react-router-dom';
+import { AuthContext } from "../Auth";
 
 //import style
 import '../custom.scss';
@@ -8,7 +9,7 @@ import { Card, Button, Form, Row, Col, Container, Modal, CardGroup } from 'react
 import { GrLocation } from "react-icons/gr";
 import { IoCloseCircle } from "react-icons/io5";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
-import { AuthContext } from "../Auth";
+import { RiChat1Line } from "react-icons/ri"
 
 const Favlist = () =>{
     const [favPost, setFavPost] = useState([]);
@@ -29,6 +30,18 @@ const Favlist = () =>{
         if(window.confirm("Remove this post from my favorite post ")){
             Axios.delete(`http://localhost:8000/fav/${currentUser.uid}/${post_id}`);
             window.location.reload(false);
+        }
+    };
+
+    const chat = (id) =>{
+        if(currentUser === null){
+            window.location.href = `/login`;
+        }else{
+            Axios.post("http://localhost:8000/room", { 
+            post_id: id,
+            uid: currentUser.uid
+        })
+        window.location.href = `/room`;
         }
     };
 
@@ -93,11 +106,12 @@ const Favlist = () =>{
                                                                     </Row> 
                                                                 </Col>  
                                                                 <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
-                                                                        <Button className="btn-remove" style={{ marginLeft: '-45px'}}
-                                                                        onClick={() => {deleteFav(val.post_id)}} >
-                                                                        <IoCloseCircle className="icon-sim" />
-                                                                            remove
-                                                                        </Button>
+                                                                    <IoCloseCircle className="icon-fav" style={{ marginTop: '5px' }}
+                                                                    onClick={() => {deleteFav(val.post_id)}}/>
+                                                                </Col>
+                                                                <Col style={{ marginTop: '12px', marginRight: '-40px'}}>
+                                                                    <RiChat1Line className="icon-chat"  style={{ marginTop: '5px' }}
+                                                                    onClick = {() => {chat(val.post_id)}} />
                                                                 </Col>
                                                             </Row>
                                             </Card.Footer>
