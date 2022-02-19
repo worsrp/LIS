@@ -102,11 +102,21 @@ body {
 }
 
 .text-sim{
-    color: rgb(0, 255, 21) !important;
+    color: white !important;
+    background-color: #42505C;
+    border-radius: 15px;
+    margin: 10px;
+    padding: 10px;
+    width: max-content;
 }
 
 .text-offer{
-    color: rgb(255, 34, 119) !important;
+    color: #42505C !important;
+    background-color: white;
+    border-radius: 15px;
+    margin: 10px;
+    padding: 10px;
+    width: max-content;
 }
 
 .text-title{
@@ -212,6 +222,19 @@ body {
     width: 300px !important;
 }
 
+.form-chat{
+    border: solid 1px;
+    border-radius: 15px;
+    border-color: lightgray;
+    padding: 5px;
+}
+
+.chat-room{
+    scroll-behavior:smooth;
+    overscroll-behavior:inherit;
+    scroll-snap-type:mandatory;
+}
+
 .modal-content  {
     -webkit-border-radius: 0px !important;
     -moz-border-radius: 0px !important;
@@ -270,6 +293,12 @@ textarea:focus, input:focus{
 .card-chat{
     width: 300px !important;
     margin: 5px !important;
+    border-color: lightgray !important;
+    border-radius: 20px !important;
+}
+
+.card-chat:hover{
+    background-color: lightgray!important;
     border-color: lightgray !important;
     border-radius: 20px !important;
 }

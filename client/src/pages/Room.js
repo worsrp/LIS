@@ -1,5 +1,6 @@
 import React,{ useState, useEffect, useContext } from "react";
-import Axios from 'axios'
+import { useHistory } from "react-router-dom";
+import Axios from 'axios';
 
 //import style
 import '../custom.scss';
@@ -14,6 +15,8 @@ const Room= () =>{
     const [customer, setCustomer] = useState([]);
     const [owner, setOwner] = useState([]);
     const [image, setImage] = useState([]);
+    let history = useHistory();
+
     useEffect (() => {
         if(currentUser === null){
             Axios.get(`http://localhost:8000/room/`, {
@@ -38,7 +41,7 @@ const Room= () =>{
         }
     }, []);
 
-    const chat = (id) =>{
+    function chat(id) {
         // alert("added to favorite list");
         if(currentUser === null){
             window.location.href = `/login`;
@@ -48,16 +51,17 @@ const Room= () =>{
                 window.location.href = `/chat?${id}`;
             });
         }
+        
     };
-    let key
+
     return (
-        <Container>
-        <Row className="justify-content-md-center">
+            <Row style={{ marginLeft: "50px" }}>
+                <Col>
             {room.map((val)=> {
                 if(val.uid!==currentUser.uid){
                     return(
                         <div>
-                            <Card className="card-chat" onClick = {() => {chat(val.roomid)}}>
+                            <Card className="card-chat"  onClick = {() => {chat(val.roomid)}} >
                                 <Row>
                                     <Col xs={5}>
                                         {val.image !== null ? (
@@ -94,9 +98,11 @@ const Room= () =>{
                         </div>
                         )    
                     }    
-            })}
-        </Row>            
-        </Container>
+            })}      
+                </Col>
+                <Col>
+                </Col>
+            </Row>     
     );
 };
 

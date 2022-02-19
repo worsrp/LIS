@@ -2,9 +2,15 @@ import React,{useEffect, useState, useContext} from "react";
 import Axios from 'axios'
 import useChat from "../useChat";
 import { AuthContext } from "../Auth";
+import Room from "../pages/Room";
+import 'scrollable-component';
+
+//import sytle
 import '../custom.scss';
-import { Button, Form, Row, Col, Image } from 'react-bootstrap';
+import { Button, Form, Row, Col, Image, InputGroup, FormControl } from 'react-bootstrap';
 import { BsImage } from "react-icons/bs";
+import { RiSendPlaneLine } from "react-icons/ri"
+
 const Chat = () => {
     const { currentUser } = useContext(AuthContext);
     let urlString = window.location.href; 
@@ -81,8 +87,14 @@ const Chat = () => {
     setNewMessage(event.target.value);
   };
 
+  const handleClick = event => {
+    hiddenFileInput.current.click();
+  };
+
   const hiddenFileInput = React.useRef(null);
+
   const formdata = new FormData(); 
+
   const handleSendMessage = () => {
     sendMessage(newMessage);
     setNewMessage("");
@@ -113,63 +125,79 @@ const Chat = () => {
 
   let element,hidden
   return (
-    <div className="chat-room-container">
-      <div className="messages-container">
-        <h1 className="room-name">Room:{post}</h1>
-        {/* <h3 className="owner">{owner}</h3> */}
-        <h5>{uidcus==currentUser.uid ? "Post by : "+ owner : ""}</h5>
-        {/* <h1 className="room-name">Room:{post}</h1>
-        <h3 className="owner">Post By :{owner}</h3> */}
-      <div>
-      <div>status :{status} </div>
-      <Col >{uidown==currentUser.uid && status=="Available" ?  <Button id="button" onClick={()=>{statusPost()}}> Share </Button> : ""}</Col>
-          { allMes.map((val) => {
-            return (
-              <div className={`${
-                val.uidsender==currentUser.uid ? "text-sim" : "text-offer"
-              }`}>
-                {val.time}
-                {val.msg}
-              </div>)
-          }
-          )} 
-        </div>
-        <ol className="messages-list">
-          {messages.map((message, i) => (
-            <li
-              key={i}
-              className={`${
-                message.ownedByCurrentUser ? "text-sim" : "text-offer"
-              }`}
-            >
-              {message.body}
-            </li>
-          ))}
-        </ol>
-      </div>
-      <textarea
-        value={newMessage}
-        onChange={handleNewMessageChange}
-        placeholder="Write message..."
-        className="new-message-input-field"
-      />
-      <Form>
-        <Col style={{ textAlign: 'center' }}>
-            {userInfo.filepreview !== null ? (
-              <Image src={userInfo.filepreview}
-                rounded className="pic-create" />
-              ) : ( 
-              <Image src={require(`../nopic.jpg`)}
-                rounded className="pic-create" />
-            )} 
+      <Row>
+        <Col>
+          <Room/>
+        </Col>
+        <Col style={{ marginRight: "20px"}}>
+            <div className="messages-container">
+            <h1 className="room-name">Room:{post}</h1>
+            {/* <h3 className="owner">{owner}</h3> */}
+            <h5>{uidcus==currentUser.uid ? "Post by : "+ owner : ""}</h5>
+            {/* <h1 className="room-name">Room:{post}</h1>
+            <h3 className="owner">Post By :{owner}</h3> */}
+          <div>status :{status} </div>
+          <Col >{uidown==currentUser.uid && status=="Available" ?  <Button id="button" onClick={()=>{statusPost()}}> Share </Button> : ""}</Col>
+          <scrollable-component style={{backgroundColor:"gray" ,width:"700px", height:"400px"}}
+          className="chat-room">
+              { allMes.map((val) => {
+                return (
+                  <Row 
+                  className={`${
+                    val.uidsender==currentUser.uid ? "text-sim" : "text-offer"
+                  }`}>
+                      {val.msg}                    
+                  </Row>
+              )}
+              )} 
+              {messages.map((message, i) => (
+                <Row
+                  key={i}
+                  style={{ width: "100%" , textAlign: "end" }}
+                >
+                  <Col 
+                  className={`${
+                    message.ownedByCurrentUser ? "text-sim" : "text-offer"
+                  }`}
+                  style={{ width: "100%" }}>
+                    {message.body}
+                  </Col>
+                </Row>
+              ))}
+            </scrollable-component>
+          </div>
+          <InputGroup style={{ marginTop: "10px" }} 
+          className="form-chat">
+            <Button className="btn-trans"
+            onClick={handleClick}>
+              <BsImage className="icon-sim" style={{ color: "gray" }}/>
+            </Button>
+            <FormControl
+              value={newMessage}
+              onChange={handleNewMessageChange}
+              placeholder="Write message..."
+              style={{ border: "none" }}
+            />
+            <Button className="btn-trans" 
+            onClick={handleSendMessage}>
+              <RiSendPlaneLine className="icon-sim" style={{ color: "gray" }}/>
+            </Button>
+          </InputGroup>
+            <Col style={{ textAlign: 'center' }} style={{ display: 'none'}}>
+                {userInfo.filepreview !== null ? (
+                  <Image src={userInfo.filepreview}
+                    rounded className="pic-create" />
+                  ) : ( 
+                  <Image src={require(`../nopic.jpg`)}
+                    rounded className="pic-create" />
+                )} 
+              </Col>
+          <Col>
+              <Form.Control type="file" ref={hiddenFileInput} style={{ display: 'none'}}
+              onChange={handleNewMessageChange} /> 
           </Col>
-      </Form>
-      <Col>
-          {newMessage}
-          <Form.Control  type="file" ref={hiddenFileInput} onChange={handleNewMessageChange} /> 
-      </Col>
-      <Button className="btn-save" onClick={handleSendMessage}> Send </Button>
-    </div>
+        </Col>
+      </Row>
   );
 };
 
