@@ -15,7 +15,6 @@ const db = mysql.createPool({
 router.get('/:id', (req, res)=> {
     const roomid = req.params.id;
     let uidown,uidcus
-    console.log("gogo")
     // const sqlSelect = "SELECT * FROM CHAT JOIN GOCHAT ON CHAT.roomid=GOCHAT.roomid JOIN POST ON GOCHAT.post_id=POST.post_id JOIN USER ON uid=uidcustomer WHERE GOCHAT.roomid = ? "
     // db.query(sqlSelect, [roomid],  (err, result) => {
     //     res.send(result)
@@ -45,7 +44,6 @@ router.get('/:id', (req, res)=> {
 router.get('/:uid/:id', (req, res)=> {
     const uidsender = req.params.uid;
     const roomid = req.params.id;
-    console.log('kkkk')
     const sqlSelect = "SELECT * FROM CHAT WHERE uidsender= ? AND roomid =?";
     db.query(sqlSelect, [uidsender,roomid],  (err, result) => {
         let uidsend
@@ -64,6 +62,25 @@ router.get('/:uid/:id', (req, res)=> {
         
     })
 });
+
+router.get('/:rid/:uid1/:uid2', (req, res)=> {
+    const uidreceiver = req.params.uid2;
+    const sqlSelect = "SELECT * FROM USER WHERE uid = ?";
+    db.query(sqlSelect, [uidreceiver],  (err, result) => {
+        console.log(result);
+        res.send(result);
+    })
+});
+
+router.get('/:rid/:uid1/:uid2/:postid', (req, res)=> {
+    const post_id = req.params.postid;
+    const sqlSelect = "SELECT * FROM POST WHERE post_id = ?";
+    db.query(sqlSelect, [post_id],  (err, result) => {
+        console.log(result);
+        res.send(result);
+    })
+});
+
 //save post
 router.post('/:id', (req,res)=> {
     const roomid = req.params.id

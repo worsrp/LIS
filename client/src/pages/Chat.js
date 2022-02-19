@@ -7,7 +7,7 @@ import ScrollableFeed from 'react-scrollable-feed'
 
 //import sytle
 import '../custom.scss';
-import { Button, Form, Row, Col, Image, InputGroup, FormControl } from 'react-bootstrap';
+import { Button, Form, Row, Col, Image, InputGroup, FormControl, Card, Container } from 'react-bootstrap';
 import { BsImage } from "react-icons/bs";
 import { RiSendPlaneLine } from "react-icons/ri"
 import { HiOutlineCheckCircle } from 'react-icons/hi'
@@ -30,9 +30,14 @@ const Chat = () => {
     const [allMes, setAllMes ] = useState([])
     const [post, setPost] = useState([]);
     const [owner, setOwner] = useState([]);
-    const [uidcus, setUidcus] = useState([]);
+    const [receiever, setReceiever] = useState([]);
+    const [uidcus, setUidcus] = useState('');
     const [uidown, setUidown] = useState([]);
     const [status, setStatus] = useState('');
+    const [imageCus, setImageCus] = useState('');
+    const [imageOwn, setImageOwn] = useState('');
+    const [postID, setPostID] = useState('');
+    const [postIMG, setPostIMG] = useState('');
     const [userInfo, setuserInfo] = useState({
       file:[],
       filepreview:null,
@@ -59,17 +64,35 @@ const Chat = () => {
 
   useEffect (() => {
     Axios.get(`http://localhost:8000/chat/${roomId}`).then((response) => {
-      setAllMes(response.data);
+      setAllMes(response.data)
       setPost(response.data[0].post_name)
-      setUidcus(response.data[0].uidcustomer)
       setUidown(response.data[0].uidowner)
       setOwner(response.data[0].firstname+" "+response.data[0].lastname)
       setStatus(response.data[0].post_status);
       console.log(response.data[0].post_status);
+      setUidcus(response.data[0].uidcustomer)
+      setImageOwn(response.data[0].image)
+      setPostID(response.data[0].post_id)
       // setPost(response.data[0].post_name)
       // setOwner(response.data[0].firstname+" "+response.data[0].lastname)
   })
   }, []);
+
+
+  useEffect (() => {
+    Axios.get(`http://localhost:8000/chat/${roomId}/${currentUser.uid}/${uidcus}`).then((response) => {
+        console.log(response.data)
+        setReceiever(response.data[0].firstname+" "+response.data[0].lastname)
+        setImageCus(response.data[0].image)
+      })
+  }, [uidcus]);
+
+  useEffect (() => {
+    Axios.get(`http://localhost:8000/chat/${roomId}/${currentUser.uid}/${uidcus}/${postID}`).then((response) => {
+        console.log(response.data)
+        setPostIMG(response.data[0].image)
+      })
+  }, [postID]);
     
   // const storage = multer.diskStorage({
   //   destination: path.join(__dirname, '../public_html/', 'uploads'),
@@ -133,25 +156,62 @@ const Chat = () => {
         <Col style={{ marginRight: "60px" }}>
             <div className="messages-container">
           <Row>
-            <Col xs={9}>
-            <h1 className="room-name">Room:{post}</h1>
-            {/* <h3 className="owner">{owner}</h3> */}
-            <h5 style={{ marginTop: "-10px"}}>{uidcus==currentUser.uid ? "Post by : "+ owner : ""}</h5>
-            {/* <h1 className="room-name">Room:{post}</h1>
-            <h3 className="owner">Post By :{owner}</h3> */}
-            <div style={{ marginTop: "-10px"}}>status :{status} </div>
-            </Col>
-            <Col style={{ textAlign: "end" }}>
-            {uidown==currentUser.uid && status=="Available" ?  
-                <Button id="button" style={{ backgroundColor: "green", border: "none" }}
-                onClick={()=>{statusPost()}}>
-                  <HiOutlineCheckCircle className="icon-sim"/>
-                  Share 
-                  <div>to this user</div>
-                </Button> 
-                : ""}
+            { uidcus==currentUser.uid ? 
+                <Col xs={1}>
+                { imageOwn !== '' ?
+                    <Image src={require(`../../../public_html/uploads/${imageOwn}`)}
+                    roundedCircle  style={{ width: "60px", height: "60px" }}/>
+                    : <Image src={require(`../nopic.jpg`)}
+                    roundedCircle  style={{ width: "60px", height: "60px" }}/>}
+              </Col> :
+              <Col xs={1}>
+              { imageCus !== '' ?
+                  <Image src={require(`../../../public_html/uploads/${imageCus}`)}
+                  roundedCircle  style={{ width: "60px", height: "60px" }}/>
+                  : <Image src={require(`../nopic.jpg`)}
+                  roundedCircle  style={{ width: "60px", height: "60px" }}/>}
+              </Col>
+            }
+            <Col xs={6} style={{ marginTop: "25px"}}>
+            { uidcus==currentUser.uid ? 
+              <h3 style={{ marginTop: "-10px"}}>{owner}</h3>
+              :
+              <h3 style={{ marginTop: "-10px"}}>{receiever}</h3>
+            }
             </Col>
           </Row>
+          <Card className="mx-auto" style={{ width: "500px", height: "100px", borderRadius: "15px",
+                position: "absolute", left: "700px", top: "160px"}}>
+                <Card.Body>
+                <Row>
+                <Col xs={2}>
+                    { postIMG !== '' ?
+                        <Image src={require(`../../../public_html/uploads/${postIMG}`)}
+                        style={{ width: "80px", height: "80px", borderRadius: "10px", marginTop: "-7px", marginLeft: "-5px" }}/>
+                        : <Image src={require(`../nopic.jpg`)}
+                        style={{ width: "80px", height: "80px", borderRadius: "10px", marginTop: "-7px", marginLeft: "-5px" }}/>}
+                  </Col> 
+                  <Col style={{ marginTop: "10px", marginLeft: "10px"}}>
+                  <h5 className="room-name">{post}</h5>
+                  {/* <h3 className="owner">{owner}</h3> */}
+                  {/* <h1 className="room-name">Room:{post}</h1>
+                  <h3 className="owner">Post By :{owner}</h3> */}
+                  <div style={{ marginTop: "-10px"}}> {status} </div>
+                  </Col>
+                  
+                  {uidown==currentUser.uid && status=="Available" ?  
+                    <Col style={{ textAlign: "end" }}>
+                      <Button id="button" style={{ backgroundColor: "green", border: "none", borderRadius: "10px"}}
+                      onClick={()=>{statusPost()}}>
+                        <HiOutlineCheckCircle className="icon-sim"/>
+                        Share 
+                        <div>to this user</div>
+                      </Button> 
+                      </Col>
+                      : ""}
+                </Row>
+                </Card.Body>
+              </Card>
             <ScrollableFeed className="chat-room">
               { allMes.map((val, i) => {
                 return (
@@ -162,7 +222,7 @@ const Chat = () => {
                   }`}>
                         <div className={`${
                         val.uidsender==currentUser.uid ?  "chat-send" : "chat-rec"
-                        }`}>{val.msg}</div>                    
+                        }`}>{val.msg}</div>  
                   </Row>
                   </div>
               )}
