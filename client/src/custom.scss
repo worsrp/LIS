@@ -103,18 +103,27 @@ body {
 
 .text-sim{
     color: white !important;
+    margin: 10px;
+    justify-content: flex-end !important;
+    align-items: flex-end !important;
+}
+
+.chat-send{
     background-color: #42505C;
     border-radius: 15px;
-    margin: 10px;
     padding: 10px;
     width: max-content;
 }
 
 .text-offer{
     color: #42505C !important;
+    margin: 10px;
+
+}
+
+.chat-rec{
     background-color: white;
     border-radius: 15px;
-    margin: 10px;
     padding: 10px;
     width: max-content;
 }
@@ -230,9 +239,10 @@ body {
 }
 
 .chat-room{
-    scroll-behavior:smooth;
-    overscroll-behavior:inherit;
-    scroll-snap-type:mandatory;
+    background-color: gray !important;
+    width: 900px !important;
+    height: 400px !important; 
+    margin-top: 10px !important;
 }
 
 .modal-content  {
@@ -419,16 +429,38 @@ textarea:focus, input:focus{
 .btn-cat{
     border-radius: 20px;
     font-size: 10px;
-    background-color: white !important;
+    background-color: transparent !important;
     border-color: lightgray;
     color: gray ;
     margin: 5px;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .btn-cat:hover{
-    text-decoration: none !important;
-    -webkit-appearance:none;
+    border-color: navy !important;
+    color: navy !important;
+}
+
+.btn-cat:active, .btn-cat:focus{
+    border-color: lightgray !important;
+    color: gray !important;
+}
+
+.btn-cat-select{
+    border-radius: 20px;
+    font-size: 10px;
+    background-color: transparent !important;
+    border-color: red;
+    color: red ;
+    margin: 5px;
+    outline: none !important;
     box-shadow: none !important;
+}
+
+.btn-cat-select:active, .btn-cat-select:focus{
+    border-color: red !important;
+    color: red !important;
 }
 
 .fav-sty{

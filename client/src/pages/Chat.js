@@ -3,13 +3,14 @@ import Axios from 'axios'
 import useChat from "../useChat";
 import { AuthContext } from "../Auth";
 import Room from "../pages/Room";
-import 'scrollable-component';
+import ScrollableFeed from 'react-scrollable-feed'
 
 //import sytle
 import '../custom.scss';
 import { Button, Form, Row, Col, Image, InputGroup, FormControl } from 'react-bootstrap';
 import { BsImage } from "react-icons/bs";
 import { RiSendPlaneLine } from "react-icons/ri"
+import { HiOutlineCheckCircle } from 'react-icons/hi'
 
 const Chat = () => {
     const { currentUser } = useContext(AuthContext);
@@ -129,42 +130,56 @@ const Chat = () => {
         <Col>
           <Room/>
         </Col>
-        <Col style={{ marginRight: "20px"}}>
+        <Col style={{ marginRight: "60px" }}>
             <div className="messages-container">
+          <Row>
+            <Col xs={9}>
             <h1 className="room-name">Room:{post}</h1>
             {/* <h3 className="owner">{owner}</h3> */}
-            <h5>{uidcus==currentUser.uid ? "Post by : "+ owner : ""}</h5>
+            <h5 style={{ marginTop: "-10px"}}>{uidcus==currentUser.uid ? "Post by : "+ owner : ""}</h5>
             {/* <h1 className="room-name">Room:{post}</h1>
             <h3 className="owner">Post By :{owner}</h3> */}
-          <div>status :{status} </div>
-          <Col >{uidown==currentUser.uid && status=="Available" ?  <Button id="button" onClick={()=>{statusPost()}}> Share </Button> : ""}</Col>
-          <scrollable-component style={{backgroundColor:"gray" ,width:"700px", height:"400px"}}
-          className="chat-room">
-              { allMes.map((val) => {
+            <div style={{ marginTop: "-10px"}}>status :{status} </div>
+            </Col>
+            <Col style={{ textAlign: "end" }}>
+            {uidown==currentUser.uid && status=="Available" ?  
+                <Button id="button" style={{ backgroundColor: "green", border: "none" }}
+                onClick={()=>{statusPost()}}>
+                  <HiOutlineCheckCircle className="icon-sim"/>
+                  Share 
+                  <div>to this user</div>
+                </Button> 
+                : ""}
+            </Col>
+          </Row>
+            <ScrollableFeed className="chat-room">
+              { allMes.map((val, i) => {
                 return (
+                  <div key={i}>
                   <Row 
                   className={`${
                     val.uidsender==currentUser.uid ? "text-sim" : "text-offer"
                   }`}>
-                      {val.msg}                    
+                        <div className={`${
+                        val.uidsender==currentUser.uid ?  "chat-send" : "chat-rec"
+                        }`}>{val.msg}</div>                    
                   </Row>
+                  </div>
               )}
               )} 
               {messages.map((message, i) => (
-                <Row
-                  key={i}
-                  style={{ width: "100%" , textAlign: "end" }}
-                >
-                  <Col 
+                <div key={i}>
+                  <Row
                   className={`${
                     message.ownedByCurrentUser ? "text-sim" : "text-offer"
-                  }`}
-                  style={{ width: "100%" }}>
-                    {message.body}
-                  </Col>
-                </Row>
+                  }`}>
+                    <div className={`${
+                        message.ownedByCurrentUser ? "chat-send" : "chat-rec"
+                        }`}>{message.body}</div> 
+                  </Row>
+                </div>
               ))}
-            </scrollable-component>
+              </ScrollableFeed>
           </div>
           <InputGroup style={{ marginTop: "10px" }} 
           className="form-chat">
@@ -177,6 +192,11 @@ const Chat = () => {
               onChange={handleNewMessageChange}
               placeholder="Write message..."
               style={{ border: "none" }}
+              onKeyPress={(e) => {
+                if(e.key === 'Enter'){
+                  handleSendMessage()
+                }
+              }}
             />
             <Button className="btn-trans" 
             onClick={handleSendMessage}>

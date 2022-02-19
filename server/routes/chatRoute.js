@@ -34,7 +34,6 @@ router.get('/:id', (req, res)=> {
             const sqlSelect = "SELECT * FROM GOCHAT JOIN POST ON GOCHAT.post_id=POST.post_id JOIN USER ON uid=uidowner WHERE GOCHAT.roomid = ? "
     db.query(sqlSelect, [roomid],  (err, result) => {
         res.send(result)
-       // console.log(result)
     });
         }
     

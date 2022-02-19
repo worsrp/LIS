@@ -17,6 +17,7 @@ const Feed = () =>{
     const [end, setEnd] = useState(3);
     const [check, setCheck] = useState(false);
     const [category, setCategory] = useState('');
+    const [catStyle, setCatStyle] = useState('0');
     const { currentUser } = useContext(AuthContext);
 
     //show all post
@@ -114,7 +115,7 @@ const Feed = () =>{
 
     function catOnClick(cat){
         if(category === cat){
-            setCategory("")
+            setCategory('')
         }else{
             setCategory(cat)
         }
@@ -141,36 +142,124 @@ const Feed = () =>{
             </Form>
             <Row>                
                 <Col style={{ textAlign: "center" }}>
-                    <Button value="Fashion" className="btn-cat"
-                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                    <Button value="Fashion" 
+                    className={`${
+                        catStyle === '1' ? "btn-cat-select" : "btn-cat"
+                    }`}
+                    onClick={(e)=>{
+                        catOnClick(e.target.value); 
+                        setCheck(!check); 
+                        if(catStyle === '1'){
+                            setCatStyle('0')
+                        }else{
+                            setCatStyle('1')
+                        }
+                    }}>
                         Fashion
                     </Button>
-                    <Button value="Health and Beauty" className="btn-cat"
-                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                    <Button value="Health and Beauty" 
+                    className={`${
+                        catStyle === '2' ? "btn-cat-select" : "btn-cat"
+                    }`}
+                    onClick={(e)=>{
+                        catOnClick(e.target.value); 
+                        setCheck(!check); 
+                        if(catStyle === '2'){
+                            setCatStyle('0')
+                        }else{
+                            setCatStyle('2')
+                        }
+                    }}>
                         Health and Beauty
                     </Button>
-                    <Button value="Electronics" className="btn-cat"
-                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                    <Button value="Electronics" 
+                    className={`${
+                        catStyle === '3' ? "btn-cat-select" : "btn-cat"
+                    }`}
+                    onClick={(e)=>{
+                        catOnClick(e.target.value); 
+                        setCheck(!check); 
+                        if(catStyle === '3'){
+                            setCatStyle('0')
+                        }else{
+                            setCatStyle('3')
+                        }
+                    }}>
                         Electronics
                     </Button>
-                    <Button value="Mommy and baby" className="btn-cat"
-                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                    <Button value="Mommy and baby" 
+                    className={`${
+                        catStyle === '4' ? "btn-cat-select" : "btn-cat"
+                    }`}
+                    onClick={(e)=>{
+                        catOnClick(e.target.value); 
+                        setCheck(!check); 
+                        if(catStyle === '4'){
+                            setCatStyle('0')
+                        }else{
+                            setCatStyle('4')
+                        }
+                    }}>
                         Mommy and baby
                     </Button>
-                    <Button value="Home and living" className="btn-cat"
-                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                    <Button value="Home and living" 
+                    className={`${
+                        catStyle === '5' ? "btn-cat-select" : "btn-cat"
+                    }`}
+                    onClick={(e)=>{
+                        catOnClick(e.target.value); 
+                        setCheck(!check); 
+                        if(catStyle === '5'){
+                            setCatStyle('0')
+                        }else{
+                            setCatStyle('5')
+                        }
+                    }}>
                         Home and living
                     </Button>
-                    <Button value="lifestyle" className="btn-cat"
-                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                    <Button value="lifestyle" 
+                    className={`${
+                        catStyle === '6' ? "btn-cat-select" : "btn-cat"
+                    }`}
+                    onClick={(e)=>{
+                        catOnClick(e.target.value); 
+                        setCheck(!check); 
+                        if(catStyle === '6'){
+                            setCatStyle('0')
+                        }else{
+                            setCatStyle('6')
+                        }
+                    }}>
                         lifestyle
                     </Button>
-                    <Button value="Kpop" className="btn-cat"
-                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                    <Button value="Kpop" 
+                    className={`${
+                        catStyle === '7' ? "btn-cat-select" : "btn-cat"
+                    }`}
+                    onClick={(e)=>{
+                        catOnClick(e.target.value); 
+                        setCheck(!check); 
+                        if(catStyle === '7'){
+                            setCatStyle('0')
+                        }else{
+                            setCatStyle('7')
+                        }
+                    }}>
                         Kpop
                     </Button>
-                    <Button value="Hand craft" className="btn-cat"
-                    onClick={(e)=>{catOnClick(e.target.value); setCheck(!check); }}>
+                    <Button value="Hand craft" 
+                    className={`${
+                        catStyle === '8' ? "btn-cat-select" : "btn-cat"
+                    }`}
+                    onClick={(e)=>{
+                        catOnClick(e.target.value); 
+                        setCheck(!check); 
+                        if(catStyle === '8'){
+                            setCatStyle('0')
+                        }else{
+                            setCatStyle('8')
+                        }
+                    }}>
                         Hand craft
                     </Button>
                 </Col>   
