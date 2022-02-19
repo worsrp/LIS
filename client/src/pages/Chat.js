@@ -183,10 +183,6 @@ const Chat = () => {
           </div>
           <InputGroup style={{ marginTop: "10px" }} 
           className="form-chat">
-            <Button className="btn-trans"
-            onClick={handleClick}>
-              <BsImage className="icon-sim" style={{ color: "gray" }}/>
-            </Button>
             <FormControl
               value={newMessage}
               onChange={handleNewMessageChange}
