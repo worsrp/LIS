@@ -431,15 +431,15 @@ textarea:focus, input:focus{
     font-size: 10px;
     background-color: transparent !important;
     border-color: lightgray;
-    color: gray ;
+    color: rgb(128, 128, 128) ;
     margin: 5px;
     outline: none !important;
     box-shadow: none !important;
 }
 
 .btn-cat:hover{
-    border-color: navy !important;
-    color: navy !important;
+    border-color: rgb(255, 166, 0) !important;
+    color: rgb(255, 166, 0) !important;
 }
 
 .btn-cat:active, .btn-cat:focus{
@@ -450,17 +450,22 @@ textarea:focus, input:focus{
 .btn-cat-select{
     border-radius: 20px;
     font-size: 10px;
-    background-color: transparent !important;
-    border-color: red;
-    color: red ;
+    background-color: rgb(255, 166, 0) !important;
+    border-color: rgb(255, 166, 0) !important;
+    color: white ;
     margin: 5px;
     outline: none !important;
     box-shadow: none !important;
 }
 
+.btn-cat-select:hover{
+    border-color: white !important;
+    color: white !important;
+}
+
 .btn-cat-select:active, .btn-cat-select:focus{
-    border-color: red !important;
-    color: red !important;
+    border-color: lightgray !important;
+    color: gray !important;
 }
 
 .fav-sty{

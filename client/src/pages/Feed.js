@@ -141,7 +141,7 @@ const Feed = () =>{
                 </Form.Group>
             </Form>
             <Row>                
-                <Col style={{ textAlign: "center" }}>
+                <Col style={{ textAlign: "center" }} >
                     <Button value="Fashion" 
                     className={`${
                         catStyle === '1' ? "btn-cat-select" : "btn-cat"
